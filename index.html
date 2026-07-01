@@ -40,6 +40,25 @@
   html { scroll-behavior: smooth; }
   * { box-sizing: border-box; margin: 0; padding: 0; }
 
+  .lion-bg-fixed {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding-top: 4vh;
+    pointer-events: none;
+    opacity: 0.07;
+  }
+  .lion-bg-fixed svg {
+    width: min(1000px, 78vw);
+    height: auto;
+  }
+  @media (max-width: 900px) {
+    .lion-bg-fixed { display: none; }
+  }
+
   body {
     background: var(--bg);
     color: var(--text-main);
@@ -132,6 +151,10 @@
     height: 480px;
     background: radial-gradient(circle, rgba(164,96,47,0.12), transparent 70%);
     pointer-events: none;
+  }
+  .hero .wrap {
+    position: relative;
+    z-index: 2;
   }
   .hero h1 {
     font-size: clamp(2.2rem, 5vw, 3.4rem);
@@ -345,6 +368,60 @@
 </head>
 <body>
 
+<div class="lion-bg-fixed" aria-hidden="true">
+  <svg viewBox="0 0 600 560" xmlns="http://www.w3.org/2000/svg">
+    <polygon points="300,130 346.1,108.1 371,157 430.8,149.2 434.2,202.5 466.1,235.5 448,280 473.9,326.6 425.6,352.5 433,413 376,411.6 345.3,449 300,430 253.9,451.9 229,403 169.2,410.8 165.8,357.5 133.9,324.5 152,280 126.1,233.4 174.4,207.5 167,147 224,148.4 254.7,111"
+      fill="var(--gold)" stroke="var(--gold-soft)" stroke-width="1.2" stroke-linejoin="round"/>
+
+    <g stroke="var(--gold-soft)" stroke-width="1" opacity="0.55">
+      <line x1="300" y1="280" x2="300" y2="130"/>
+      <line x1="300" y1="280" x2="346.1" y2="108.1"/>
+      <line x1="300" y1="280" x2="371" y2="157"/>
+      <line x1="300" y1="280" x2="430.8" y2="149.2"/>
+      <line x1="300" y1="280" x2="434.2" y2="202.5"/>
+      <line x1="300" y1="280" x2="466.1" y2="235.5"/>
+      <line x1="300" y1="280" x2="448" y2="280"/>
+      <line x1="300" y1="280" x2="473.9" y2="326.6"/>
+      <line x1="300" y1="280" x2="425.6" y2="352.5"/>
+      <line x1="300" y1="280" x2="433" y2="413"/>
+      <line x1="300" y1="280" x2="376" y2="411.6"/>
+      <line x1="300" y1="280" x2="345.3" y2="449"/>
+      <line x1="300" y1="280" x2="300" y2="430"/>
+      <line x1="300" y1="280" x2="253.9" y2="451.9"/>
+      <line x1="300" y1="280" x2="229" y2="403"/>
+      <line x1="300" y1="280" x2="169.2" y2="410.8"/>
+      <line x1="300" y1="280" x2="165.8" y2="357.5"/>
+      <line x1="300" y1="280" x2="133.9" y2="324.5"/>
+      <line x1="300" y1="280" x2="152" y2="280"/>
+      <line x1="300" y1="280" x2="126.1" y2="233.4"/>
+      <line x1="300" y1="280" x2="174.4" y2="207.5"/>
+      <line x1="300" y1="280" x2="167" y2="147"/>
+      <line x1="300" y1="280" x2="224" y2="148.4"/>
+      <line x1="300" y1="280" x2="254.7" y2="111"/>
+    </g>
+
+    <polygon points="395,280 367.2,347.2 300,375 232.8,347.2 205,280 232.8,212.8 300,185 367.2,212.8"
+      fill="#e9d3ad" stroke="var(--gold)" stroke-width="1.6" stroke-linejoin="round"/>
+    <g stroke="var(--gold)" stroke-width="0.9" opacity="0.55">
+      <line x1="300" y1="280" x2="395" y2="280"/>
+      <line x1="300" y1="280" x2="367.2" y2="347.2"/>
+      <line x1="300" y1="280" x2="300" y2="375"/>
+      <line x1="300" y1="280" x2="232.8" y2="347.2"/>
+      <line x1="300" y1="280" x2="205" y2="280"/>
+      <line x1="300" y1="280" x2="232.8" y2="212.8"/>
+      <line x1="300" y1="280" x2="300" y2="185"/>
+      <line x1="300" y1="280" x2="367.2" y2="212.8"/>
+    </g>
+
+    <polygon points="254,258 262,250 270,258 262,266" fill="#2b1608"/>
+    <polygon points="330,258 338,250 346,258 338,266" fill="#2b1608"/>
+    <polygon points="288,300 312,300 300,315" fill="#3a1f10"/>
+    <line x1="300" y1="315" x2="300" y2="328" stroke="#3a1f10" stroke-width="1.6"/>
+    <line x1="300" y1="328" x2="280" y2="338" stroke="#3a1f10" stroke-width="1.6"/>
+    <line x1="300" y1="328" x2="320" y2="338" stroke="#3a1f10" stroke-width="1.6"/>
+  </svg>
+</div>
+
 <header>
   <div class="header-inner">
     <div class="logo"><a href="#top" style="display:flex; align-items:center; gap:6px;">株式会社<span>MOZ</span></a></div>
@@ -356,6 +433,7 @@
         <li><a href="#representative">代表挨拶</a></li>
         <li><a href="#recruit">採用</a></li>
         <li><a href="#community">コミュニティ</a></li>
+        <li><a href="preview-3d.html" target="_blank">MOZ WORLD ↗</a></li>
         <li><a href="#profile">会社概要</a></li>
       </ul>
     </nav>
@@ -374,6 +452,7 @@
     <div class="cta-row">
       <a href="#services" class="btn btn-primary">サービスを見る</a>
       <a href="#recruit" class="btn btn-outline">仲間になる</a>
+      <a href="preview-3d.html" target="_blank" class="btn btn-outline">MOZ WORLD を覗く ↗</a>
     </div>
   </div>
 </section>
