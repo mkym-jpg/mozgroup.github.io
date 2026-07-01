@@ -37,6 +37,7 @@
     --max-width: 1080px;
   }
 
+  html { scroll-behavior: smooth; }
   * { box-sizing: border-box; margin: 0; padding: 0; }
 
   body {
@@ -346,9 +347,10 @@
 
 <header>
   <div class="header-inner">
-    <div class="logo">株式会社<span>MOZ</span></div>
+    <div class="logo"><a href="#top" style="display:flex; align-items:center; gap:6px;">株式会社<span>MOZ</span></a></div>
     <nav>
       <ul>
+        <li><a href="#top">HOME</a></li>
         <li><a href="#mission">ミッション</a></li>
         <li><a href="#services">サービス</a></li>
         <li><a href="#representative">代表挨拶</a></li>
@@ -361,7 +363,7 @@
 </header>
 
 <!-- ============ HERO ============ -->
-<section class="hero">
+<section class="hero" id="top">
   <div class="wrap">
     <div class="eyebrow">Corporate Site — Skeleton Draft</div>
     <h1>AIを、<span class="accent">営業の武器</span>に変える。</h1>
