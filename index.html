@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>株式会社MOZ | AIツールで、営業を武器にする。</title>
+<meta name="description" content="株式会社MOZ - オリジナルAIツール「イデミター」とSNS解析ツールを提供。">
+
+<!--
+  ============================================================
+  【このファイルについて】
+  骨組み(構造)フェーズのHTMLです。トンマナ・コピー・画像は
+  すべて仮のプレースホルダーです。黒×ゴールドのみ社長の好みを
+  軽く反映していますが、本格的なトンマナ確定後に全面差し替え
+  想定です。
+
+  【要確認・TBD項目】(検索: "TBD" で該当箇所にジャンプ可能)
+  - 会社概要の設立年月日・代表者名・資本金など(法務側確認待ち)
+  - Discordサーバーの招待リンク / ウィジェットID
+  - AIツールの正式な料金・機能詳細
+  ============================================================
+-->
+
+<style>
+  :root {
+    --bg: #f1ebdd;
+    --bg-elevated: #ffffff;
+    --gold: #a4602f;
+    --gold-soft: #c17c48;
+    --accent2: #253f3a;
+    --accent2-soft: #33544e;
+    --text-main: #211d16;
+    --text-sub: #78715f;
+    --border: #e2d9c4;
+    --font-display: "Hiragino Sans", "Yu Gothic", sans-serif;
+    --font-body: "Hiragino Sans", "Yu Gothic", sans-serif;
+    --max-width: 1080px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text-main);
+    font-family: var(--font-body);
+    line-height: 1.75;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  a { color: inherit; text-decoration: none; }
+
+  .wrap {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  /* Header */
+  header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(241,235,221,0.92);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--border);
+  }
+  .header-inner {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 18px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .logo {
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    font-size: 1.15rem;
+  }
+  .logo span { color: var(--gold); }
+  nav ul {
+    list-style: none;
+    display: flex;
+    gap: 28px;
+    font-size: 0.88rem;
+  }
+  nav a:hover { color: var(--gold-soft); }
+  .nav-toggle { display: none; }
+
+  @media (max-width: 760px) {
+    nav ul { display: none; }
+  }
+
+  /* Section base */
+  section {
+    padding: 96px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .eyebrow {
+    color: var(--accent2);
+    font-size: 0.78rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+  h1, h2, h3 {
+    font-family: var(--font-display);
+    font-weight: 700;
+    letter-spacing: 0.02em;
+  }
+  h2 { font-size: clamp(1.6rem, 3vw, 2.2rem); margin-bottom: 24px; }
+  p.lead {
+    color: var(--text-sub);
+    font-size: 1.02rem;
+    max-width: 640px;
+  }
+
+  /* Hero */
+  .hero {
+    padding: 140px 0 100px;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: "";
+    position: absolute;
+    top: -20%;
+    right: -10%;
+    width: 480px;
+    height: 480px;
+    background: radial-gradient(circle, rgba(164,96,47,0.12), transparent 70%);
+    pointer-events: none;
+  }
+  .hero h1 {
+    font-size: clamp(2.2rem, 5vw, 3.4rem);
+    line-height: 1.35;
+    max-width: 780px;
+  }
+  .hero h1 .accent { color: var(--accent2); }
+  .hero p.sub {
+    margin-top: 24px;
+    color: var(--text-sub);
+    max-width: 560px;
+    font-size: 1.05rem;
+  }
+  .cta-row {
+    margin-top: 40px;
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .btn {
+    display: inline-block;
+    padding: 14px 28px;
+    font-size: 0.92rem;
+    border-radius: 4px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    transition: all 0.2s ease;
+  }
+  .btn-primary {
+    background: var(--gold);
+    color: #ffffff;
+  }
+  .btn-primary:hover { background: var(--gold-soft); }
+  .btn-outline {
+    border: 1px solid var(--border);
+    color: var(--text-main);
+  }
+  .btn-outline:hover { border-color: var(--gold); color: var(--gold); }
+
+  /* Mission */
+  .mission-body {
+    max-width: 720px;
+    color: var(--text-sub);
+  }
+  .placeholder-note {
+    display: inline-block;
+    margin-top: 16px;
+    padding: 4px 10px;
+    font-size: 0.72rem;
+    border: 1px dashed var(--gold);
+    color: var(--gold);
+    border-radius: 3px;
+  }
+
+  /* Services */
+  .service-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+    margin-top: 36px;
+  }
+  .service-card {
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 32px;
+    transition: border-color 0.2s ease;
+  }
+  .service-card:hover { border-color: var(--gold); }
+  .service-card .tag {
+    font-size: 0.72rem;
+    color: var(--gold);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .service-card h3 { font-size: 1.2rem; margin-bottom: 10px; }
+  .service-card p { color: var(--text-sub); font-size: 0.92rem; }
+  .service-card.add-more {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-sub);
+    border-style: dashed;
+    font-size: 0.85rem;
+  }
+
+  /* Rep message */
+  .rep-block {
+    display: flex;
+    gap: 40px;
+    flex-wrap: wrap;
+    align-items: flex-start;
+  }
+  .rep-photo {
+    width: 180px;
+    height: 180px;
+    border-radius: 6px;
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-sub);
+    font-size: 0.8rem;
+    flex-shrink: 0;
+  }
+  .rep-text { max-width: 560px; color: var(--text-sub); }
+  .rep-text .name { color: var(--text-main); font-weight: 700; margin-top: 16px; }
+
+  /* Recruit */
+  .recruit-box {
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 48px;
+  }
+  .recruit-box h2 { margin-bottom: 12px; }
+
+  /* Community / Discord */
+  .community-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 32px;
+    margin-top: 32px;
+  }
+  @media (max-width: 760px) {
+    .community-grid { grid-template-columns: 1fr; }
+  }
+  .discord-widget-slot {
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 24px;
+    min-height: 220px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-sub);
+    font-size: 0.85rem;
+    text-align: center;
+  }
+  .channel-list { list-style: none; margin-top: 16px; }
+  .channel-list li {
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 0.9rem;
+    color: var(--text-sub);
+  }
+  .channel-list li .badge {
+    display: inline-block;
+    font-size: 0.68rem;
+    padding: 2px 8px;
+    border-radius: 10px;
+    margin-right: 8px;
+  }
+  .badge.open { background: rgba(37,63,58,0.13); color: var(--accent2); }
+  .badge.private { background: rgba(255,255,255,0.06); color: var(--text-sub); }
+
+  /* Company profile */
+  table.profile {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 24px;
+  }
+  table.profile th, table.profile td {
+    text-align: left;
+    padding: 16px 12px;
+    border-bottom: 1px solid var(--border);
+    font-size: 0.92rem;
+  }
+  table.profile th {
+    width: 180px;
+    color: var(--text-sub);
+    font-weight: 500;
+  }
+  .tbd { color: var(--gold); font-size: 0.82rem; }
+
+  /* News */
+  .news-empty {
+    color: var(--text-sub);
+    font-size: 0.92rem;
+    padding: 32px;
+    text-align: center;
+    border: 1px dashed var(--border);
+    border-radius: 6px;
+  }
+
+  /* SNS */
+  .sns-row {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-top: 24px;
+  }
+  .sns-pill {
+    padding: 12px 22px;
+    border: 1px solid var(--border);
+    border-radius: 30px;
+    font-size: 0.88rem;
+  }
+  .sns-pill:hover { border-color: var(--gold); color: var(--gold-soft); }
+
+  footer {
+    padding: 40px 0;
+    text-align: center;
+    color: var(--text-sub);
+    font-size: 0.8rem;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="logo">株式会社<span>MOZ</span></div>
+    <nav>
+      <ul>
+        <li><a href="#mission">ミッション</a></li>
+        <li><a href="#services">サービス</a></li>
+        <li><a href="#representative">代表挨拶</a></li>
+        <li><a href="#recruit">採用</a></li>
+        <li><a href="#community">コミュニティ</a></li>
+        <li><a href="#profile">会社概要</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<!-- ============ HERO ============ -->
+<section class="hero">
+  <div class="wrap">
+    <div class="eyebrow">Corporate Site — Skeleton Draft</div>
+    <h1>AIを、<span class="accent">営業の武器</span>に変える。</h1>
+    <p class="sub">
+      仮コピー: 株式会社MOZは、SNS時代の営業・発信を加速させるAIツールを開発・販売しています。
+      (※本文はトンマナ確定後に差し替え予定)
+    </p>
+    <div class="cta-row">
+      <a href="#services" class="btn btn-primary">サービスを見る</a>
+      <a href="#recruit" class="btn btn-outline">仲間になる</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ MISSION ============ -->
+<section id="mission">
+  <div class="wrap">
+    <div class="eyebrow">Mission</div>
+    <h2>私たちが目指すもの</h2>
+    <p class="mission-body">
+      仮テキスト: 法人化されたばかりの株式会社MOZが、どんな課題を解決し、どんな未来を作りたいのかをここに記載します。
+      代表の言葉や創業のきっかけを踏まえて、トンマナ確定時に本文を作成予定です。
+    </p>
+    <span class="placeholder-note">TBD: ミッション・ビジョン本文</span>
+  </div>
+</section>
+
+<!-- ============ SERVICES ============ -->
+<section id="services">
+  <div class="wrap">
+    <div class="eyebrow">Services</div>
+    <h2>提供サービス</h2>
+    <p class="lead">現在2つのオリジナルAIツールを提供しています。今後、新たなサービスも順次追加予定です。</p>
+
+    <div class="service-grid">
+      <div class="service-card">
+        <div class="tag">SNS投稿作成AI</div>
+        <h3>イデミター</h3>
+        <p>
+          SNS投稿の作成を支援するオリジナルAIツール。仮説明文:
+          テーマを入力するだけで投稿文案を生成し、発信の手間を削減します。
+          (※機能詳細・料金は確認中)
+        </p>
+      </div>
+
+      <div class="service-card">
+        <div class="tag">SNS解析AI</div>
+        <h3>SNS解析ツール(仮称)</h3>
+        <p>
+          SNSアカウントのパフォーマンスを解析するツール。仮説明文:
+          投稿の反応データをもとに、改善のヒントを可視化します。
+          (※正式名称・機能詳細は確認中)
+        </p>
+      </div>
+
+      <div class="service-card add-more">
+        + 今後のサービスはここに追加
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ REPRESENTATIVE MESSAGE ============ -->
+<section id="representative">
+  <div class="wrap">
+    <div class="eyebrow">Representative</div>
+    <h2>代表挨拶</h2>
+    <div class="rep-block">
+      <div class="rep-photo">代表写真<br>(仮)</div>
+      <div class="rep-text">
+        <p>
+          仮テキスト: 代表者からのメッセージをここに掲載します。創業の想い、これまでの経歴
+          (JA共済等の営業経験)、これから作りたい組織像などを、社長ご本人の言葉で構成予定です。
+        </p>
+        <p class="name">代表取締役　氏名(TBD)</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ RECRUIT ============ -->
+<section id="recruit">
+  <div class="wrap">
+    <div class="eyebrow">Recruit</div>
+    <div class="recruit-box">
+      <h2>一緒に営業を仕掛ける仲間を募集中</h2>
+      <p class="lead">
+        まずは気軽にDiscordコミュニティで話を聞いてみてください。応募フォームは近日公開予定です。
+      </p>
+      <div class="cta-row">
+        <a href="#community" class="btn btn-primary">Discordで話を聞く</a>
+        <a href="#" class="btn btn-outline">応募フォーム(準備中)</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ COMMUNITY / DISCORD ============ -->
+<section id="community">
+  <div class="wrap">
+    <div class="eyebrow">Community</div>
+    <h2>MOZコミュニティ(Discord)</h2>
+    <p class="lead">
+      誰でも参加できる一般チャンネルと、メンバー限定チャンネルを用意しています。
+      AIツールの質問や、営業に関する情報交換の場としてご活用ください。
+    </p>
+
+    <div class="community-grid">
+      <div>
+        <!--
+          TBD: Discordウィジェット埋め込み
+          サーバー設定 → ウィジェット → 有効化 でIDを取得後、
+          下記iframeのsrcにIDを差し込む
+          <iframe src="https://discord.com/widget?id=YOUR_SERVER_ID&theme=dark"
+            width="100%" height="220" allowtransparency="true" frameborder="0"></iframe>
+        -->
+        <div class="discord-widget-slot">
+          Discordウィジェット挿入予定<br>(サーバーID取得後に反映)
+        </div>
+        <ul class="channel-list">
+          <li><span class="badge open">公開</span>雑談・自己紹介</li>
+          <li><span class="badge open">公開</span>ツールに関する質問</li>
+          <li><span class="badge private">メンバー限定</span>営業戦略共有</li>
+          <li><span class="badge private">メンバー限定</span>社内連絡</li>
+        </ul>
+      </div>
+      <div>
+        <p class="lead" style="margin-bottom: 16px;">
+          招待リンクは期限付き・流入経路の計測ができる設定を推奨します。
+        </p>
+        <a href="#" class="btn btn-primary" style="width:100%; text-align:center; display:block;">
+          Discordに参加する(TBD: 招待リンク)
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ COMPANY PROFILE ============ -->
+<section id="profile">
+  <div class="wrap">
+    <div class="eyebrow">Company</div>
+    <h2>会社概要</h2>
+    <table class="profile">
+      <tr><th>商号</th><td>株式会社MOZ</td></tr>
+      <tr><th>所在地</th><td>栃木県宇都宮市鐺山町1924-2</td></tr>
+      <tr><th>設立</th><td class="tbd">TBD(確認中)</td></tr>
+      <tr><th>代表者</th><td class="tbd">TBD(確認中)</td></tr>
+      <tr><th>資本金</th><td class="tbd">TBD(確認中)</td></tr>
+      <tr><th>事業内容</th><td>AIツールの開発・販売、SNSを活用した営業支援</td></tr>
+      <tr><th>お問い合わせ</th><td class="tbd">TBD(確認中)</td></tr>
+    </table>
+  </div>
+</section>
+
+<!-- ============ NEWS ============ -->
+<section id="news">
+  <div class="wrap">
+    <div class="eyebrow">News</div>
+    <h2>お知らせ</h2>
+    <div class="news-empty">
+      現在お知らせはありません。今後、リリース情報や採用情報をここに掲載予定です。
+    </div>
+  </div>
+</section>
+
+<!-- ============ SNS ============ -->
+<section id="sns" style="border-bottom: none;">
+  <div class="wrap">
+    <div class="eyebrow">Follow</div>
+    <h2>SNSでつながる</h2>
+    <div class="sns-row">
+      <a href="#" class="sns-pill">X (Twitter) — TBD</a>
+      <a href="#" class="sns-pill">Threads — TBD</a>
+      <a href="#" class="sns-pill">Discord — TBD</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    &copy; 2026 MOZ Inc. All rights reserved.
+  </div>
+</footer>
+
+</body>
+</html>
