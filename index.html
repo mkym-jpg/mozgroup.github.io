@@ -49,7 +49,7 @@
     justify-content: center;
     padding-top: 4vh;
     pointer-events: none;
-    opacity: 0.11;
+    opacity: 0.08;
   }
   .lion-bg-fixed svg {
     width: min(1300px, 90vw);
@@ -91,6 +91,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    position: relative;
   }
   .logo {
     font-weight: 700;
@@ -105,10 +106,53 @@
     font-size: 0.88rem;
   }
   nav a:hover { color: var(--gold-soft); }
-  .nav-toggle { display: none; }
+  .nav-toggle {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    color: var(--text-main);
+    z-index: 120;
+  }
+  .nav-toggle span {
+    display: block;
+    width: 24px;
+    height: 2px;
+    background: var(--text-main);
+    margin: 5px 0;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+  }
+  .nav-toggle.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .nav-toggle.open span:nth-child(2) { opacity: 0; }
+  .nav-toggle.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
   @media (max-width: 760px) {
-    nav ul { display: none; }
+    .nav-toggle { display: block; }
+    nav { position: static; }
+    nav ul {
+      display: none;
+      position: absolute;
+      top: 100%;
+      right: 0;
+      left: 0;
+      flex-direction: column;
+      gap: 0;
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+      padding: 8px 0;
+    }
+    nav ul.open { display: flex; }
+    nav ul li {
+      padding: 0;
+    }
+    nav ul li a {
+      display: block;
+      padding: 14px 24px;
+      font-size: 1rem;
+      border-top: 1px solid var(--border);
+    }
+    nav ul li:first-child a { border-top: none; }
   }
 
   /* Section base */
@@ -369,44 +413,30 @@
 <body>
 
 <div class="lion-bg-fixed" aria-hidden="true">
-  <svg viewBox="0 0 700 560" xmlns="http://www.w3.org/2000/svg">
-    <path d="M200,120 Q250,70 300,95 Q360,60 400,90 Q460,70 480,130 Q540,140 560,180 Q600,195 595,225 Q600,255 560,275 Q540,290 500,300 Q480,330 460,340 Q450,380 420,400 Q400,430 350,440 Q310,460 270,430 Q230,450 190,390 Q160,370 140,320 Q110,300 130,240 Q110,190 160,170 Q170,140 200,120 Z"
-      fill="none" stroke="var(--gold)" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round"/>
+  <svg viewBox="0 0 760 760" xmlns="http://www.w3.org/2000/svg">
+    <path d="M511.9,568.4 L449.6,512.9 L445.9,558.2 L413.6,526.2 L404.3,628.8 L375.4,529.9 L351.5,557.7 L337.5,523.8 L275.0,617.8 L302.3,508.3 L258.5,532.5 L272.3,484.4 L191.7,520.7 L249.3,453.7 L208.5,449.5 L234.9,418.1 L127.1,412.6 L230.0,380.0 L191.6,355.7 L234.9,341.9 L152.9,288.0 L249.3,306.3 L235.8,272.3 L272.3,275.6 L224.3,184.4 L302.3,251.7 L301.2,201.6 L337.5,236.2 L344.3,157.8 L375.4,230.1 L398.0,195.9 L413.6,233.8 L463.2,154.9 L449.6,247.1 L489.0,224.4 L500,250 Q585,275 615,310 Q635,350 672,395 Q610,425 565,455 Q525,495 478,525 Z"
+      fill="var(--gold)" stroke="var(--gold-soft)" stroke-width="1"/>
 
-    <path d="M400,90 Q440,105 480,130 Q525,150 560,180 Q585,205 595,225 Q585,250 560,275 Q525,290 500,300 Q470,320 460,340 Q445,280 430,220 Q415,155 400,90 Z"
-      fill="none" stroke="var(--gold-soft)" stroke-width="1.4"/>
+    <path d="M470,215 Q490,180 520,205 Q505,235 478,232 Z"
+      fill="var(--gold)" stroke="var(--gold-soft)" stroke-width="1"/>
 
-    <path d="M370,95 Q385,68 412,84 Q402,106 380,106 Q370,101 370,95 Z"
-      fill="none" stroke="var(--gold)" stroke-width="1.6" stroke-linecap="round"/>
+    <path d="M572,282 Q595,268 618,285 Q595,300 572,282 Z"
+      fill="var(--bg)" stroke="var(--accent2)" stroke-width="2"/>
+    <circle cx="596" cy="285" r="4" fill="var(--accent2)"/>
 
-    <path d="M460,160 Q490,144 526,162" fill="none" stroke="var(--gold)" stroke-width="1.6" stroke-linecap="round"/>
-    <path d="M470,176 Q491,160 516,176 Q491,196 470,176 Z" fill="none" stroke="var(--gold)" stroke-width="1.6"/>
-    <circle cx="492" cy="178" r="3.4" fill="var(--gold)"/>
-
-    <path d="M560,190 Q590,205 595,225 Q590,245 560,270 Q545,250 545,225 Q545,205 560,190 Z"
-      fill="none" stroke="var(--gold)" stroke-width="1.8"/>
-    <path d="M555,270 Q520,290 480,296" fill="none" stroke="var(--gold)" stroke-width="1.4" stroke-linecap="round"/>
-
-    <g fill="none" stroke="var(--gold-soft)" stroke-width="1.2" stroke-linecap="round">
-      <path d="M260,100 Q282,132 270,166"/>
-      <path d="M320,84 Q332,120 316,155"/>
-      <path d="M160,182 Q140,222 156,262"/>
-      <path d="M140,262 Q120,302 142,337"/>
-      <path d="M156,342 Q140,377 166,406"/>
-      <path d="M220,412 Q242,436 276,436"/>
-      <path d="M302,432 Q332,447 362,432"/>
-      <path d="M372,412 Q402,397 417,372"/>
-      <path d="M430,342 Q420,367 410,387"/>
-      <path d="M402,352 Q396,377 386,397"/>
-    </g>
+    <path d="M660,388 Q676,392 674,404 Q660,408 652,398 Z" fill="var(--accent2)"/>
+    <path d="M610,428 Q585,442 558,438" fill="none" stroke="var(--accent2)" stroke-width="2.4" stroke-linecap="round"/>
   </svg>
 </div>
 
 <header>
   <div class="header-inner">
     <div class="logo"><a href="#top" style="display:flex; align-items:center; gap:6px;">株式会社<span>MOZ</span></a></div>
+    <button class="nav-toggle" id="navToggle" aria-label="メニューを開く" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
     <nav>
-      <ul>
+      <ul id="navMenu">
         <li><a href="#top">HOME</a></li>
         <li><a href="#mission">ミッション</a></li>
         <li><a href="#services">サービス</a></li>
@@ -607,6 +637,30 @@
     &copy; 2026 MOZ Inc. All rights reserved.
   </div>
 </footer>
+
+<script>
+  (function() {
+    var toggle = document.getElementById('navToggle');
+    var menu = document.getElementById('navMenu');
+    if (!toggle || !menu) return;
+
+    function closeMenu() {
+      menu.classList.remove('open');
+      toggle.classList.remove('open');
+      toggle.setAttribute('aria-expanded', 'false');
+    }
+
+    toggle.addEventListener('click', function() {
+      var isOpen = menu.classList.toggle('open');
+      toggle.classList.toggle('open', isOpen);
+      toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    });
+
+    menu.querySelectorAll('a').forEach(function(link) {
+      link.addEventListener('click', closeMenu);
+    });
+  })();
+</script>
 
 </body>
 </html>
