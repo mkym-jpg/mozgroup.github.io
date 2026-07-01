@@ -56,7 +56,15 @@
     height: auto;
   }
   @media (max-width: 900px) {
-    .lion-bg-fixed { display: none; }
+    .lion-bg-fixed {
+      align-items: center;
+      padding-top: 0;
+      opacity: 0.3;
+    }
+    .lion-bg-fixed img {
+      width: 130vw;
+      max-width: none;
+    }
   }
 
   body {
@@ -128,8 +136,14 @@
   .nav-toggle.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
   @media (max-width: 760px) {
-    .nav-toggle { display: block; }
-    nav { position: static; }
+    .nav-toggle {
+      display: block;
+      margin-left: auto;
+    }
+    nav {
+      position: static;
+      display: contents;
+    }
     nav ul {
       display: none;
       position: absolute;
