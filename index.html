@@ -49,7 +49,7 @@
     justify-content: center;
     padding-top: 4vh;
     pointer-events: none;
-    opacity: 0.07;
+    opacity: 0.11;
   }
   .lion-bg-fixed svg {
     width: min(1300px, 90vw);
@@ -370,47 +370,35 @@
 
 <div class="lion-bg-fixed" aria-hidden="true">
   <svg viewBox="0 0 700 560" xmlns="http://www.w3.org/2000/svg">
-    <circle cx="350" cy="290" r="260" fill="none" stroke="var(--gold-soft)" stroke-width="2"/>
+    <path d="M200,120 Q250,70 300,95 Q360,60 400,90 Q460,70 480,130 Q540,140 560,180 Q600,195 595,225 Q600,255 560,275 Q540,290 500,300 Q480,330 460,340 Q450,380 420,400 Q400,430 350,440 Q310,460 270,430 Q230,450 190,390 Q160,370 140,320 Q110,300 130,240 Q110,190 160,170 Q170,140 200,120 Z"
+      fill="none" stroke="var(--gold)" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round"/>
 
-    <polygon points="200,120 260,90 300,110 340,80 380,110 420,100 460,140 520,160 560,190 585,215 585,245 555,260 520,280 480,290 440,320 460,360 420,400 380,430 330,450 280,440 230,420 180,390 150,340 130,290 140,230 170,170"
-      fill="var(--gold)" stroke="var(--gold-soft)" stroke-width="1.2" stroke-linejoin="round"/>
+    <path d="M400,90 Q440,105 480,130 Q525,150 560,180 Q585,205 595,225 Q585,250 560,275 Q525,290 500,300 Q470,320 460,340 Q445,280 430,220 Q415,155 400,90 Z"
+      fill="none" stroke="var(--gold-soft)" stroke-width="1.4"/>
 
-    <g stroke="var(--gold-soft)" stroke-width="1" opacity="0.55">
-      <line x1="320" y1="290" x2="200" y2="120"/>
-      <line x1="320" y1="290" x2="260" y2="90"/>
-      <line x1="320" y1="290" x2="300" y2="110"/>
-      <line x1="320" y1="290" x2="340" y2="80"/>
-      <line x1="320" y1="290" x2="380" y2="110"/>
-      <line x1="320" y1="290" x2="420" y2="100"/>
-      <line x1="320" y1="290" x2="460" y2="140"/>
-      <line x1="320" y1="290" x2="520" y2="160"/>
-      <line x1="320" y1="290" x2="560" y2="190"/>
-      <line x1="320" y1="290" x2="585" y2="215"/>
-      <line x1="320" y1="290" x2="585" y2="245"/>
-      <line x1="320" y1="290" x2="555" y2="260"/>
-      <line x1="320" y1="290" x2="520" y2="280"/>
-      <line x1="320" y1="290" x2="480" y2="290"/>
-      <line x1="320" y1="290" x2="440" y2="320"/>
-      <line x1="320" y1="290" x2="460" y2="360"/>
-      <line x1="320" y1="290" x2="420" y2="400"/>
-      <line x1="320" y1="290" x2="380" y2="430"/>
-      <line x1="320" y1="290" x2="330" y2="450"/>
-      <line x1="320" y1="290" x2="280" y2="440"/>
-      <line x1="320" y1="290" x2="230" y2="420"/>
-      <line x1="320" y1="290" x2="180" y2="390"/>
-      <line x1="320" y1="290" x2="150" y2="340"/>
-      <line x1="320" y1="290" x2="130" y2="290"/>
-      <line x1="320" y1="290" x2="140" y2="230"/>
-      <line x1="320" y1="290" x2="170" y2="170"/>
+    <path d="M370,95 Q385,68 412,84 Q402,106 380,106 Q370,101 370,95 Z"
+      fill="none" stroke="var(--gold)" stroke-width="1.6" stroke-linecap="round"/>
+
+    <path d="M460,160 Q490,144 526,162" fill="none" stroke="var(--gold)" stroke-width="1.6" stroke-linecap="round"/>
+    <path d="M470,176 Q491,160 516,176 Q491,196 470,176 Z" fill="none" stroke="var(--gold)" stroke-width="1.6"/>
+    <circle cx="492" cy="178" r="3.4" fill="var(--gold)"/>
+
+    <path d="M560,190 Q590,205 595,225 Q590,245 560,270 Q545,250 545,225 Q545,205 560,190 Z"
+      fill="none" stroke="var(--gold)" stroke-width="1.8"/>
+    <path d="M555,270 Q520,290 480,296" fill="none" stroke="var(--gold)" stroke-width="1.4" stroke-linecap="round"/>
+
+    <g fill="none" stroke="var(--gold-soft)" stroke-width="1.2" stroke-linecap="round">
+      <path d="M260,100 Q282,132 270,166"/>
+      <path d="M320,84 Q332,120 316,155"/>
+      <path d="M160,182 Q140,222 156,262"/>
+      <path d="M140,262 Q120,302 142,337"/>
+      <path d="M156,342 Q140,377 166,406"/>
+      <path d="M220,412 Q242,436 276,436"/>
+      <path d="M302,432 Q332,447 362,432"/>
+      <path d="M372,412 Q402,397 417,372"/>
+      <path d="M430,342 Q420,367 410,387"/>
+      <path d="M402,352 Q396,377 386,397"/>
     </g>
-
-    <polygon points="380,110 420,100 460,140 520,160 560,190 585,215 585,245 555,260 520,280 480,290 440,320 400,260 380,180"
-      fill="#e9d3ad" stroke="var(--gold)" stroke-width="1.4" stroke-linejoin="round"/>
-
-    <polygon points="492,172 502,163 512,172 502,182" fill="#2b1608"/>
-    <polygon points="560,190 585,215 585,245 555,260" fill="#3a1f10"/>
-    <line x1="555" y1="260" x2="500" y2="270" stroke="#3a1f10" stroke-width="1.6"/>
-    <line x1="500" y1="270" x2="460" y2="300" stroke="#3a1f10" stroke-width="1.6"/>
   </svg>
 </div>
 
