@@ -3,17 +3,15 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MOZ CABIN — 暖炉の部屋</title>
+<title>MOZ CABIN — 癒しの部屋</title>
 <style>
   :root {
     --copper: #c8834f;
     --copper-soft: #e0a978;
     --petrol: #2d524d;
-    --parchment: #f1ebdd;
-    --wood-dark: #2a1c12;
-    --wood: #3d2a1a;
     --text: #ede4d3;
     --text-sub: #b0a48f;
+    --wood-dark: #150d07;
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   html, body {
@@ -23,39 +21,87 @@
     font-family: "Hiragino Sans", "Yu Gothic", sans-serif;
     color: var(--text);
   }
-  #scene { position: fixed; inset: 0; z-index: 1; }
-
-  /* 木の壁のビネット風オーバーレイ */
-  .vignette {
+  .cabin-bg {
     position: fixed;
     inset: 0;
+    z-index: 1;
+    background: url("cabin-bg.jpg") center 52% / cover no-repeat;
+  }
+  .fire-glow {
+    position: fixed;
+    left: 50%;
+    top: 52%;
+    width: 90vw;
+    height: 90vh;
+    transform: translate(-50%, -50%);
     z-index: 2;
     pointer-events: none;
-    background: radial-gradient(ellipse at 50% 55%, transparent 30%, rgba(20,12,7,0.55) 80%, rgba(15,9,5,0.85) 100%);
+    background: radial-gradient(ellipse 40% 45% at center,
+                rgba(255,150,60,0.28) 0%,
+                rgba(255,130,50,0.12) 35%,
+                transparent 70%);
+    mix-blend-mode: screen;
+    animation: breathe 5s ease-in-out infinite;
   }
-
-  .ui {
+  @keyframes breathe {
+    0%, 100% { opacity: 0.35; transform: translate(-50%, -50%) scale(1.0); }
+    50%      { opacity: 1.0;  transform: translate(-50%, -50%) scale(1.06); }
+  }
+  .fire-flicker {
+    position: fixed;
+    left: 50%;
+    top: 52%;
+    width: 60vw;
+    height: 60vh;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+    pointer-events: none;
+    background: radial-gradient(ellipse 30% 35% at center,
+                rgba(255,170,80,0.18) 0%, transparent 65%);
+    mix-blend-mode: screen;
+    animation: flicker 0.14s steps(2) infinite;
+  }
+  @keyframes flicker {
+    0%   { opacity: 0.5; }
+    50%  { opacity: 0.85; }
+    100% { opacity: 0.62; }
+  }
+  #embers {
     position: fixed;
     inset: 0;
     z-index: 3;
+    pointer-events: none;
+  }
+  .vignette {
+    position: fixed;
+    inset: 0;
+    z-index: 4;
+    pointer-events: none;
+    background: radial-gradient(ellipse at 50% 52%, transparent 35%, rgba(10,6,3,0.5) 85%, rgba(8,5,2,0.8) 100%);
+  }
+  .ui {
+    position: fixed;
+    inset: 0;
+    z-index: 5;
     pointer-events: none;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     padding: 28px;
   }
-  .ui-top { pointer-events: none; }
   .eyebrow {
     font-size: 0.72rem;
     letter-spacing: 0.22em;
     text-transform: uppercase;
-    color: var(--copper);
+    color: var(--copper-soft);
+    text-shadow: 0 2px 8px rgba(0,0,0,0.8);
   }
   .room-title {
     margin-top: 8px;
     font-size: clamp(1.4rem, 3.5vw, 2rem);
     font-weight: 700;
     letter-spacing: 0.04em;
+    text-shadow: 0 2px 12px rgba(0,0,0,0.9);
   }
   .room-sub {
     margin-top: 10px;
@@ -63,8 +109,8 @@
     color: var(--text-sub);
     max-width: 360px;
     line-height: 1.8;
+    text-shadow: 0 1px 8px rgba(0,0,0,0.9);
   }
-
   .ui-bottom {
     pointer-events: none;
     display: flex;
@@ -89,63 +135,59 @@
     font-weight: 600;
     cursor: pointer;
     border: 1px solid rgba(224,169,120,0.4);
-    background: rgba(42,28,18,0.6);
+    background: rgba(30,18,10,0.7);
     color: var(--text);
     backdrop-filter: blur(6px);
     transition: all 0.2s ease;
     text-decoration: none;
   }
-  .btn:hover { border-color: var(--copper); background: rgba(60,42,26,0.75); }
-  .btn.active { background: var(--copper); color: var(--wood-dark); border-color: var(--copper); }
+  .btn:hover { border-color: var(--copper); background: rgba(50,32,18,0.85); }
   .btn-discord {
-    background: rgba(45,82,77,0.55);
+    background: rgba(45,82,77,0.6);
     border-color: rgba(120,180,170,0.4);
   }
-  .btn-discord:hover { border-color: var(--petrol); background: rgba(45,82,77,0.8); }
-
+  .btn-discord:hover { border-color: var(--petrol); background: rgba(45,82,77,0.85); }
   .hint {
-    pointer-events: none;
     font-size: 0.72rem;
     color: var(--text-sub);
     letter-spacing: 0.05em;
+    text-shadow: 0 1px 6px rgba(0,0,0,0.9);
   }
   .nav-back {
     pointer-events: auto;
     position: fixed;
     top: 28px;
     right: 28px;
-    z-index: 4;
+    z-index: 6;
     font-size: 0.78rem;
     color: var(--text-sub);
     text-decoration: none;
     border: 1px solid rgba(176,164,143,0.3);
     padding: 8px 14px;
     border-radius: 4px;
-    background: rgba(42,28,18,0.5);
+    background: rgba(30,18,10,0.6);
     backdrop-filter: blur(6px);
   }
   .nav-back:hover { color: var(--copper); border-color: var(--copper); }
-
-  /* 入室オーバーレイ(音声再生のためのユーザー操作起点) */
   .enter-gate {
     position: fixed;
     inset: 0;
     z-index: 10;
-    background: rgba(15,9,5,0.94);
+    background: rgba(12,7,4,0.96);
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     text-align: center;
     padding: 32px;
-    transition: opacity 0.8s ease;
+    transition: opacity 0.9s ease;
   }
   .enter-gate.hidden { opacity: 0; pointer-events: none; }
   .enter-gate .g-eyebrow {
     font-size: 0.72rem;
     letter-spacing: 0.24em;
     text-transform: uppercase;
-    color: var(--copper);
+    color: var(--copper-soft);
     margin-bottom: 20px;
   }
   .enter-gate h1 {
@@ -178,7 +220,10 @@
 </head>
 <body>
 
-<div id="scene"></div>
+<div class="cabin-bg"></div>
+<div class="fire-glow"></div>
+<div class="fire-flicker"></div>
+<canvas id="embers"></canvas>
 <div class="vignette"></div>
 
 <a href="index.html" class="nav-back">← サイトへ戻る</a>
@@ -186,13 +231,12 @@
 <div class="ui">
   <div class="ui-top">
     <div class="eyebrow">MOZ CABIN</div>
-    <div class="room-title">暖炉の部屋</div>
+    <div class="room-title">癒しの部屋</div>
     <div class="room-sub">
-      少し火にあたって、ひと息つく部屋です。<br>
+      火にあたって、ひと息つく部屋です。<br>
       考えごとに疲れたら、どうぞ。
     </div>
   </div>
-
   <div class="ui-bottom">
     <div class="controls">
       <div class="btn" id="soundToggle">🔥 火の音を消す</div>
@@ -200,11 +244,10 @@
         💬 カジュアルに相談する
       </a>
     </div>
-    <div class="hint">ドラッグで少し見回す · ホイールで寄る</div>
+    <div class="hint">火を眺めて、少し休んでいってください</div>
   </div>
 </div>
 
-<!-- 入室ゲート(クリックで音声再生を許可) -->
 <div class="enter-gate" id="enterGate">
   <div class="g-eyebrow">MOZ CABIN</div>
   <h1>火を入れておきました。<br>どうぞ、中へ。</h1>
@@ -216,236 +259,60 @@
   <source src="fireplace-loop.mp3" type="audio/mpeg">
 </audio>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script>
-  const container = document.getElementById('scene');
-
-  const scene = new THREE.Scene();
-  scene.fog = new THREE.FogExp2(0x1a0f0a, 0.035);
-
-  const camera = new THREE.PerspectiveCamera(55, window.innerWidth / window.innerHeight, 0.1, 100);
-  camera.position.set(0, 1.4, 6);
-
-  const renderer = new THREE.WebGLRenderer({ antialias: true });
-  renderer.setSize(window.innerWidth, window.innerHeight);
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-  container.appendChild(renderer.domElement);
-
-  // ---- Lights ----
-  const ambient = new THREE.AmbientLight(0x3a2818, 0.8);
-  scene.add(ambient);
-
-  // 暖炉のゆらぐ光
-  const fireLight = new THREE.PointLight(0xff7a2a, 3.5, 24);
-  fireLight.position.set(0, 1.0, 0.5);
-  scene.add(fireLight);
-
-  const fillLight = new THREE.PointLight(0xc8834f, 0.8, 20);
-  fillLight.position.set(-3, 3, 3);
-  scene.add(fillLight);
-
-  // ---- 床(木の質感) ----
-  const floorGeo = new THREE.PlaneGeometry(30, 30);
-  const floorMat = new THREE.MeshStandardMaterial({ color: 0x2a1c12, roughness: 0.95, metalness: 0.05 });
-  const floor = new THREE.Mesh(floorGeo, floorMat);
-  floor.rotation.x = -Math.PI / 2;
-  floor.position.y = -0.5;
-  scene.add(floor);
-
-  // ---- 背後の壁(ログハウス:横積みの丸太) ----
-  const wallGroup = new THREE.Group();
-  const logMat = new THREE.MeshStandardMaterial({ color: 0x3d2a1a, roughness: 0.9, metalness: 0.05 });
-  for (let i = 0; i < 9; i++) {
-    const logGeo = new THREE.CylinderGeometry(0.32, 0.32, 16, 12);
-    const log = new THREE.Mesh(logGeo, logMat);
-    log.rotation.z = Math.PI / 2;
-    log.position.set(0, -0.3 + i * 0.62, -3.2);
-    wallGroup.add(log);
-  }
-  scene.add(wallGroup);
-
-  // ---- 暖炉の石枠 ----
-  const stoneMat = new THREE.MeshStandardMaterial({ color: 0x4a4038, roughness: 1.0, metalness: 0.0 });
-  // 左柱・右柱・上枠
-  const pillarGeo = new THREE.BoxGeometry(0.6, 3.2, 0.6);
-  const leftPillar = new THREE.Mesh(pillarGeo, stoneMat);
-  leftPillar.position.set(-1.6, 1.0, -3.0);
-  scene.add(leftPillar);
-  const rightPillar = new THREE.Mesh(pillarGeo, stoneMat);
-  rightPillar.position.set(1.6, 1.0, -3.0);
-  scene.add(rightPillar);
-  const topBeam = new THREE.Mesh(new THREE.BoxGeometry(3.8, 0.6, 0.7), stoneMat);
-  topBeam.position.set(0, 2.6, -3.0);
-  scene.add(topBeam);
-
-  // ---- 暖炉の奥(暗い炉内) ----
-  const hearthBack = new THREE.Mesh(
-    new THREE.PlaneGeometry(2.6, 2.8),
-    new THREE.MeshBasicMaterial({ color: 0x0d0603 })
-  );
-  hearthBack.position.set(0, 1.0, -3.15);
-  scene.add(hearthBack);
-
-  // ---- 薪 ----
-  const woodMat = new THREE.MeshStandardMaterial({ color: 0x2b1a0e, roughness: 0.9 });
-  for (let i = 0; i < 4; i++) {
-    const logGeo = new THREE.CylinderGeometry(0.12, 0.12, 1.6, 8);
-    const log = new THREE.Mesh(logGeo, woodMat);
-    log.rotation.z = Math.PI / 2;
-    log.rotation.y = (i - 1.5) * 0.3;
-    log.position.set((i - 1.5) * 0.2, -0.15, -2.7);
-    scene.add(log);
-  }
-
-  // ---- 炎パーティクル ----
-  const fireCount = 260;
-  const firePositions = new Float32Array(fireCount * 3);
-  const fireData = [];
-  for (let i = 0; i < fireCount; i++) {
-    resetFireParticle(i, true);
-  }
-  function resetFireParticle(i, initial) {
-    const spread = 0.5;
-    const x = (Math.random() - 0.5) * spread;
-    const z = -2.7 + (Math.random() - 0.5) * 0.35;
-    const y = initial ? Math.random() * 1.4 - 0.2 : -0.25;
-    firePositions[i*3] = x;
-    firePositions[i*3+1] = y;
-    firePositions[i*3+2] = z;
-    fireData[i] = {
-      speed: 0.008 + Math.random() * 0.018,
-      sway: (Math.random() - 0.5) * 0.006,
-      baseX: x,
-      life: Math.random()
-    };
-  }
-  const fireGeo = new THREE.BufferGeometry();
-  fireGeo.setAttribute('position', new THREE.BufferAttribute(firePositions, 3));
-
-  // 炎の色グラデーション用テクスチャ(円形のソフトなパーティクル)
-  const canvas = document.createElement('canvas');
-  canvas.width = 64; canvas.height = 64;
+  const canvas = document.getElementById('embers');
   const ctx = canvas.getContext('2d');
-  const grad = ctx.createRadialGradient(32, 32, 0, 32, 32, 32);
-  grad.addColorStop(0, 'rgba(255,230,150,1)');
-  grad.addColorStop(0.4, 'rgba(255,140,40,0.8)');
-  grad.addColorStop(1, 'rgba(200,60,10,0)');
-  ctx.fillStyle = grad;
-  ctx.fillRect(0, 0, 64, 64);
-  const fireTexture = new THREE.CanvasTexture(canvas);
+  let W, H, fireX, fireY;
 
-  const fireMat = new THREE.PointsMaterial({
-    size: 0.42,
-    map: fireTexture,
-    transparent: true,
-    depthWrite: false,
-    blending: THREE.AdditiveBlending,
-    opacity: 0.85
-  });
-  const fireParticles = new THREE.Points(fireGeo, fireMat);
-  scene.add(fireParticles);
-
-  // ---- 火の粉(上に舞う小さな粒) ----
-  const emberCount = 40;
-  const emberPositions = new Float32Array(emberCount * 3);
-  const emberData = [];
-  for (let i = 0; i < emberCount; i++) {
-    emberPositions[i*3] = (Math.random() - 0.5) * 1.2;
-    emberPositions[i*3+1] = Math.random() * 2.5;
-    emberPositions[i*3+2] = -2.7 + (Math.random() - 0.5) * 0.3;
-    emberData[i] = { speed: 0.004 + Math.random() * 0.01, sway: (Math.random()-0.5)*0.01 };
+  function resize() {
+    W = canvas.width = window.innerWidth;
+    H = canvas.height = window.innerHeight;
+    fireX = W * 0.50;
+    fireY = H * 0.60;
   }
-  const emberGeo = new THREE.BufferGeometry();
-  emberGeo.setAttribute('position', new THREE.BufferAttribute(emberPositions, 3));
-  const emberMat = new THREE.PointsMaterial({
-    size: 0.06, color: 0xffb060, transparent: true, opacity: 0.8,
-    depthWrite: false, blending: THREE.AdditiveBlending
-  });
-  const embers = new THREE.Points(emberGeo, emberMat);
-  scene.add(embers);
+  resize();
+  window.addEventListener('resize', resize);
 
-  // ---- ドラッグで軽く見回す ----
-  let isDragging = false, prevX = 0, prevY = 0;
-  let targetRotY = 0, targetRotX = 0;
-  let camDist = 6;
-  renderer.domElement.addEventListener('mousedown', e => { isDragging = true; prevX = e.clientX; prevY = e.clientY; });
-  window.addEventListener('mouseup', () => isDragging = false);
-  window.addEventListener('mousemove', e => {
-    if (!isDragging) return;
-    targetRotY += (e.clientX - prevX) * 0.002;
-    targetRotX += (e.clientY - prevY) * 0.0015;
-    targetRotY = Math.max(-0.5, Math.min(0.5, targetRotY));
-    targetRotX = Math.max(-0.2, Math.min(0.3, targetRotX));
-    prevX = e.clientX; prevY = e.clientY;
-  });
-  renderer.domElement.addEventListener('touchstart', e => {
-    isDragging = true; prevX = e.touches[0].clientX; prevY = e.touches[0].clientY;
-  }, { passive: true });
-  window.addEventListener('touchend', () => isDragging = false);
-  window.addEventListener('touchmove', e => {
-    if (!isDragging) return;
-    targetRotY += (e.touches[0].clientX - prevX) * 0.002;
-    targetRotX += (e.touches[0].clientY - prevY) * 0.0015;
-    targetRotY = Math.max(-0.5, Math.min(0.5, targetRotY));
-    targetRotX = Math.max(-0.2, Math.min(0.3, targetRotX));
-    prevX = e.touches[0].clientX; prevY = e.touches[0].clientY;
-  }, { passive: true });
-  renderer.domElement.addEventListener('wheel', e => {
-    camDist += e.deltaY * 0.005;
-    camDist = Math.max(3.5, Math.min(8, camDist));
-  }, { passive: true });
-
-  // ---- リサイズ ----
-  window.addEventListener('resize', () => {
-    camera.aspect = window.innerWidth / window.innerHeight;
-    camera.updateProjectionMatrix();
-    renderer.setSize(window.innerWidth, window.innerHeight);
-  });
-
-  // ---- アニメーション ----
-  let flickerT = 0;
-  function animate() {
-    requestAnimationFrame(animate);
-
-    // 炎パーティクル更新
-    const fp = fireGeo.attributes.position.array;
-    for (let i = 0; i < fireCount; i++) {
-      fp[i*3+1] += fireData[i].speed;
-      fp[i*3] += fireData[i].sway;
-      if (fp[i*3+1] > 1.3) resetFireParticle(i, false);
-    }
-    fireGeo.attributes.position.needsUpdate = true;
-
-    // 火の粉更新
-    const ep = emberGeo.attributes.position.array;
-    for (let i = 0; i < emberCount; i++) {
-      ep[i*3+1] += emberData[i].speed;
-      ep[i*3] += emberData[i].sway;
-      if (ep[i*3+1] > 3.0) {
-        ep[i*3+1] = -0.2;
-        ep[i*3] = (Math.random() - 0.5) * 1.2;
-      }
-    }
-    emberGeo.attributes.position.needsUpdate = true;
-
-    // 光のゆらぎ
-    flickerT += 0.08;
-    fireLight.intensity = 3.0 + Math.sin(flickerT) * 0.4 + Math.random() * 0.3;
-
-    // カメラのスムーズな追従
-    const targetX = Math.sin(targetRotY) * camDist;
-    const targetZ = Math.cos(targetRotY) * camDist;
-    const targetY = 1.4 + targetRotX * 3;
-    camera.position.x += (targetX - camera.position.x) * 0.05;
-    camera.position.z += (targetZ - camera.position.z) * 0.05;
-    camera.position.y += (targetY - camera.position.y) * 0.05;
-    camera.lookAt(0, 1.0, -3.0);
-
-    renderer.render(scene, camera);
+  const embers = [];
+  function spawnEmber() {
+    embers.push({
+      x: fireX + (Math.random() - 0.5) * W * 0.08,
+      y: fireY,
+      vx: (Math.random() - 0.5) * 0.4,
+      vy: -(0.5 + Math.random() * 1.1),
+      life: 1,
+      decay: 0.004 + Math.random() * 0.006,
+      size: 1 + Math.random() * 1.8
+    });
   }
-  animate();
 
-  // ---- 入室ゲート & 音声制御 ----
+  let frame = 0;
+  function draw() {
+    requestAnimationFrame(draw);
+    ctx.clearRect(0, 0, W, H);
+    frame++;
+    if (frame % 14 === 0 && embers.length < 22) spawnEmber();
+    for (let i = embers.length - 1; i >= 0; i--) {
+      const e = embers[i];
+      e.x += e.vx;
+      e.y += e.vy;
+      e.vy -= 0.004;
+      e.vx += (Math.random() - 0.5) * 0.05;
+      e.life -= e.decay;
+      if (e.life <= 0) { embers.splice(i, 1); continue; }
+      const alpha = e.life * 0.9;
+      const flick = 0.7 + Math.random() * 0.3;
+      ctx.beginPath();
+      ctx.arc(e.x, e.y, e.size, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(255, ${150 + Math.floor(e.life*80)}, 60, ${alpha * flick})`;
+      ctx.shadowBlur = 6;
+      ctx.shadowColor = 'rgba(255,140,40,0.8)';
+      ctx.fill();
+    }
+    ctx.shadowBlur = 0;
+  }
+  draw();
+
   const gate = document.getElementById('enterGate');
   const enterBtn = document.getElementById('enterBtn');
   const audio = document.getElementById('fireAudio');
@@ -456,13 +323,11 @@
     gate.classList.add('hidden');
     audio.volume = 0.6;
     audio.play().catch(() => {
-      // 再生失敗時はボタン表示を調整
       soundOn = false;
       soundToggle.textContent = '🔇 火の音を出す';
     });
   });
 
-  // ループの保険: loop属性が効かない環境でも途切れないよう二重化
   audio.addEventListener('timeupdate', () => {
     if (!soundOn) return;
     if (audio.duration && audio.currentTime > audio.duration - 0.3) {
@@ -471,10 +336,7 @@
     }
   });
   audio.addEventListener('ended', () => {
-    if (soundOn) {
-      audio.currentTime = 0;
-      audio.play().catch(()=>{});
-    }
+    if (soundOn) { audio.currentTime = 0; audio.play().catch(()=>{}); }
   });
 
   soundToggle.addEventListener('click', () => {
