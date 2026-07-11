@@ -37,7 +37,6 @@
   .lion-bg-fixed img {
     width: min(1100px, 82vw);
     height: auto;
-    filter: grayscale(1) sepia(0.55) hue-rotate(172deg) saturate(2.6) brightness(1.05);
   }
   @media (max-width: 900px) {
     .lion-bg-fixed {
@@ -74,7 +73,7 @@
     z-index: 100;
     background: rgba(238,245,249,0.92);
     backdrop-filter: blur(8px);
-    border-bottom: 1px solid var(--border);
+    border-bottom: 1px solid var(--gold);
   }
   .header-inner {
     max-width: var(--max-width);
@@ -89,13 +88,17 @@
     font-weight: 700;
     letter-spacing: 0.08em;
     font-size: 1.15rem;
+    flex-shrink: 0;
+    white-space: nowrap;
   }
   .logo span { color: var(--gold); }
   nav ul {
     list-style: none;
     display: flex;
-    gap: 28px;
-    font-size: 0.88rem;
+    gap: 20px;
+    font-size: 0.8rem;
+    flex-wrap: nowrap;
+    white-space: nowrap;
   }
   nav a:hover { color: var(--gold-soft); }
   .nav-toggle {
@@ -156,7 +159,7 @@
   /* Section base */
   section {
     padding: 96px 0;
-    border-bottom: 1px solid var(--border);
+    border-bottom: 1px solid var(--gold);
   }
   .eyebrow {
     color: var(--accent2);
@@ -164,13 +167,39 @@
     letter-spacing: 0.18em;
     text-transform: uppercase;
     margin-bottom: 14px;
+    position: relative;
+    padding-left: 18px;
+  }
+  .eyebrow::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 10px;
+    height: 3px;
+    background: var(--gold);
   }
   h1, h2, h3 {
     font-family: var(--font-display);
     font-weight: 700;
     letter-spacing: 0.02em;
   }
-  h2 { font-size: clamp(1.6rem, 3vw, 2.2rem); margin-bottom: 24px; }
+  h2 {
+    font-size: clamp(1.6rem, 3vw, 2.2rem);
+    margin-bottom: 32px;
+    position: relative;
+    display: inline-block;
+  }
+  h2::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -8px;
+    width: 40px;
+    height: 3px;
+    background: var(--gold);
+  }
   p.lead {
     color: var(--text-sub);
     font-size: 1.02rem;
@@ -180,7 +209,7 @@
   /* Hero */
   .hero {
     padding: 140px 0 100px;
-    border-bottom: 1px solid var(--border);
+    border-bottom: 1px solid var(--gold);
     position: relative;
     overflow: hidden;
   }
@@ -203,7 +232,7 @@
     line-height: 1.35;
     max-width: 780px;
   }
-  .hero h1 .accent { color: var(--accent2); }
+  .hero h1 .accent { color: var(--gold); }
   .hero p.sub {
     margin-top: 24px;
     color: var(--text-sub);
@@ -321,6 +350,37 @@
   .rep-text { max-width: 560px; color: var(--text-sub); }
   .rep-text .name { color: var(--text-main); font-weight: 700; margin-top: 16px; }
 
+  /* Staff (top page) */
+  .staff-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 24px;
+    margin-top: 32px;
+  }
+  .staff-card { min-width: 0; }
+  @media (max-width: 760px) {
+    .staff-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+    .staff-card { padding: 10px; }
+    .staff-card svg { width: 60px; }
+    .staff-card h3 { font-size: 0.78rem; word-break: break-word; }
+    .staff-role { font-size: 0.62rem; word-break: break-word; }
+    .staff-meta { font-size: 0.66rem; }
+  }
+  .staff-card {
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 24px;
+    text-align: center;
+  }
+  .staff-card svg { width: 110px; height: auto; margin: 0 auto 10px; display: block; }
+  .staff-card h3 { font-size: 0.95rem; margin-bottom: 4px; }
+  .staff-role { color: var(--gold); font-size: 0.74rem; letter-spacing: 0.04em; margin-bottom: 8px; }
+  .staff-meta { color: var(--text-sub); font-size: 0.78rem; }
+
   /* Recruit */
   .recruit-box {
     background: var(--bg-elevated);
@@ -368,7 +428,7 @@
     margin-right: 8px;
   }
   .badge.open { background: rgba(31,95,139,0.13); color: var(--accent2); }
-  .badge.private { background: rgba(255,255,255,0.06); color: var(--text-sub); }
+  .badge.private { background: rgba(217,69,31,0.10); color: var(--gold); }
 
   /* Company profile */
   table.profile {
@@ -430,7 +490,6 @@
   }
   .footer-links a:hover { color: var(--gold); }
   .footer-copy { color: var(--text-sub); }
-
   .page-hero { padding: 100px 0 50px; border-bottom: 1px solid var(--border); }
   .page-hero h1 { font-size: clamp(1.8rem, 4vw, 2.6rem); margin-top: 10px; }
   .page-content { padding: 60px 0 100px; }
@@ -467,13 +526,10 @@
         <li><a href="#top">HOME</a></li>
         <li><a href="#mission">ミッション</a></li>
         <li><a href="#services">サービス</a></li>
-        <li><a href="#representative">代表挨拶</a></li>
-        <li><a href="staff.html">スタッフ紹介</a></li>
-        <li><a href="#recruit">採用</a></li>
+        <li><a href="#staff">スタッフ紹介</a></li>
         <li><a href="#community">コミュニティ</a></li>
         <li><a href="preview-3d.html" target="_blank">MOZ WORLD ↗</a></li>
         <li><a href="cabin.html" target="_blank">癒しの部屋 ↗</a></li>
-        <li><a href="#profile">会社概要</a></li>
       </ul>
     </nav>
   </div>
@@ -514,6 +570,7 @@
       <a href="about.html">会社概要</a>
       <a href="history.html">会社沿革</a>
       <a href="index.html#representative">代表挨拶</a>
+      <a href="index.html#recruit">採用</a>
       <a href="staff.html">スタッフ紹介</a>
       <a href="privacy.html">プライバシーポリシー</a>
       <a href="terms.html">利用規約</a>

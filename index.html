@@ -90,7 +90,7 @@
     z-index: 100;
     background: rgba(238,245,249,0.92);
     backdrop-filter: blur(8px);
-    border-bottom: 1px solid var(--border);
+    border-bottom: 1px solid var(--gold);
   }
   .header-inner {
     max-width: var(--max-width);
@@ -176,7 +176,7 @@
   /* Section base */
   section {
     padding: 96px 0;
-    border-bottom: 1px solid var(--border);
+    border-bottom: 1px solid var(--gold);
   }
   .eyebrow {
     color: var(--accent2);
@@ -184,13 +184,39 @@
     letter-spacing: 0.18em;
     text-transform: uppercase;
     margin-bottom: 14px;
+    position: relative;
+    padding-left: 18px;
+  }
+  .eyebrow::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 10px;
+    height: 3px;
+    background: var(--gold);
   }
   h1, h2, h3 {
     font-family: var(--font-display);
     font-weight: 700;
     letter-spacing: 0.02em;
   }
-  h2 { font-size: clamp(1.6rem, 3vw, 2.2rem); margin-bottom: 24px; }
+  h2 {
+    font-size: clamp(1.6rem, 3vw, 2.2rem);
+    margin-bottom: 32px;
+    position: relative;
+    display: inline-block;
+  }
+  h2::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -8px;
+    width: 40px;
+    height: 3px;
+    background: var(--gold);
+  }
   p.lead {
     color: var(--text-sub);
     font-size: 1.02rem;
@@ -200,7 +226,7 @@
   /* Hero */
   .hero {
     padding: 140px 0 100px;
-    border-bottom: 1px solid var(--border);
+    border-bottom: 1px solid var(--gold);
     position: relative;
     overflow: hidden;
   }
@@ -223,7 +249,7 @@
     line-height: 1.35;
     max-width: 780px;
   }
-  .hero h1 .accent { color: var(--accent2); }
+  .hero h1 .accent { color: var(--gold); }
   .hero p.sub {
     margin-top: 24px;
     color: var(--text-sub);
@@ -419,7 +445,7 @@
     margin-right: 8px;
   }
   .badge.open { background: rgba(31,95,139,0.13); color: var(--accent2); }
-  .badge.private { background: rgba(255,255,255,0.06); color: var(--text-sub); }
+  .badge.private { background: rgba(217,69,31,0.10); color: var(--gold); }
 
   /* Company profile */
   table.profile {
@@ -581,7 +607,10 @@
       <p style="margin-top:16px;">
         カジュアルにお話しできる場を設けています。気になった方はそちらからお話ししませんか?
       </p>
-      <a href="#community" class="btn btn-primary">カジュアルな相談をする</a>
+      <div class="cta-row" style="margin-top:0;">
+        <a href="#community" class="btn btn-primary">カジュアルな相談をする</a>
+        <a href="document-a.pdf" download class="btn btn-outline">📄 資料Aをダウンロードする(PDF)</a>
+      </div>
     </div>
   </div>
 </section>
