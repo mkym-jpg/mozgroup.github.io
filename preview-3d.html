@@ -103,44 +103,95 @@
   const ambient = new THREE.AmbientLight(0x2a3530, 1.1);
   scene.add(ambient);
 
-  const copperLight = new THREE.PointLight(0xd9451f, 3.2, 30);
+  const copperLight = new THREE.PointLight(0xd9451f, 1.4, 30);
   copperLight.position.set(4, 3, 4);
   scene.add(copperLight);
 
-  const petrolLight = new THREE.PointLight(0x1f5f8b, 2.4, 30);
+  const petrolLight = new THREE.PointLight(0x4a9fd8, 3.0, 30);
   petrolLight.position.set(-5, -2, -3);
   scene.add(petrolLight);
 
-  // ---- Central emblem (MOZ core) ----
+  // ---- Central emblem (MOZ Globe) ----
   const coreGroup = new THREE.Group();
   scene.add(coreGroup);
 
-  const coreGeo = new THREE.IcosahedronGeometry(1.6, 1);
+  // 地球本体:キャンバスで大陸っぽい模様を描いてテクスチャ化
+  const earthCanvas = document.createElement('canvas');
+  earthCanvas.width = 512; earthCanvas.height = 256;
+  const ectx = earthCanvas.getContext('2d');
+  // 海:宇宙から見た地球のような深い青のグラデーション
+  const oceanGrad = ectx.createLinearGradient(0, 0, 0, 256);
+  oceanGrad.addColorStop(0, '#0b3d66');
+  oceanGrad.addColorStop(0.5, '#124f80');
+  oceanGrad.addColorStop(1, '#0b3d66');
+  ectx.fillStyle = oceanGrad;
+  ectx.fillRect(0, 0, 512, 256);
+
+  function blob(cx, cy, r, color) {
+    ectx.fillStyle = color;
+    ectx.beginPath();
+    for (let a = 0; a < Math.PI * 2; a += 0.4) {
+      const rr = r * (0.7 + Math.random() * 0.6);
+      const x = cx + Math.cos(a) * rr;
+      const y = cy + Math.sin(a) * rr * 0.6;
+      a === 0 ? ectx.moveTo(x, y) : ectx.lineTo(x, y);
+    }
+    ectx.closePath();
+    ectx.fill();
+  }
+  // 大陸:緑(植生)と茶(乾燥地帯)を混ぜたリアルな配色
+  const landColors = ['#3d6b45', '#4a7a4f', '#7a6a42', '#5c7a3d'];
+  const continentSeeds = [[80,80,38],[150,60,26],[120,150,30],[260,70,42],[300,140,34],[380,90,30],[420,160,26],[60,190,22],[220,190,28]];
+  continentSeeds.forEach(([x,y,r], i) => blob(x, y, r, landColors[i % landColors.length]));
+  const earthTexture = new THREE.CanvasTexture(earthCanvas);
+
+  const coreGeo = new THREE.SphereGeometry(1.6, 48, 48);
   const coreMat = new THREE.MeshStandardMaterial({
-    color: 0xd9451f,
-    metalness: 0.55,
-    roughness: 0.35,
-    flatShading: true
+    map: earthTexture,
+    metalness: 0.25,
+    roughness: 0.7
   });
   const coreMesh = new THREE.Mesh(coreGeo, coreMat);
   coreGroup.add(coreMesh);
 
-  const wireGeo = new THREE.IcosahedronGeometry(1.95, 1);
-  const wireMat = new THREE.MeshBasicMaterial({
-    color: 0x1f5f8b,
-    wireframe: true,
+  // 雲の層(薄い半透明の外殻)
+  const cloudCanvas = document.createElement('canvas');
+  cloudCanvas.width = 512; cloudCanvas.height = 256;
+  const cctx = cloudCanvas.getContext('2d');
+  cctx.clearRect(0,0,512,256);
+  cctx.fillStyle = 'rgba(255,255,255,0.55)';
+  for (let i=0;i<40;i++){
+    const cx = Math.random()*512, cy = Math.random()*256, r = 8+Math.random()*22;
+    cctx.beginPath(); cctx.ellipse(cx,cy,r,r*0.4,0,0,Math.PI*2); cctx.fill();
+  }
+  const cloudTexture = new THREE.CanvasTexture(cloudCanvas);
+  const cloudGeo = new THREE.SphereGeometry(1.63, 48, 48);
+  const cloudMat = new THREE.MeshStandardMaterial({
+    map: cloudTexture,
     transparent: true,
-    opacity: 0.5
+    opacity: 0.55,
+    depthWrite: false
+  });
+  const cloudMesh = new THREE.Mesh(cloudGeo, cloudMat);
+  coreGroup.add(cloudMesh);
+
+  // 大気のふちどり(淡いグロー)
+  const wireGeo = new THREE.SphereGeometry(1.72, 32, 32);
+  const wireMat = new THREE.MeshBasicMaterial({
+    color: 0x8fc4e8,
+    transparent: true,
+    opacity: 0.15,
+    side: THREE.BackSide
   });
   const wireMesh = new THREE.Mesh(wireGeo, wireMat);
   coreGroup.add(wireMesh);
 
-  // ---- 衛星(メンバーを表す小球、役職・ロールワードを持つ) ----
+  // ---- 衛星(メンバーを表す小球。タップ/ホバーで「ありがとう」を多言語表示) ----
   const satelliteWords = [
-    'CEO','Vice President','Director','Senior Managing Director','Outside Director','Legal Counsel',
-    'Engineer','Analyst','Strategist','Architect','Designer','Producer','Curator','Consultant','Specialist','Mentor',
-    'Booker','Visitor','Scheduler','Concierge','Host','Moderator','Coordinator','Liaison','Ambassador','Navigator',
-    'Pioneer','Explorer','Builder','Creator','Innovator','Connector','Catalyst','Collaborator','Supporter','Newcomer'
+    'ありがとう','Thank you','Gracias','Merci','Danke','Grazie','Obrigado','谢谢','감사합니다','ขอบคุณ',
+    'Terima kasih','Cảm ơn','शुक्रिया','شكراً','תודה','Спасибо','Dziękuję','Efharisto','Kiitos','Tack',
+    'Dank je','Takk','Дякую','Köszönöm','Mulțumesc','Hvala','Ačiū','Aitäh','Paldies','Xièxiè',
+    'Mahalo','Asante','Gracias totales','Obrigada','Cảm tạ','Terima kasih banyak'
   ];
 
   const satellites = [];
@@ -191,6 +242,27 @@
       labelEl.style.opacity = '0';
     }
   });
+
+  function checkTap(x, y) {
+    mousePos.x = (x / window.innerWidth) * 2 - 1;
+    mousePos.y = -(y / window.innerHeight) * 2 + 1;
+    raycaster.setFromCamera(mousePos, camera);
+    const hits = raycaster.intersectObjects(satellites);
+    if (hits.length > 0) {
+      const word = hits[0].object.userData.word;
+      labelEl.textContent = word;
+      labelEl.style.left = Math.min(x + 14, window.innerWidth - 120) + 'px';
+      labelEl.style.top = (y - 30) + 'px';
+      labelEl.style.opacity = '1';
+      clearTimeout(labelEl._hideTimer);
+      labelEl._hideTimer = setTimeout(() => { labelEl.style.opacity = '0'; }, 1800);
+    }
+  }
+  renderer.domElement.addEventListener('touchstart', (e) => {
+    if (e.touches.length === 1) {
+      checkTap(e.touches[0].clientX, e.touches[0].clientY);
+    }
+  }, { passive: true });
 
 
   // ---- Ambient particle field ----
@@ -293,8 +365,9 @@
   let satTime = 0;
   function animate() {
     requestAnimationFrame(animate);
-    coreGroup.rotation.y += 0.0025;
-    wireMesh.rotation.y -= 0.0015;
+    coreMesh.rotation.y += 0.0022;
+    cloudMesh.rotation.y += 0.0032;
+    wireMesh.rotation.y -= 0.0006;
     particles.rotation.y += 0.0004;
 
     satTime += 0.01;
