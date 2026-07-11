@@ -54,7 +54,6 @@
   .lion-bg-fixed img {
     width: min(1100px, 82vw);
     height: auto;
-    filter: grayscale(1) sepia(0.55) hue-rotate(172deg) saturate(2.6) brightness(1.05);
   }
   @media (max-width: 900px) {
     .lion-bg-fixed {
@@ -106,13 +105,17 @@
     font-weight: 700;
     letter-spacing: 0.08em;
     font-size: 1.15rem;
+    flex-shrink: 0;
+    white-space: nowrap;
   }
   .logo span { color: var(--gold); }
   nav ul {
     list-style: none;
     display: flex;
-    gap: 28px;
-    font-size: 0.88rem;
+    gap: 20px;
+    font-size: 0.8rem;
+    flex-wrap: nowrap;
+    white-space: nowrap;
   }
   nav a:hover { color: var(--gold-soft); }
   .nav-toggle {
@@ -345,6 +348,18 @@
     gap: 24px;
     margin-top: 32px;
   }
+  .staff-card { min-width: 0; }
+  @media (max-width: 760px) {
+    .staff-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+    .staff-card { padding: 10px; }
+    .staff-card svg { width: 60px; }
+    .staff-card h3 { font-size: 0.78rem; word-break: break-word; }
+    .staff-role { font-size: 0.62rem; word-break: break-word; }
+    .staff-meta { font-size: 0.66rem; }
+  }
   .staff-card {
     background: var(--bg-elevated);
     border: 1px solid var(--border);
@@ -485,13 +500,10 @@
         <li><a href="#top">HOME</a></li>
         <li><a href="#mission">ミッション</a></li>
         <li><a href="#services">サービス</a></li>
-        <li><a href="#representative">代表挨拶</a></li>
         <li><a href="#staff">スタッフ紹介</a></li>
-        <li><a href="#recruit">採用</a></li>
         <li><a href="#community">コミュニティ</a></li>
         <li><a href="preview-3d.html" target="_blank">MOZ WORLD ↗</a></li>
         <li><a href="cabin.html" target="_blank">癒しの部屋 ↗</a></li>
-        <li><a href="#profile">会社概要</a></li>
       </ul>
     </nav>
   </div>
@@ -566,7 +578,10 @@
         ツールを使って一緒に前へ進める仲間を見つけることを大切にしています。
         だからこそ、価格や仕様の前に、まずお話しする時間をいただいています。
       </p>
-      <a href="#community" class="btn btn-primary">カジュアルにお話しできる場を設けています。気になった方はそちらからお話ししませんか?</a>
+      <p style="margin-top:16px;">
+        カジュアルにお話しできる場を設けています。気になった方はそちらからお話ししませんか?
+      </p>
+      <a href="#community" class="btn btn-primary">カジュアルな相談をする</a>
     </div>
   </div>
 </section>
@@ -604,7 +619,7 @@
       </div>
       <div class="staff-card">
         <svg viewBox="0 0 120 230"><ellipse cx="60" cy="150" rx="55" ry="40" fill="#0e8a7a"/><circle cx="60" cy="82" r="46" fill="#f0c8a0"/><path d="M15 70 Q10 20 60 18 Q112 22 106 74 L98 66 Q95 34 60 32 Q28 34 24 68 Z" fill="#6b4a2a"/><path d="M18 60 Q10 90 22 108 L30 92 Z" fill="#6b4a2a"/><rect x="44" y="120" width="32" height="18" rx="4" fill="#e8c34a"/></svg>
-        <h3>TBD</h3>
+        <h3>藤田銀也</h3>
         <div class="staff-role">Vice President</div>
         <div class="staff-meta">TBD</div>
       </div>
@@ -616,7 +631,7 @@
       </div>
       <div class="staff-card">
         <svg viewBox="0 0 120 230"><ellipse cx="60" cy="150" rx="55" ry="40" fill="#2b6cb0"/><circle cx="60" cy="82" r="46" fill="#f0c8a0"/><path d="M13 76 Q8 20 60 16 Q114 20 107 78 Q112 55 100 42 Q90 60 78 40 Q68 58 55 38 Q42 58 30 42 Q20 56 13 76 Z" fill="#161616"/><rect x="46" y="118" width="28" height="22" fill="#0e8a7a"/></svg>
-        <h3>TBD</h3>
+        <h3>長谷川リキ</h3>
         <div class="staff-role">Engineer</div>
         <div class="staff-meta">TBD</div>
       </div>
@@ -732,6 +747,7 @@
       <a href="about.html">会社概要</a>
       <a href="history.html">会社沿革</a>
       <a href="index.html#representative">代表挨拶</a>
+      <a href="index.html#recruit">採用</a>
       <a href="staff.html">スタッフ紹介</a>
       <a href="privacy.html">プライバシーポリシー</a>
       <a href="terms.html">利用規約</a>
