@@ -31,7 +31,7 @@
     font-size: 0.72rem;
     letter-spacing: 0.22em;
     text-transform: uppercase;
-    color: #c8834f;
+    color: #4a9fd8;
   }
   .title {
     margin-top: 10px;
@@ -103,11 +103,11 @@
   const ambient = new THREE.AmbientLight(0x2a3530, 1.1);
   scene.add(ambient);
 
-  const copperLight = new THREE.PointLight(0xc9834f, 3.2, 30);
+  const copperLight = new THREE.PointLight(0xd9451f, 3.2, 30);
   copperLight.position.set(4, 3, 4);
   scene.add(copperLight);
 
-  const petrolLight = new THREE.PointLight(0x2a5a52, 2.4, 30);
+  const petrolLight = new THREE.PointLight(0x1f5f8b, 2.4, 30);
   petrolLight.position.set(-5, -2, -3);
   scene.add(petrolLight);
 
@@ -117,7 +117,7 @@
 
   const coreGeo = new THREE.IcosahedronGeometry(1.6, 1);
   const coreMat = new THREE.MeshStandardMaterial({
-    color: 0x9c5c2f,
+    color: 0xd9451f,
     metalness: 0.55,
     roughness: 0.35,
     flatShading: true
@@ -127,13 +127,71 @@
 
   const wireGeo = new THREE.IcosahedronGeometry(1.95, 1);
   const wireMat = new THREE.MeshBasicMaterial({
-    color: 0x3f6a61,
+    color: 0x1f5f8b,
     wireframe: true,
     transparent: true,
     opacity: 0.5
   });
   const wireMesh = new THREE.Mesh(wireGeo, wireMat);
   coreGroup.add(wireMesh);
+
+  // ---- 衛星(メンバーを表す小球、役職・ロールワードを持つ) ----
+  const satelliteWords = [
+    'CEO','Vice President','Director','Senior Managing Director','Outside Director','Legal Counsel',
+    'Engineer','Analyst','Strategist','Architect','Designer','Producer','Curator','Consultant','Specialist','Mentor',
+    'Booker','Visitor','Scheduler','Concierge','Host','Moderator','Coordinator','Liaison','Ambassador','Navigator',
+    'Pioneer','Explorer','Builder','Creator','Innovator','Connector','Catalyst','Collaborator','Supporter','Newcomer'
+  ];
+
+  const satellites = [];
+  const satGroup = new THREE.Group();
+  scene.add(satGroup);
+
+  const satColors = [0xd9451f, 0x1f5f8b, 0xea6b3f, 0x3a7fab];
+  const ringRadii = [3.2, 4.4, 5.6];
+
+  satelliteWords.forEach((word, i) => {
+    const ring = i % ringRadii.length;
+    const radius = ringRadii[ring];
+    const angle = (i / satelliteWords.length) * Math.PI * 2 * (ring + 1);
+    const tilt = (ring - 1) * 0.35;
+
+    const satGeo = new THREE.SphereGeometry(0.09, 12, 12);
+    const satMat = new THREE.MeshStandardMaterial({
+      color: satColors[i % satColors.length],
+      emissive: satColors[i % satColors.length],
+      emissiveIntensity: 0.4,
+      roughness: 0.4
+    });
+    const sat = new THREE.Mesh(satGeo, satMat);
+    sat.userData = { word, radius, angle, tilt, speed: 0.15 + (ring * 0.05) };
+    satGroup.add(sat);
+    satellites.push(sat);
+  });
+
+  // ---- ホバーラベル(役職ワード表示) ----
+  const raycaster = new THREE.Raycaster();
+  const mousePos = new THREE.Vector2();
+  const labelEl = document.createElement('div');
+  labelEl.style.cssText = 'position:fixed;pointer-events:none;padding:6px 12px;background:rgba(20,26,23,0.85);color:#e7e2d6;font-family:"Hiragino Sans","Yu Gothic",sans-serif;font-size:0.78rem;letter-spacing:0.04em;border:1px solid rgba(224,169,120,0.4);border-radius:4px;opacity:0;transition:opacity 0.15s ease;z-index:20;white-space:nowrap;';
+  document.body.appendChild(labelEl);
+
+  window.addEventListener('mousemove', (e) => {
+    mousePos.x = (e.clientX / window.innerWidth) * 2 - 1;
+    mousePos.y = -(e.clientY / window.innerHeight) * 2 + 1;
+    raycaster.setFromCamera(mousePos, camera);
+    const hits = raycaster.intersectObjects(satellites);
+    if (hits.length > 0) {
+      const word = hits[0].object.userData.word;
+      labelEl.textContent = word;
+      labelEl.style.left = (e.clientX + 14) + 'px';
+      labelEl.style.top = (e.clientY - 10) + 'px';
+      labelEl.style.opacity = '1';
+    } else {
+      labelEl.style.opacity = '0';
+    }
+  });
+
 
   // ---- Ambient particle field ----
   const particleCount = 900;
@@ -149,7 +207,7 @@
   const particleGeo = new THREE.BufferGeometry();
   particleGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
   const particleMat = new THREE.PointsMaterial({
-    color: 0xd9a06a,
+    color: 0xea6b3f,
     size: 0.045,
     transparent: true,
     opacity: 0.6,
@@ -232,11 +290,24 @@
   });
 
   // ---- Animate ----
+  let satTime = 0;
   function animate() {
     requestAnimationFrame(animate);
     coreGroup.rotation.y += 0.0025;
     wireMesh.rotation.y -= 0.0015;
     particles.rotation.y += 0.0004;
+
+    satTime += 0.01;
+    satellites.forEach(sat => {
+      const d = sat.userData;
+      const a = d.angle + satTime * d.speed;
+      sat.position.set(
+        Math.cos(a) * d.radius,
+        Math.sin(d.tilt) * d.radius * 0.4 + Math.sin(a * 0.7) * 0.2,
+        Math.sin(a) * d.radius
+      );
+    });
+
     renderer.render(scene, camera);
   }
   animate();

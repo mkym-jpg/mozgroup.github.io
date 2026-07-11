@@ -3,24 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>株式会社MOZ | 「ありがとう」のその先へ。</title>
-<meta name="description" content="株式会社MOZ - AIツール「イデミター」「レゾナ(仮)」を通じて、出会った人の人生を前へ進める会社です。">
-
-<!--
-  ============================================================
-  【このファイルについて】
-  骨組み(構造)フェーズのHTMLです。トンマナ・コピー・画像は
-  すべて仮のプレースホルダーです。黒×ゴールドのみ社長の好みを
-  軽く反映していますが、本格的なトンマナ確定後に全面差し替え
-  想定です。
-
-  【要確認・TBD項目】(検索: "TBD" で該当箇所にジャンプ可能)
-  - 会社概要の設立年月日・代表者名・資本金など(法務側確認待ち)
-  - Discordサーバーの招待リンク / ウィジェットID
-  - AIツールの正式な料金・機能詳細
-  ============================================================
--->
-
+<title>スタッフ紹介 | 株式会社MOZ</title>
 <style>
   :root {
     --bg: #eef5f9;
@@ -338,25 +321,6 @@
   .rep-text { max-width: 560px; color: var(--text-sub); }
   .rep-text .name { color: var(--text-main); font-weight: 700; margin-top: 16px; }
 
-  /* Staff (top page) */
-  .staff-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 24px;
-    margin-top: 32px;
-  }
-  .staff-card {
-    background: var(--bg-elevated);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 24px;
-    text-align: center;
-  }
-  .staff-card svg { width: 110px; height: auto; margin: 0 auto 10px; display: block; }
-  .staff-card h3 { font-size: 0.95rem; margin-bottom: 4px; }
-  .staff-role { color: var(--gold); font-size: 0.74rem; letter-spacing: 0.04em; margin-bottom: 8px; }
-  .staff-meta { color: var(--text-sub); font-size: 0.78rem; }
-
   /* Recruit */
   .recruit-box {
     background: var(--bg-elevated);
@@ -466,6 +430,17 @@
   }
   .footer-links a:hover { color: var(--gold); }
   .footer-copy { color: var(--text-sub); }
+
+  .page-hero { padding: 100px 0 50px; border-bottom: 1px solid var(--border); }
+  .page-hero h1 { font-size: clamp(1.8rem, 4vw, 2.6rem); margin-top: 10px; }
+  .page-content { padding: 60px 0 100px; }
+  .staff-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 28px; margin-top: 32px; }
+  .staff-card { background: var(--bg-elevated); border: 1px solid var(--border); border-radius: 8px; padding: 28px; text-align: center; }
+  .staff-card svg { width: 140px; height: auto; margin: 0 auto 12px; display: block; }
+  .staff-card h3 { font-size: 1.05rem; margin-bottom: 4px; }
+  .staff-role { color: var(--gold); font-size: 0.8rem; letter-spacing: 0.05em; margin-bottom: 12px; }
+  .staff-meta { color: var(--text-sub); font-size: 0.82rem; margin-bottom: 10px; }
+  .staff-bio { color: var(--text-sub); font-size: 0.88rem; text-align: left; line-height: 1.8; }
 </style>
 </head>
 <body>
@@ -486,7 +461,7 @@
         <li><a href="#mission">ミッション</a></li>
         <li><a href="#services">サービス</a></li>
         <li><a href="#representative">代表挨拶</a></li>
-        <li><a href="#staff">スタッフ紹介</a></li>
+        <li><a href="staff.html">スタッフ紹介</a></li>
         <li><a href="#recruit">採用</a></li>
         <li><a href="#community">コミュニティ</a></li>
         <li><a href="preview-3d.html" target="_blank">MOZ WORLD ↗</a></li>
@@ -497,231 +472,59 @@
   </div>
 </header>
 
-<!-- ============ HERO ============ -->
-<section class="hero" id="top">
-  <div class="wrap">
-    <div class="eyebrow">MOZ Inc.</div>
-    <h1>「ありがとう」の<span class="accent">その先へ。</span></h1>
-    <p class="sub">
-      私たちは、AIツールを売る会社ではありません。<br>
-      出会った人の人生を、変える会社です。
-    </p>
-    <div class="cta-row">
-      <a href="#services" class="btn btn-primary">サービスを見る</a>
-      <a href="#recruit" class="btn btn-outline">仲間になる</a>
-      <a href="preview-3d.html" target="_blank" class="btn btn-outline">MOZ WORLD を覗く ↗</a>
-    </div>
-  </div>
-</section>
-
-<!-- ============ MISSION ============ -->
-<section id="mission">
-  <div class="wrap">
-    <div class="eyebrow">Mission</div>
-    <h2>私たちが目指すもの</h2>
-    <p class="mission-body">
-      一つのツールが、一人の悩みを解き、<br>
-      一つの出会いが、一つの人生を前へ進める。<br><br>
-      MOZという場所で交わった人が、
-      「あの時、MOZに出会えてよかった」と思える瞬間を、
-      これからも増やし続けていきます。
-    </p>
-  </div>
-</section>
-
-<!-- ============ SERVICES ============ -->
-<section id="services">
-  <div class="wrap">
-    <div class="eyebrow">Services</div>
-    <h2>提供サービス</h2>
-    <p class="lead">現在2つのオリジナルAIツールを提供しています。今後、新たなサービスも順次追加予定です。</p>
-
-    <div class="service-grid">
-      <div class="service-card">
-        <div class="tag">SNS投稿作成AI</div>
-        <h3>イデミター</h3>
-        <p>イデミターは独自のアルゴリズムでコンテンツを生成します。</p>
-      </div>
-
-      <div class="service-card">
-        <div class="tag">SNS解析AI</div>
-        <h3>レゾナ(仮)</h3>
-        <p>レゾナ(仮)は独自のアルゴリズムでSNSの反響を解析します。</p>
-      </div>
-
-      <div class="service-card add-more">
-        + 今後のサービスはここに追加
-      </div>
-    </div>
-
-    <div class="disclosure-box">
-      <p>
-        私たちのツールは、誰にでも売るものではありません。<br>
-        イデミターとレゾナ(仮)は、SNSでの発信力を武器に変える、実践的なツールです。<br>
-        ただ、その詳しい機能や価格は、このサイト上では公開していません。
-      </p>
-      <p>
-        それは、隠しているのではなく、<strong>選んでいる</strong>からです。
-        私たちは、ツールを「売る」ことより、
-        ツールを使って一緒に前へ進める仲間を見つけることを大切にしています。
-        だからこそ、価格や仕様の前に、まずお話しする時間をいただいています。
-      </p>
-      <a href="#community" class="btn btn-primary">カジュアルにお話しできる場を設けています。気になった方はそちらからお話ししませんか?</a>
-    </div>
-  </div>
-</section>
-
-<!-- ============ REPRESENTATIVE MESSAGE ============ -->
-<section id="representative">
-  <div class="wrap">
-    <div class="eyebrow">Representative</div>
-    <h2>代表挨拶</h2>
-    <div class="rep-block">
-      <div class="rep-photo">代表写真<br>(仮)</div>
-      <div class="rep-text">
-        <p>
-          仮テキスト: 代表者からのメッセージをここに掲載します。創業の想い、これまでの経歴
-          (JA共済等の営業経験)、これから作りたい組織像などを、社長ご本人の言葉で構成予定です。
-        </p>
-        <p class="name">代表取締役　斎藤瑞樹</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ============ STAFF ============ -->
-<section id="staff">
+<section class="page-hero">
   <div class="wrap">
     <div class="eyebrow">Staff</div>
-    <h2>スタッフ紹介</h2>
-    <p class="lead">MOZを支えるメンバーです。詳しいプロフィールは<a href="staff.html" style="color:var(--gold); text-decoration:underline;">スタッフ紹介ページ</a>でご覧いただけます。</p>
+    <h1>スタッフ紹介</h1>
+  </div>
+</section>
+
+<section class="page-content">
+  <div class="wrap">
+    <p style="max-width:640px;">MOZを支えるメンバーです。写真の代わりに、統一したトーンのイラストでご紹介しています。名前・年齢・詳しいプロフィールは、確定次第、順次公開します。</p>
     <div class="staff-grid">
       <div class="staff-card">
         <svg viewBox="0 0 120 230"><ellipse cx="60" cy="150" rx="55" ry="40" fill="#1a3d6b"/><circle cx="60" cy="82" r="46" fill="#f0c8a0"/><path d="M14 78 Q16 26 60 24 Q104 26 106 78 Q100 40 60 38 Q20 40 14 78 Z" fill="#241a12"/><rect x="46" y="118" width="28" height="22" fill="#d9451f"/></svg>
         <h3>斎藤瑞樹</h3>
         <div class="staff-role">President & CEO</div>
-        <div class="staff-meta">TBD</div>
+        <div class="staff-meta">年齢:TBD</div>
+        <p class="staff-bio">元JA共済の営業経験を経て、株式会社MOZを設立。持ち前の行動力と巻き込み力で、AIツールを届ける会社を牽引しています。(自己紹介文はご本人確認後、正式版に差し替え予定)</p>
       </div>
       <div class="staff-card">
         <svg viewBox="0 0 120 230"><ellipse cx="60" cy="150" rx="55" ry="40" fill="#0e8a7a"/><circle cx="60" cy="82" r="46" fill="#f0c8a0"/><path d="M15 70 Q10 20 60 18 Q112 22 106 74 L98 66 Q95 34 60 32 Q28 34 24 68 Z" fill="#6b4a2a"/><path d="M18 60 Q10 90 22 108 L30 92 Z" fill="#6b4a2a"/><rect x="44" y="120" width="32" height="18" rx="4" fill="#e8c34a"/></svg>
         <h3>TBD</h3>
         <div class="staff-role">Vice President</div>
-        <div class="staff-meta">TBD</div>
+        <div class="staff-meta">年齢:TBD</div>
+        <p class="staff-bio">趣味は釣り。じっくりと物事に向き合う姿勢で、代表を支えています。(自己紹介文はご本人確認後、正式版に差し替え予定)</p>
       </div>
       <div class="staff-card">
         <svg viewBox="0 0 120 230"><ellipse cx="60" cy="150" rx="55" ry="40" fill="#5a1f1f"/><circle cx="60" cy="82" r="46" fill="#f0c8a0"/><path d="M18 62 Q60 44 102 62 Q100 50 60 48 Q20 50 18 62 Z" fill="#9a9a9a"/><rect x="42" y="118" width="36" height="20" fill="#1a3d6b"/></svg>
         <h3>TBD</h3>
         <div class="staff-role">Senior Managing Director</div>
-        <div class="staff-meta">TBD</div>
+        <div class="staff-meta">年齢:TBD</div>
+        <p class="staff-bio">組織運営の要として、事業全体を俯瞰しながら日々の意思決定を支えています。(自己紹介文はご本人確認後、正式版に差し替え予定)</p>
       </div>
       <div class="staff-card">
         <svg viewBox="0 0 120 230"><ellipse cx="60" cy="150" rx="55" ry="40" fill="#2b6cb0"/><circle cx="60" cy="82" r="46" fill="#f0c8a0"/><path d="M13 76 Q8 20 60 16 Q114 20 107 78 Q112 55 100 42 Q90 60 78 40 Q68 58 55 38 Q42 58 30 42 Q20 56 13 76 Z" fill="#161616"/><rect x="46" y="118" width="28" height="22" fill="#0e8a7a"/></svg>
         <h3>TBD</h3>
         <div class="staff-role">Engineer</div>
-        <div class="staff-meta">TBD</div>
+        <div class="staff-meta">年齢:TBD</div>
+        <p class="staff-bio">地方大手企業のご出身。確かな技術力で、イデミター・レゾナ(仮)の開発を担っています。(自己紹介文はご本人確認後、正式版に差し替え予定)</p>
       </div>
       <div class="staff-card">
         <svg viewBox="0 0 120 230"><ellipse cx="60" cy="150" rx="55" ry="40" fill="#4a4a4a"/><circle cx="60" cy="82" r="46" fill="#f0c8a0"/><path d="M15 66 Q12 22 60 20 Q108 22 105 66 Q100 36 60 34 Q20 36 15 66 Z" fill="#b8b8b8"/><path d="M12 66 Q8 100 18 116 L26 98 Z" fill="#b8b8b8"/><path d="M108 66 Q112 100 102 116 L94 98 Z" fill="#b8b8b8"/><rect x="44" y="118" width="32" height="20" fill="#d9451f"/></svg>
         <h3>TBD</h3>
         <div class="staff-role">Outside Director</div>
-        <div class="staff-meta">TBD</div>
+        <div class="staff-meta">年齢:TBD</div>
+        <p class="staff-bio">社外の視点から、MOZの意思決定に客観性と信頼性を加えています。(自己紹介文はご本人確認後、正式版に差し替え予定)</p>
       </div>
       <div class="staff-card">
         <svg viewBox="0 0 120 230"><ellipse cx="60" cy="150" rx="55" ry="40" fill="#8a2f4a"/><circle cx="60" cy="82" r="46" fill="#f0c8a0"/><path d="M16 74 Q14 24 60 22 Q106 24 104 74 Q100 42 60 40 Q20 42 16 74 Z" fill="#3d2b1a"/><path d="M14 70 Q10 96 20 110 L28 96 Z" fill="#3d2b1a"/><path d="M106 70 Q110 96 100 110 L92 96 Z" fill="#3d2b1a"/><rect x="45" y="118" width="30" height="20" fill="#f5f5f5"/></svg>
         <h3>TBD</h3>
         <div class="staff-role">Legal Counsel</div>
-        <div class="staff-meta">TBD</div>
+        <div class="staff-meta">年齢:TBD</div>
+        <p class="staff-bio">法務の専門知識で、MOZの事業活動を静かに、しかし確実に支えています。(自己紹介文はご本人確認後、正式版に差し替え予定)</p>
       </div>
-    </div>
-  </div>
-</section>
-
-<!-- ============ RECRUIT ============ -->
-<section id="recruit">
-  <div class="wrap">
-    <div class="eyebrow">Recruit</div>
-    <div class="recruit-box">
-      <h2>一緒に営業を仕掛ける仲間を募集中</h2>
-      <p class="lead">
-        まずは気軽にDiscordコミュニティで話を聞いてみてください。応募フォームは近日公開予定です。
-      </p>
-      <div class="cta-row">
-        <a href="#community" class="btn btn-primary">Discordで話を聞く</a>
-        <a href="#" class="btn btn-outline">応募フォーム(準備中)</a>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ============ COMMUNITY / DISCORD ============ -->
-<section id="community">
-  <div class="wrap">
-    <div class="eyebrow">Community</div>
-    <h2>MOZコミュニティ(Discord)</h2>
-    <p class="lead">
-      誰でも参加できる一般チャンネルと、メンバー限定チャンネルを用意しています。
-      AIツールの質問や、営業に関する情報交換の場としてご活用ください。
-    </p>
-
-    <div class="community-grid">
-      <div>
-        <ul class="channel-list">
-          <li><span class="badge open">公開</span>雑談・自己紹介</li>
-          <li><span class="badge open">公開</span>ツールに関する質問</li>
-          <li><span class="badge private">メンバー限定</span>営業戦略共有</li>
-          <li><span class="badge private">メンバー限定</span>社内連絡</li>
-        </ul>
-      </div>
-      <div>
-        <p class="lead" style="margin-bottom: 16px;">
-          「ちょっと話を聞いてみたい」くらいの気持ちで大丈夫です。
-          まずはお気軽に、カジュアルに相談してみてください。
-        </p>
-        <a href="https://discord.gg/e9QpVpPaR" target="_blank" rel="noopener" class="btn btn-primary" style="width:100%; text-align:center; display:block;">
-          💬 Discordでカジュアルに相談する
-        </a>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ============ COMPANY PROFILE ============ -->
-<section id="profile">
-  <div class="wrap">
-    <div class="eyebrow">Company</div>
-    <h2>会社概要</h2>
-    <table class="profile">
-      <tr><th>商号</th><td>株式会社MOZ</td></tr>
-      <tr><th>所在地</th><td>栃木県宇都宮市鐺山町1924-2</td></tr>
-      <tr><th>設立</th><td>2026年4月</td></tr>
-      <tr><th>代表者</th><td>斎藤瑞樹</td></tr>
-      <tr><th>資本金</th><td class="tbd">TBD(確認中)</td></tr>
-      <tr><th>事業内容</th><td>AIツールの開発・販売、SNSを活用した営業支援</td></tr>
-      <tr><th>お問い合わせ</th><td class="tbd">TBD(確認中)</td></tr>
-    </table>
-  </div>
-</section>
-
-<!-- ============ NEWS ============ -->
-<section id="news">
-  <div class="wrap">
-    <div class="eyebrow">News</div>
-    <h2>お知らせ</h2>
-    <div class="news-empty">
-      現在お知らせはありません。今後、リリース情報や採用情報をここに掲載予定です。
-    </div>
-  </div>
-</section>
-
-<!-- ============ SNS ============ -->
-<section id="sns" style="border-bottom: none;">
-  <div class="wrap">
-    <div class="eyebrow">Follow</div>
-    <h2>SNSでつながる</h2>
-    <div class="sns-row">
-      <a href="#" class="sns-pill">X (Twitter) — TBD</a>
-      <a href="#" class="sns-pill">Threads — TBD</a>
-      <a href="https://discord.gg/e9QpVpPaR" target="_blank" rel="noopener" class="sns-pill">Discord</a>
     </div>
   </div>
 </section>
