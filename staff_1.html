@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>スタッフ紹介 | 株式会社MOZ</title>
+<style>
+  :root {
+    --bg: #eef5f9;
+    --bg-elevated: #ffffff;
+    --gold: #d9451f;
+    --gold-soft: #ea6b3f;
+    --accent2: #1f5f8b;
+    --accent2-soft: #3a7fab;
+    --text-main: #16232e;
+    --text-sub: #5f7485;
+    --border: #d8e3ea;
+    --font-display: "Zen Kaku Gothic New", "Hiragino Sans", "Yu Gothic", sans-serif;
+    --font-body: "Hiragino Sans", "Yu Gothic", sans-serif;
+    --max-width: 1080px;
+  }
+
+  html { scroll-behavior: smooth; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  .lion-bg-fixed {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding-top: 4vh;
+    pointer-events: none;
+    opacity: 0.45;
+  }
+  .lion-bg-fixed img {
+    width: min(1100px, 82vw);
+    height: auto;
+  }
+  @media (max-width: 900px) {
+    .lion-bg-fixed {
+      align-items: center;
+      padding-top: 0;
+      opacity: 0.45;
+    }
+    .lion-bg-fixed img {
+      width: 130vw;
+      max-width: none;
+    }
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--text-main);
+    font-family: var(--font-body);
+    line-height: 1.75;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  a { color: inherit; text-decoration: none; }
+
+  .wrap {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  /* Header */
+  header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(238,245,249,0.92);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--gold);
+  }
+  .header-inner {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 18px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+  }
+  .logo {
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    font-size: 1.15rem;
+    flex-shrink: 0;
+    white-space: nowrap;
+  }
+  .logo span { color: var(--gold); }
+  nav ul {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+    font-size: 0.8rem;
+    flex-wrap: nowrap;
+    white-space: nowrap;
+  }
+  nav a:hover { color: var(--gold-soft); }
+  .nav-toggle {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    color: var(--text-main);
+    z-index: 120;
+  }
+  .nav-toggle span {
+    display: block;
+    width: 24px;
+    height: 2px;
+    background: var(--text-main);
+    margin: 5px 0;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+  }
+  .nav-toggle.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .nav-toggle.open span:nth-child(2) { opacity: 0; }
+  .nav-toggle.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+  @media (max-width: 760px) {
+    .nav-toggle {
+      display: block;
+      margin-left: auto;
+    }
+    nav {
+      position: static;
+      display: contents;
+    }
+    nav ul {
+      display: none;
+      position: absolute;
+      top: 100%;
+      right: 0;
+      left: 0;
+      flex-direction: column;
+      gap: 0;
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+      padding: 8px 0;
+    }
+    nav ul.open { display: flex; }
+    nav ul li {
+      padding: 0;
+    }
+    nav ul li a {
+      display: block;
+      padding: 14px 24px;
+      font-size: 1rem;
+      border-top: 1px solid var(--border);
+    }
+    nav ul li:first-child a { border-top: none; }
+  }
+
+  /* Section base */
+  section {
+    padding: 96px 0;
+    border-bottom: 1px solid var(--gold);
+  }
+  .eyebrow {
+    color: var(--accent2);
+    font-size: 0.78rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+    position: relative;
+    padding-left: 18px;
+  }
+  .eyebrow::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 10px;
+    height: 3px;
+    background: var(--gold);
+  }
+  h1, h2, h3 {
+    font-family: var(--font-display);
+    font-weight: 700;
+    letter-spacing: 0.02em;
+  }
+  h2 {
+    font-size: clamp(1.6rem, 3vw, 2.2rem);
+    margin-bottom: 32px;
+    position: relative;
+    display: inline-block;
+  }
+  h2::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -8px;
+    width: 40px;
+    height: 3px;
+    background: var(--gold);
+  }
+  p.lead {
+    color: var(--text-sub);
+    font-size: 1.02rem;
+    max-width: 640px;
+  }
+
+  /* Hero */
+  .hero {
+    padding: 140px 0 100px;
+    border-bottom: 1px solid var(--gold);
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: "";
+    position: absolute;
+    top: -20%;
+    right: -10%;
+    width: 480px;
+    height: 480px;
+    background: radial-gradient(circle, rgba(217,69,31,0.12), transparent 70%);
+    pointer-events: none;
+  }
+  .hero .wrap {
+    position: relative;
+    z-index: 2;
+  }
+  .hero h1 {
+    font-size: clamp(2.2rem, 5vw, 3.4rem);
+    line-height: 1.35;
+    max-width: 780px;
+  }
+  .hero h1 .accent { color: var(--gold); }
+  .hero p.sub {
+    margin-top: 24px;
+    color: var(--text-sub);
+    max-width: 560px;
+    font-size: 1.05rem;
+  }
+  .cta-row {
+    margin-top: 40px;
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .btn {
+    display: inline-block;
+    padding: 14px 28px;
+    font-size: 0.92rem;
+    border-radius: 4px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    transition: all 0.2s ease;
+  }
+  .btn-primary {
+    background: var(--gold);
+    color: #ffffff;
+  }
+  .btn-primary:hover { background: var(--gold-soft); }
+  .btn-outline {
+    border: 1px solid var(--border);
+    color: var(--text-main);
+  }
+  .btn-outline:hover { border-color: var(--gold); color: var(--gold); }
+
+  /* Mission */
+  .mission-body {
+    max-width: 720px;
+    color: var(--text-sub);
+  }
+  .placeholder-note {
+    display: inline-block;
+    margin-top: 16px;
+    padding: 4px 10px;
+    font-size: 0.72rem;
+    border: 1px dashed var(--gold);
+    color: var(--gold);
+    border-radius: 3px;
+  }
+
+  /* Services */
+  .service-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+    margin-top: 36px;
+  }
+  .service-card {
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 32px;
+    transition: border-color 0.2s ease;
+  }
+  .service-card:hover { border-color: var(--gold); }
+  .service-card .tag {
+    font-size: 0.72rem;
+    color: var(--gold);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .service-card h3 { font-size: 1.2rem; margin-bottom: 10px; }
+  .service-card p { color: var(--text-sub); font-size: 0.92rem; }
+  .service-card.add-more {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-sub);
+    border-style: dashed;
+    font-size: 0.85rem;
+  }
+  .disclosure-box {
+    margin-top: 40px;
+    padding: 32px;
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+  }
+  .disclosure-box p {
+    color: var(--text-sub);
+    font-size: 0.94rem;
+    margin-bottom: 16px;
+  }
+  .disclosure-box p:last-of-type { margin-bottom: 24px; }
+  .disclosure-box strong { color: var(--gold); }
+
+  /* Rep message */
+  .rep-block {
+    display: flex;
+    gap: 40px;
+    flex-wrap: wrap;
+    align-items: flex-start;
+  }
+  .rep-photo {
+    width: 180px;
+    height: 180px;
+    border-radius: 6px;
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-sub);
+    font-size: 0.8rem;
+    flex-shrink: 0;
+  }
+  .rep-text { max-width: 560px; color: var(--text-sub); }
+  .rep-text .name { color: var(--text-main); font-weight: 700; margin-top: 16px; }
+
+  /* Staff (top page) */
+  .staff-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 24px;
+    margin-top: 32px;
+  }
+  .staff-card { min-width: 0; }
+  @media (max-width: 760px) {
+    .staff-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+    .staff-card { padding: 10px; }
+    .staff-card svg { width: 60px; }
+    .staff-card h3 { font-size: 0.78rem; word-break: break-word; }
+    .staff-role { font-size: 0.62rem; word-break: break-word; }
+    .staff-meta { font-size: 0.66rem; }
+  }
+  .staff-card {
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 24px;
+    text-align: center;
+  }
+  .staff-card svg { width: 110px; height: auto; margin: 0 auto 10px; display: block; }
+  .staff-card h3 { font-size: 0.95rem; margin-bottom: 4px; }
+  .staff-role { color: var(--gold); font-size: 0.74rem; letter-spacing: 0.04em; margin-bottom: 8px; }
+  .staff-meta { color: var(--text-sub); font-size: 0.78rem; }
+
+  /* Recruit */
+  .recruit-box {
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 48px;
+  }
+  .recruit-box h2 { margin-bottom: 12px; }
+
+  /* Community / Discord */
+  .community-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 32px;
+    margin-top: 32px;
+  }
+  @media (max-width: 760px) {
+    .community-grid { grid-template-columns: 1fr; }
+  }
+  .discord-widget-slot {
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 24px;
+    min-height: 220px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-sub);
+    font-size: 0.85rem;
+    text-align: center;
+  }
+  .channel-list { list-style: none; margin-top: 16px; }
+  .channel-list li {
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 0.9rem;
+    color: var(--text-sub);
+  }
+  .channel-list li .badge {
+    display: inline-block;
+    font-size: 0.68rem;
+    padding: 2px 8px;
+    border-radius: 10px;
+    margin-right: 8px;
+  }
+  .badge.open { background: rgba(31,95,139,0.13); color: var(--accent2); }
+  .badge.private { background: rgba(217,69,31,0.10); color: var(--gold); }
+
+  /* Company profile */
+  table.profile {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 24px;
+  }
+  table.profile th, table.profile td {
+    text-align: left;
+    padding: 16px 12px;
+    border-bottom: 1px solid var(--border);
+    font-size: 0.92rem;
+  }
+  table.profile th {
+    width: 180px;
+    color: var(--text-sub);
+    font-weight: 500;
+  }
+  .tbd { color: var(--gold); font-size: 0.82rem; }
+
+  /* News */
+  .news-empty {
+    color: var(--text-sub);
+    font-size: 0.92rem;
+    padding: 32px;
+    text-align: center;
+    border: 1px dashed var(--border);
+    border-radius: 6px;
+  }
+
+  /* SNS */
+  .sns-row {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-top: 24px;
+  }
+  .sns-pill {
+    padding: 12px 22px;
+    border: 1px solid var(--border);
+    border-radius: 30px;
+    font-size: 0.88rem;
+  }
+  .sns-pill:hover { border-color: var(--gold); color: var(--gold-soft); }
+
+  footer {
+    padding: 40px 0;
+    text-align: center;
+    color: var(--text-sub);
+    font-size: 0.8rem;
+  }
+  .footer-links {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin-bottom: 16px;
+    font-size: 0.82rem;
+  }
+  .footer-links a:hover { color: var(--gold); }
+  .footer-copy { color: var(--text-sub); }
+  .page-hero { padding: 100px 0 50px; border-bottom: 1px solid var(--border); }
+  .page-hero h1 { font-size: clamp(1.8rem, 4vw, 2.6rem); margin-top: 10px; }
+  .page-content { padding: 60px 0 100px; }
+  .staff-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 28px; margin-top: 32px; }
+  .staff-card { min-width: 0; }
+  @media (max-width: 760px) {
+    .staff-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+    .staff-card { padding: 10px; }
+    .staff-card svg { width: 60px; }
+    .staff-card h3 { font-size: 0.78rem; word-break: break-word; }
+    .staff-role { font-size: 0.62rem; word-break: break-word; }
+    .staff-meta { font-size: 0.66rem; }
+    .staff-bio { font-size: 0.7rem; word-break: break-word; }
+  }
+  .staff-card { background: var(--bg-elevated); border: 1px solid var(--border); border-radius: 8px; padding: 28px; text-align: center; }
+  .staff-card svg { width: 140px; height: auto; margin: 0 auto 12px; display: block; }
+  .staff-card h3 { font-size: 1.05rem; margin-bottom: 4px; }
+  .staff-role { color: var(--gold); font-size: 0.8rem; letter-spacing: 0.05em; margin-bottom: 12px; }
+  .staff-meta { color: var(--text-sub); font-size: 0.82rem; margin-bottom: 10px; }
+  .staff-bio { color: var(--text-sub); font-size: 0.88rem; text-align: left; line-height: 1.8; }
+</style>
+</head>
+<body>
+
+<div class="lion-bg-fixed" aria-hidden="true">
+  <img src="lion-bg.png" alt="">
+</div>
+
+<header>
+  <div class="header-inner">
+    <div class="logo"><a href="#top" style="display:flex; align-items:center; gap:6px;">株式会社<span>MOZ</span></a></div>
+    <button class="nav-toggle" id="navToggle" aria-label="メニューを開く" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <nav>
+      <ul id="navMenu">
+        <li><a href="#top">HOME</a></li>
+        <li><a href="#mission">ミッション</a></li>
+        <li><a href="#services">サービス</a></li>
+        <li><a href="#staff">スタッフ紹介</a></li>
+        <li><a href="#community">コミュニティ</a></li>
+        <li><a href="preview-3d.html" target="_blank">MOZ WORLD ↗</a></li>
+        <li><a href="cabin.html" target="_blank">癒しの部屋 ↗</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<section class="page-hero">
+  <div class="wrap">
+    <div class="eyebrow">Staff</div>
+    <h1>スタッフ紹介</h1>
+  </div>
+</section>
+
+<section class="page-content">
+  <div class="wrap">
+    <p style="max-width:640px;">MOZを支えるメンバーです。写真の代わりに、統一したトーンのイラストでご紹介しています。名前・年齢・詳しいプロフィールは、確定次第、順次公開します。</p>
+    <div class="staff-grid">
+      <div class="staff-card">
+        <svg viewBox="0 0 120 230"><ellipse cx="60" cy="150" rx="55" ry="40" fill="#1a3d6b"/><circle cx="60" cy="82" r="46" fill="#f0c8a0"/><path d="M14 78 Q16 26 60 24 Q104 26 106 78 Q100 40 60 38 Q20 40 14 78 Z" fill="#241a12"/><rect x="46" y="118" width="28" height="22" fill="#d9451f"/></svg>
+        <h3>斎藤瑞樹</h3>
+        <div class="staff-role">President & CEO</div>
+        <div class="staff-meta">年齢:TBD</div>
+        <p class="staff-bio">元JA共済の営業経験を経て、株式会社MOZを設立。持ち前の行動力と巻き込み力で、AIツールを届ける会社を牽引しています。(自己紹介文はご本人確認後、正式版に差し替え予定)</p>
+      </div>
+      <div class="staff-card">
+        <svg viewBox="0 0 120 230"><ellipse cx="60" cy="150" rx="55" ry="40" fill="#0e8a7a"/><circle cx="60" cy="82" r="46" fill="#f0c8a0"/><path d="M15 70 Q10 20 60 18 Q112 22 106 74 L98 66 Q95 34 60 32 Q28 34 24 68 Z" fill="#6b4a2a"/><path d="M18 60 Q10 90 22 108 L30 92 Z" fill="#6b4a2a"/><rect x="44" y="120" width="32" height="18" rx="4" fill="#e8c34a"/></svg>
+        <h3>藤田銀也</h3>
+        <div class="staff-role">Vice President</div>
+        <div class="staff-meta">年齢:TBD</div>
+        <p class="staff-bio">趣味は釣り。じっくりと物事に向き合う姿勢で、代表を支えています。(自己紹介文はご本人確認後、正式版に差し替え予定)</p>
+      </div>
+      <div class="staff-card">
+        <svg viewBox="0 0 120 230"><ellipse cx="60" cy="150" rx="55" ry="40" fill="#5a1f1f"/><circle cx="60" cy="82" r="46" fill="#f0c8a0"/><path d="M18 62 Q60 44 102 62 Q100 50 60 48 Q20 50 18 62 Z" fill="#9a9a9a"/><rect x="42" y="118" width="36" height="20" fill="#1a3d6b"/></svg>
+        <h3>TBD</h3>
+        <div class="staff-role">Senior Managing Director</div>
+        <div class="staff-meta">年齢:TBD</div>
+        <p class="staff-bio">組織運営の要として、事業全体を俯瞰しながら日々の意思決定を支えています。(自己紹介文はご本人確認後、正式版に差し替え予定)</p>
+      </div>
+      <div class="staff-card">
+        <svg viewBox="0 0 120 230"><ellipse cx="60" cy="150" rx="55" ry="40" fill="#2b6cb0"/><circle cx="60" cy="82" r="46" fill="#f0c8a0"/><path d="M13 76 Q8 20 60 16 Q114 20 107 78 Q112 55 100 42 Q90 60 78 40 Q68 58 55 38 Q42 58 30 42 Q20 56 13 76 Z" fill="#161616"/><rect x="46" y="118" width="28" height="22" fill="#0e8a7a"/></svg>
+        <h3>長谷川リキ</h3>
+        <div class="staff-role">Engineer</div>
+        <div class="staff-meta">年齢:TBD</div>
+        <p class="staff-bio">地方大手企業のご出身。確かな技術力で、イデミター・レゾナ(仮)の開発を担っています。(自己紹介文はご本人確認後、正式版に差し替え予定)</p>
+      </div>
+      <div class="staff-card">
+        <svg viewBox="0 0 120 230"><ellipse cx="60" cy="150" rx="55" ry="40" fill="#4a4a4a"/><circle cx="60" cy="82" r="46" fill="#f0c8a0"/><path d="M15 66 Q12 22 60 20 Q108 22 105 66 Q100 36 60 34 Q20 36 15 66 Z" fill="#b8b8b8"/><path d="M12 66 Q8 100 18 116 L26 98 Z" fill="#b8b8b8"/><path d="M108 66 Q112 100 102 116 L94 98 Z" fill="#b8b8b8"/><rect x="44" y="118" width="32" height="20" fill="#d9451f"/></svg>
+        <h3>TBD</h3>
+        <div class="staff-role">Outside Director</div>
+        <div class="staff-meta">年齢:TBD</div>
+        <p class="staff-bio">社外の視点から、MOZの意思決定に客観性と信頼性を加えています。(自己紹介文はご本人確認後、正式版に差し替え予定)</p>
+      </div>
+      <div class="staff-card">
+        <svg viewBox="0 0 120 230"><ellipse cx="60" cy="150" rx="55" ry="40" fill="#8a2f4a"/><circle cx="60" cy="82" r="46" fill="#f0c8a0"/><path d="M16 74 Q14 24 60 22 Q106 24 104 74 Q100 42 60 40 Q20 42 16 74 Z" fill="#3d2b1a"/><path d="M14 70 Q10 96 20 110 L28 96 Z" fill="#3d2b1a"/><path d="M106 70 Q110 96 100 110 L92 96 Z" fill="#3d2b1a"/><rect x="45" y="118" width="30" height="20" fill="#f5f5f5"/></svg>
+        <h3>TBD</h3>
+        <div class="staff-role">Legal Counsel</div>
+        <div class="staff-meta">年齢:TBD</div>
+        <p class="staff-bio">法務の専門知識で、MOZの事業活動を静かに、しかし確実に支えています。(自己紹介文はご本人確認後、正式版に差し替え予定)</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-links">
+      <a href="about.html">会社概要</a>
+      <a href="history.html">会社沿革</a>
+      <a href="index.html#representative">代表挨拶</a>
+      <a href="index.html#recruit">採用</a>
+      <a href="staff.html">スタッフ紹介</a>
+      <a href="privacy.html">プライバシーポリシー</a>
+      <a href="terms.html">利用規約</a>
+    </div>
+    <div class="footer-copy">&copy; 2026 MOZ Inc. All rights reserved.</div>
+  </div>
+</footer>
+
+<script>
+  (function() {
+    var toggle = document.getElementById('navToggle');
+    var menu = document.getElementById('navMenu');
+    if (!toggle || !menu) return;
+
+    function closeMenu() {
+      menu.classList.remove('open');
+      toggle.classList.remove('open');
+      toggle.setAttribute('aria-expanded', 'false');
+    }
+
+    toggle.addEventListener('click', function() {
+      var isOpen = menu.classList.toggle('open');
+      toggle.classList.toggle('open', isOpen);
+      toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    });
+
+    menu.querySelectorAll('a').forEach(function(link) {
+      link.addEventListener('click', closeMenu);
+    });
+  })();
+</script>
+
+</body>
+</html>
