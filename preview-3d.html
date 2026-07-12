@@ -116,17 +116,10 @@
   const coreGroup = new THREE.Group();
   scene.add(coreGroup);
 
-  // 地球本体:NASA EPICカメラの実写画像をテクスチャとして使用
-  const textureLoader = new THREE.TextureLoader();
-  const earthTexture = textureLoader.load('earth-texture.jpg');
-  earthTexture.colorSpace = THREE.SRGBColorSpace;
-  earthTexture.wrapS = THREE.RepeatWrapping;
-  earthTexture.wrapT = THREE.ClampToEdgeWrapping;
-  earthTexture.anisotropy = 4;
-
+  // 地球本体:画像テクスチャは使わず、単色+雲の斑模様でイメージ表現
   const coreGeo = new THREE.SphereGeometry(1.6, 48, 48);
   const coreMat = new THREE.MeshStandardMaterial({
-    map: earthTexture,
+    color: 0x235BC8,
     metalness: 0.25,
     roughness: 0.7
   });
@@ -180,7 +173,7 @@
   const cloudMat = new THREE.MeshStandardMaterial({
     map: cloudTexture,
     transparent: true,
-    opacity: 0.18,
+    opacity: 0.55,
     depthWrite: false
   });
   const cloudMesh = new THREE.Mesh(cloudGeo, cloudMat);
