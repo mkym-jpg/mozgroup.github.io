@@ -9,7 +9,7 @@
     margin: 0;
     padding: 0;
     overflow: hidden;
-    background: #0d1210;
+    background: #000000;
     font-family: "Hiragino Sans", "Yu Gothic", sans-serif;
     height: 100%;
   }
@@ -89,12 +89,13 @@
   const container = document.getElementById('scene');
 
   const scene = new THREE.Scene();
-  scene.fog = new THREE.FogExp2(0x0d1210, 0.045);
+  scene.fog = new THREE.FogExp2(0x000000, 0.02);
 
   const camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 200);
   camera.position.set(0, 1.2, 9);
 
   const renderer = new THREE.WebGLRenderer({ antialias: true });
+  renderer.setClearColor(0x000000, 1);
   renderer.setSize(window.innerWidth, window.innerHeight);
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
   container.appendChild(renderer.domElement);
@@ -229,7 +230,7 @@
   const raycaster = new THREE.Raycaster();
   const mousePos = new THREE.Vector2();
   const labelEl = document.createElement('div');
-  labelEl.style.cssText = 'position:fixed;pointer-events:none;padding:6px 12px;background:rgba(20,26,23,0.85);color:#e7e2d6;font-family:"Hiragino Sans","Yu Gothic",sans-serif;font-size:0.78rem;letter-spacing:0.04em;border:1px solid rgba(224,169,120,0.4);border-radius:4px;opacity:0;transition:opacity 0.15s ease;z-index:20;white-space:nowrap;';
+  labelEl.style.cssText = 'position:fixed;pointer-events:none;padding:8px 16px;background:rgba(20,26,23,0.9);color:#e7e2d6;font-family:"Hiragino Sans","Yu Gothic",sans-serif;font-size:1.15rem;font-weight:600;letter-spacing:0.04em;border:1px solid rgba(224,169,120,0.4);border-radius:6px;opacity:0;transition:opacity 0.15s ease;z-index:20;white-space:nowrap;';
   document.body.appendChild(labelEl);
 
   window.addEventListener('mousemove', (e) => {
@@ -260,7 +261,7 @@
       labelEl.style.top = (y - 30) + 'px';
       labelEl.style.opacity = '1';
       clearTimeout(labelEl._hideTimer);
-      labelEl._hideTimer = setTimeout(() => { labelEl.style.opacity = '0'; }, 1800);
+      labelEl._hideTimer = setTimeout(() => { labelEl.style.opacity = '0'; }, 1000);
     }
   }
   renderer.domElement.addEventListener('touchstart', (e) => {
