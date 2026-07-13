@@ -243,6 +243,28 @@
     max-width: 780px;
   }
   .hero h1 .accent { color: var(--gold); }
+
+  /* Typewriter */
+  .tw-line {
+    display: inline-block;
+    overflow: hidden;
+    white-space: nowrap;
+    vertical-align: bottom;
+  }
+  .tw-line.tw-active {
+    border-right: 2px solid var(--gold);
+  }
+
+  /* Scroll reveal */
+  .reveal {
+    opacity: 0;
+    transform: translateY(18px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
   .hero p.sub {
     margin-top: 24px;
     color: var(--text-sub);
@@ -551,7 +573,7 @@
 <section class="hero" id="top">
   <div class="wrap">
     <div class="eyebrow">MOZ Inc.</div>
-    <h1>「ありがとう」<br>　<span class="accent">その先へ。</span></h1>
+    <h1><span class="tw-line" id="twHero1">「ありがとう」</span><br>　<span class="tw-line accent" id="twHero2">その先へ。</span></h1>
     <p class="sub">
       私たちはAIツールを通じて出会った方の人生を変えます。
     </p>
@@ -569,8 +591,8 @@
     <div class="eyebrow">Mission</div>
     <h2>私たちが目指すもの</h2>
     <p class="mission-body">
-      一つのツールが、一人の悩みを解き、<br>
-      一つの出会いが、一つの人生を前へ進める。<br><br>
+      <span class="tw-line" id="twMission1">一つのツールが、一人の悩みを解き、</span><br>
+      <span class="tw-line" id="twMission2">一つの出会いが、一つの人生を前へ進める。</span><br><br>
       MOZという場所で交わった人が、
       「あの時、MOZに出会えてよかった」と思える瞬間を、
       これからも増やし続けていきます。
@@ -817,6 +839,78 @@
     menu.querySelectorAll('a').forEach(function(link) {
       link.addEventListener('click', closeMenu);
     });
+  })();
+
+  // ===== タイプライター =====
+  (function() {
+    function typeLine(el, duration, callback) {
+      if (!el) { if (callback) callback(); return; }
+      const full = el.scrollWidth;
+      el.style.width = '0px';
+      el.classList.add('tw-active');
+      const start = performance.now();
+      function step(now) {
+        const t = Math.min(1, (now - start) / duration);
+        el.style.width = (full * t) + 'px';
+        if (t < 1) {
+          requestAnimationFrame(step);
+        } else {
+          el.classList.remove('tw-active');
+          el.style.width = '';
+          if (callback) callback();
+        }
+      }
+      requestAnimationFrame(step);
+    }
+
+    // ヒーロー見出し:ページ読み込み後すぐに開始
+    window.addEventListener('load', function() {
+      const h1 = document.getElementById('twHero1');
+      const h2 = document.getElementById('twHero2');
+      setTimeout(function() {
+        typeLine(h1, 700, function() {
+          typeLine(h2, 600);
+        });
+      }, 200);
+    });
+
+    // ミッション本文:スクロールで画面に入ったら開始
+    const m1 = document.getElementById('twMission1');
+    const m2 = document.getElementById('twMission2');
+    if (m1 && m2) {
+      let missionStarted = false;
+      const missionObserver = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting && !missionStarted) {
+            missionStarted = true;
+            typeLine(m1, 900, function() {
+              typeLine(m2, 900);
+            });
+            missionObserver.disconnect();
+          }
+        });
+      }, { threshold: 0.4 });
+      missionObserver.observe(m1);
+    }
+  })();
+
+  // ===== スクロール連動フェードイン =====
+  (function() {
+    const targets = document.querySelectorAll(
+      '.eyebrow, h2, p.lead, .service-grid, .rep-block, .recruit-box, .community-grid, table.profile, .staff-grid, .sns-row, .disclosure-box, .hero p.sub, .hero .cta-row'
+    );
+    targets.forEach(function(el) { el.classList.add('reveal'); });
+
+    const revealObserver = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+
+    targets.forEach(function(el) { revealObserver.observe(el); });
   })();
 </script>
 
