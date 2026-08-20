@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>会社概要 | 株式会社moz</title>
+<title>特定商取引法に基づく表記 | 株式会社moz</title>
 <style>
   :root {
     --bg: #eef5f9;
@@ -20,7 +20,7 @@
     --max-width: 1080px;
   }
 
-  html { scroll-behavior: smooth; }
+  html { scroll-behavior: smooth; scroll-padding-top: 90px; }
   * { box-sizing: border-box; margin: 0; padding: 0; }
 
   .lion-bg-fixed {
@@ -37,6 +37,7 @@
   .lion-bg-fixed img {
     width: min(1100px, 82vw);
     height: auto;
+    filter: drop-shadow(0 18px 30px rgba(22,35,46,0.18));
   }
   @media (max-width: 900px) {
     .lion-bg-fixed {
@@ -47,6 +48,7 @@
     .lion-bg-fixed img {
       width: 96vw;
       max-width: none;
+      filter: none;
     }
   }
 
@@ -74,6 +76,7 @@
     background: rgba(238,245,249,0.92);
     backdrop-filter: blur(8px);
     border-bottom: 1px solid var(--gold);
+    box-shadow: 0 4px 14px rgba(22,35,46,0.06);
   }
   .header-inner {
     max-width: var(--max-width);
@@ -214,16 +217,6 @@
     position: relative;
     overflow: hidden;
   }
-  .hero::before {
-    content: "";
-    position: absolute;
-    top: -20%;
-    right: -10%;
-    width: 480px;
-    height: 480px;
-    background: radial-gradient(circle, rgba(217,69,31,0.12), transparent 70%);
-    pointer-events: none;
-  }
   .hero .wrap {
     position: relative;
     z-index: 2;
@@ -234,6 +227,28 @@
     max-width: 780px;
   }
   .hero h1 .accent { color: var(--gold); }
+
+  /* Typewriter */
+  .tw-line {
+    display: inline-block;
+    overflow: hidden;
+    white-space: nowrap;
+    vertical-align: bottom;
+  }
+  .tw-line.tw-active {
+    border-right: 2px solid var(--gold);
+  }
+
+  /* Scroll reveal */
+  .reveal {
+    opacity: 0;
+    transform: translateY(18px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
   .hero p.sub {
     margin-top: 24px;
     color: var(--text-sub);
@@ -258,8 +273,13 @@
   .btn-primary {
     background: var(--gold);
     color: #ffffff;
+    box-shadow: 0 3px 8px rgba(217,69,31,0.25), 0 8px 18px rgba(217,69,31,0.15);
   }
-  .btn-primary:hover { background: var(--gold-soft); }
+  .btn-primary:hover {
+    background: var(--gold-soft);
+    box-shadow: 0 4px 10px rgba(217,69,31,0.3), 0 10px 22px rgba(217,69,31,0.18);
+    transform: translateY(-1px);
+  }
   .btn-outline {
     border: 1px solid var(--border);
     color: var(--text-main);
@@ -293,9 +313,14 @@
     border: 1px solid var(--border);
     border-radius: 6px;
     padding: 32px;
-    transition: border-color 0.2s ease;
+    box-shadow: 0 2px 6px rgba(22,35,46,0.06), 0 10px 24px rgba(22,35,46,0.08);
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
   }
-  .service-card:hover { border-color: var(--gold); }
+  .service-card:hover {
+    border-color: var(--gold);
+    box-shadow: 0 6px 14px rgba(22,35,46,0.10), 0 18px 34px rgba(22,35,46,0.12);
+    transform: translateY(-2px);
+  }
   .service-card .tag {
     font-size: 0.72rem;
     color: var(--gold);
@@ -319,6 +344,7 @@
     background: var(--bg-elevated);
     border: 1px solid var(--border);
     border-radius: 8px;
+    box-shadow: 0 3px 8px rgba(22,35,46,0.06), 0 14px 30px rgba(22,35,46,0.08);
   }
   .disclosure-box p {
     color: var(--text-sub);
@@ -341,6 +367,7 @@
     border-radius: 6px;
     background: var(--bg-elevated);
     border: 1px solid var(--border);
+    box-shadow: 0 8px 20px rgba(22,35,46,0.10);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -376,6 +403,12 @@
     border-radius: 8px;
     padding: 24px;
     text-align: center;
+    box-shadow: 0 2px 6px rgba(22,35,46,0.05), 0 8px 18px rgba(22,35,46,0.07);
+    transition: box-shadow 0.2s ease, transform 0.2s ease;
+  }
+  .staff-card:hover {
+    box-shadow: 0 6px 14px rgba(22,35,46,0.10), 0 16px 30px rgba(22,35,46,0.10);
+    transform: translateY(-2px);
   }
   .staff-card svg { width: 110px; height: auto; margin: 0 auto 10px; display: block; }
   .staff-card h3 { font-size: 0.95rem; margin-bottom: 4px; }
@@ -388,6 +421,7 @@
     border: 1px solid var(--border);
     border-radius: 8px;
     padding: 48px;
+    box-shadow: 0 3px 8px rgba(22,35,46,0.06), 0 14px 30px rgba(22,35,46,0.09);
   }
   .recruit-box h2 { margin-bottom: 12px; }
 
@@ -518,17 +552,17 @@
 
 <header>
   <div class="header-inner">
-    <div class="logo"><a href="index.html#top" style="display:flex; align-items:center;"><img src="moz-logo.png" alt="株式会社moz"></a></div>
+    <div class="logo"><a href="#top" style="display:flex; align-items:center;"><img src="moz-logo.png" alt="株式会社moz"></a></div>
     <button class="nav-toggle" id="navToggle" aria-label="メニューを開く" aria-expanded="false">
       <span></span><span></span><span></span>
     </button>
     <nav>
       <ul id="navMenu">
-        <li><a href="index.html#top">HOME</a></li>
-        <li><a href="index.html#mission">ミッション</a></li>
-        <li><a href="index.html#services">サービス</a></li>
-        <li><a href="index.html#staff">スタッフ紹介</a></li>
-        <li><a href="index.html#community">コミュニティ</a></li>
+        <li><a href="#top">HOME</a></li>
+        <li><a href="#mission">ミッション</a></li>
+        <li><a href="#services">サービス</a></li>
+        <li><a href="#staff">スタッフ紹介</a></li>
+        <li><a href="#community">コミュニティ</a></li>
         <li><a href="preview-3d.html" target="_blank">MOZ WORLD ↗</a></li>
         <li><a href="cabin.html" target="_blank">癒しの部屋 ↗</a></li>
       </ul>
@@ -538,22 +572,44 @@
 
 <section class="page-hero">
   <div class="wrap">
-    <div class="eyebrow">Company</div>
-    <h1>会社概要</h1>
+    <div class="eyebrow">Legal</div>
+    <h1>特定商取引法に基づく表記</h1>
   </div>
 </section>
 
 <section class="page-content">
   <div class="wrap">
     <table class="profile">
-      <tr><th>商号</th><td>株式会社moz</td></tr>
+      <tr><th>販売業者</th><td>株式会社moz</td></tr>
+      <tr><th>運営統括責任者</th><td>代表取締役 斎藤瑞樹</td></tr>
       <tr><th>所在地</th><td>栃木県宇都宮市鐺山町1924-2</td></tr>
-      <tr><th>設立</th><td>2026年4月</td></tr>
-      <tr><th>代表者</th><td>斎藤瑞樹</td></tr>
-      <tr><th>資本金</th><td>200万円</td></tr>
-      <tr><th>事業内容</th><td>SNSコンサルティング業務、セミナー運営、AIツールの提供</td></tr>
-      <tr><th>お問い合わせ</th><td><a href="mailto:contact@moz-group.com">contact@moz-group.com</a></td></tr>
+      <tr><th>電話番号</th><td>お客様からご請求があった場合には、遅滞なく開示いたします。まずは下記メールアドレスまでご連絡ください。</td></tr>
+      <tr><th>メールアドレス</th><td><a href="mailto:contact@moz-group.com">contact@moz-group.com</a></td></tr>
+      <tr><th>提供役務の内容</th><td>
+        <strong>10万円コース</strong><br>
+        ・SNSアカウントを運用したマーケティングに関するグループコンサルティングサービスの提供<br>
+        ・SNSマーケティングセミナー(講演)の開催<br><br>
+        <strong>50万円コース</strong><br>
+        ・SNSアカウントを運用したマーケティングにおける、営業方法に関する個別コンサルティングサービスの提供<br>
+        ・グループコンサルティングサービスの提供<br>
+        ・SNSマーケティングセミナー(講演)の開催<br>
+        ・プラットフォーム「note」を利用した、集客・ブランディング・収益化を目指す専門的戦略立案/運用改善アドバイスを行う個別サポートサービスの提供<br><br>
+        いずれのコースも、付随してAIツール「Idemitor」を補助的にご利用いただけます。
+      </td></tr>
+      <tr><th>販売価格</th><td>10万円コース:金10万円(税込)<br>50万円コース:金50万円(税込)</td></tr>
+      <tr><th>役務の対価以外に必要な料金</th><td>銀行振込手数料はお客様のご負担となります。なお、当社がお客様のご要望により出張する場合の交通費・宿泊費等の実費は、業務委託料とは別にご負担いただきます。</td></tr>
+      <tr><th>お支払い方法</th><td>銀行振込、又は当社が承諾した場合に限りSquareが提供するオンラインクレジットカード決済<br><span style="font-size:0.85rem; color:var(--text-sub);">お支払いに関するお問い合わせ:<a href="mailto:finance@moz-group.com">finance@moz-group.com</a></span></td></tr>
+      <tr><th>お支払い時期</th><td>契約締結日から10日以内</td></tr>
+      <tr><th>役務の提供時期</th><td>契約締結時から順次提供(契約期間1年間。期間満了30日前までにいずれかの当事者から終了の申出がない限り自動更新)</td></tr>
+      <tr><th>提供方法</th><td>テキストベース又はオンライン(LINE通話、Discord、Xスペース、Zoom等)に限ります。対面(オフライン)での提供は行いません。</td></tr>
+      <tr><th>返品・キャンセルについて</th><td>役務の性質上、提供開始後のお客様のご都合による返金は原則として承っておりません。解約をご希望の場合は、解約日の1か月前までに書面にてご通知いただくことで、将来に向かって契約を解約することができます(この場合、既払いの料金はご返金いたしかねます)。詳細は契約締結時に交付する契約書面をご確認ください。</td></tr>
+      <tr><th>動作環境</th><td>本サービスのご利用には、インターネット環境及びLINE、Discord、Zoom等の通信アプリケーションのご利用環境が必要です。</td></tr>
     </table>
+
+    <p style="margin-top:32px; padding-top:20px; border-top:1px solid var(--border); color:var(--text-sub); font-size:0.85rem;">
+      制定日:2026年8月20日<br>
+      最終更新日:2026年8月20日
+    </p>
   </div>
 </section>
 
@@ -594,6 +650,78 @@
     menu.querySelectorAll('a').forEach(function(link) {
       link.addEventListener('click', closeMenu);
     });
+  })();
+
+  // ===== タイプライター =====
+  (function() {
+    function typeLine(el, duration, callback) {
+      if (!el) { if (callback) callback(); return; }
+      const full = el.scrollWidth;
+      el.style.width = '0px';
+      el.classList.add('tw-active');
+      const start = performance.now();
+      function step(now) {
+        const t = Math.min(1, (now - start) / duration);
+        el.style.width = (full * t) + 'px';
+        if (t < 1) {
+          requestAnimationFrame(step);
+        } else {
+          el.classList.remove('tw-active');
+          el.style.width = '';
+          if (callback) callback();
+        }
+      }
+      requestAnimationFrame(step);
+    }
+
+    // ヒーロー見出し:ページ読み込み後すぐに開始
+    window.addEventListener('load', function() {
+      const h1 = document.getElementById('twHero1');
+      const h2 = document.getElementById('twHero2');
+      setTimeout(function() {
+        typeLine(h1, 700, function() {
+          typeLine(h2, 600);
+        });
+      }, 200);
+    });
+
+    // ミッション本文:スクロールで画面に入ったら開始
+    const m1 = document.getElementById('twMission1');
+    const m2 = document.getElementById('twMission2');
+    if (m1 && m2) {
+      let missionStarted = false;
+      const missionObserver = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting && !missionStarted) {
+            missionStarted = true;
+            typeLine(m1, 900, function() {
+              typeLine(m2, 900);
+            });
+            missionObserver.disconnect();
+          }
+        });
+      }, { threshold: 0.4 });
+      missionObserver.observe(m1);
+    }
+  })();
+
+  // ===== スクロール連動フェードイン =====
+  (function() {
+    const targets = document.querySelectorAll(
+      '.eyebrow, h2, p.lead, .service-grid, .rep-block, .recruit-box, .community-grid, table.profile, .staff-grid, .sns-row, .disclosure-box, .hero p.sub, .hero .cta-row'
+    );
+    targets.forEach(function(el) { el.classList.add('reveal'); });
+
+    const revealObserver = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+
+    targets.forEach(function(el) { revealObserver.observe(el); });
   })();
 </script>
 

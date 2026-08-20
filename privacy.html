@@ -20,7 +20,7 @@
     --max-width: 1080px;
   }
 
-  html { scroll-behavior: smooth; }
+  html { scroll-behavior: smooth; scroll-padding-top: 90px; }
   * { box-sizing: border-box; margin: 0; padding: 0; }
 
   .lion-bg-fixed {
@@ -37,6 +37,7 @@
   .lion-bg-fixed img {
     width: min(1100px, 82vw);
     height: auto;
+    filter: drop-shadow(0 18px 30px rgba(22,35,46,0.18));
   }
   @media (max-width: 900px) {
     .lion-bg-fixed {
@@ -47,6 +48,7 @@
     .lion-bg-fixed img {
       width: 96vw;
       max-width: none;
+      filter: none;
     }
   }
 
@@ -74,6 +76,7 @@
     background: rgba(238,245,249,0.92);
     backdrop-filter: blur(8px);
     border-bottom: 1px solid var(--gold);
+    box-shadow: 0 4px 14px rgba(22,35,46,0.06);
   }
   .header-inner {
     max-width: var(--max-width);
@@ -214,16 +217,6 @@
     position: relative;
     overflow: hidden;
   }
-  .hero::before {
-    content: "";
-    position: absolute;
-    top: -20%;
-    right: -10%;
-    width: 480px;
-    height: 480px;
-    background: radial-gradient(circle, rgba(217,69,31,0.12), transparent 70%);
-    pointer-events: none;
-  }
   .hero .wrap {
     position: relative;
     z-index: 2;
@@ -234,6 +227,28 @@
     max-width: 780px;
   }
   .hero h1 .accent { color: var(--gold); }
+
+  /* Typewriter */
+  .tw-line {
+    display: inline-block;
+    overflow: hidden;
+    white-space: nowrap;
+    vertical-align: bottom;
+  }
+  .tw-line.tw-active {
+    border-right: 2px solid var(--gold);
+  }
+
+  /* Scroll reveal */
+  .reveal {
+    opacity: 0;
+    transform: translateY(18px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
   .hero p.sub {
     margin-top: 24px;
     color: var(--text-sub);
@@ -258,8 +273,13 @@
   .btn-primary {
     background: var(--gold);
     color: #ffffff;
+    box-shadow: 0 3px 8px rgba(217,69,31,0.25), 0 8px 18px rgba(217,69,31,0.15);
   }
-  .btn-primary:hover { background: var(--gold-soft); }
+  .btn-primary:hover {
+    background: var(--gold-soft);
+    box-shadow: 0 4px 10px rgba(217,69,31,0.3), 0 10px 22px rgba(217,69,31,0.18);
+    transform: translateY(-1px);
+  }
   .btn-outline {
     border: 1px solid var(--border);
     color: var(--text-main);
@@ -293,9 +313,14 @@
     border: 1px solid var(--border);
     border-radius: 6px;
     padding: 32px;
-    transition: border-color 0.2s ease;
+    box-shadow: 0 2px 6px rgba(22,35,46,0.06), 0 10px 24px rgba(22,35,46,0.08);
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
   }
-  .service-card:hover { border-color: var(--gold); }
+  .service-card:hover {
+    border-color: var(--gold);
+    box-shadow: 0 6px 14px rgba(22,35,46,0.10), 0 18px 34px rgba(22,35,46,0.12);
+    transform: translateY(-2px);
+  }
   .service-card .tag {
     font-size: 0.72rem;
     color: var(--gold);
@@ -319,6 +344,7 @@
     background: var(--bg-elevated);
     border: 1px solid var(--border);
     border-radius: 8px;
+    box-shadow: 0 3px 8px rgba(22,35,46,0.06), 0 14px 30px rgba(22,35,46,0.08);
   }
   .disclosure-box p {
     color: var(--text-sub);
@@ -341,6 +367,7 @@
     border-radius: 6px;
     background: var(--bg-elevated);
     border: 1px solid var(--border);
+    box-shadow: 0 8px 20px rgba(22,35,46,0.10);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -376,6 +403,12 @@
     border-radius: 8px;
     padding: 24px;
     text-align: center;
+    box-shadow: 0 2px 6px rgba(22,35,46,0.05), 0 8px 18px rgba(22,35,46,0.07);
+    transition: box-shadow 0.2s ease, transform 0.2s ease;
+  }
+  .staff-card:hover {
+    box-shadow: 0 6px 14px rgba(22,35,46,0.10), 0 16px 30px rgba(22,35,46,0.10);
+    transform: translateY(-2px);
   }
   .staff-card svg { width: 110px; height: auto; margin: 0 auto 10px; display: block; }
   .staff-card h3 { font-size: 0.95rem; margin-bottom: 4px; }
@@ -388,6 +421,7 @@
     border: 1px solid var(--border);
     border-radius: 8px;
     padding: 48px;
+    box-shadow: 0 3px 8px rgba(22,35,46,0.06), 0 14px 30px rgba(22,35,46,0.09);
   }
   .recruit-box h2 { margin-bottom: 12px; }
 
@@ -518,17 +552,17 @@
 
 <header>
   <div class="header-inner">
-    <div class="logo"><a href="index.html#top" style="display:flex; align-items:center;"><img src="moz-logo.png" alt="株式会社moz"></a></div>
+    <div class="logo"><a href="#top" style="display:flex; align-items:center;"><img src="moz-logo.png" alt="株式会社moz"></a></div>
     <button class="nav-toggle" id="navToggle" aria-label="メニューを開く" aria-expanded="false">
       <span></span><span></span><span></span>
     </button>
     <nav>
       <ul id="navMenu">
-        <li><a href="index.html#top">HOME</a></li>
-        <li><a href="index.html#mission">ミッション</a></li>
-        <li><a href="index.html#services">サービス</a></li>
-        <li><a href="index.html#staff">スタッフ紹介</a></li>
-        <li><a href="index.html#community">コミュニティ</a></li>
+        <li><a href="#top">HOME</a></li>
+        <li><a href="#mission">ミッション</a></li>
+        <li><a href="#services">サービス</a></li>
+        <li><a href="#staff">スタッフ紹介</a></li>
+        <li><a href="#community">コミュニティ</a></li>
         <li><a href="preview-3d.html" target="_blank">MOZ WORLD ↗</a></li>
         <li><a href="cabin.html" target="_blank">癒しの部屋 ↗</a></li>
       </ul>
@@ -545,23 +579,74 @@
 
 <section class="page-content">
   <div class="wrap">
-    <h2>1. 取得する情報の範囲</h2>
-    <p>当社は、当社のコミュニティ(Discord等)にご参加いただき、共に業務を行う仲間となる方に限り、業務上必要な最低限の個人情報(氏名、連絡先、SNSアカウント等)を取得します。当社サイトを一般に閲覧されるお客様の個人情報は、収集いたしません。</p>
-    <h2>2. 利用目的</h2>
-    <p>取得した情報は、コミュニティ運営、業務連絡、契約手続きなど、当社との関係を維持・遂行するために必要な範囲でのみ利用します。</p>
-    <h2>3. カジュアル面談・通話について</h2>
-    <p>代表者等とのカジュアルな面談・通話(Discordボイスチャット、Google Meet等)について、内容を録音する場合があります。録音データは、社内での情報共有・品質向上の目的にのみ利用し、ご本人の同意なく目的外に利用することはありません。</p>
-    <h2>4. 第三者提供</h2>
-    <p>法令に基づく場合を除き、取得した個人情報を本人の同意なく第三者に提供することはありません。</p>
-    <h2>5. 安全管理</h2>
-    <p>取得した個人情報は、漏洩・滅失・毀損の防止のため、適切な安全管理措置を講じます。</p>
-    <h2>6. 開示・訂正・削除等のご請求</h2>
-    <p>ご本人からの個人情報の開示、訂正、削除等のご請求には、法令に基づき適切に対応します。</p>
-    <h2>7. お問い合わせ窓口</h2>
-    <p>本ポリシーに関するお問い合わせは、当社お問い合わせ窓口までご連絡ください。</p>
-    <h2>8. 改定</h2>
-    <p>本ポリシーは、必要に応じて改定することがあります。改定後の内容は、本サイトに掲載した時点から効力を生じるものとします。</p>
-    <p style="margin-top:24px;">制定日:(TBD)</p>
+    <p>株式会社moz(以下「当社」という。)は、当社が運営するウェブサイト(https://moz-group.com/、以下「本サイト」という。)、SNSアカウントを通じた情報発信及びお問い合わせ対応、並びにSNSコンサルティング業務(グループ・個別コンサルティング、セミナーの開催、noteを利用した個別サポート及び付随するAIツール「Idemitor＜イデミター＞」の提供を含みます。以下総称して「本サービス」という。)の提供にあたり取得するお客様の個人情報について、以下のとおりプライバシーポリシー(以下「本ポリシー」という。)を定め、これを遵守します。</p>
+
+    <h2>1. 事業者情報</h2>
+    <ul class="plain">
+      <li>商号:株式会社moz</li>
+      <li>代表者:代表取締役 斎藤瑞樹</li>
+      <li>所在地:栃木県宇都宮市鐺山町1924-2</li>
+      <li>連絡先:<a href="mailto:contact@moz-group.com">contact@moz-group.com</a></li>
+    </ul>
+
+    <h2>2. 取得する個人情報の項目</h2>
+    <p>当社は、本サービスの提供にあたり、以下の情報を取得することがあります。</p>
+    <ul class="plain">
+      <li>氏名、住所、電話番号、メールアドレス等の連絡先情報</li>
+      <li>SNS(X、Threads等)のアカウント名及びダイレクトメッセージでのやり取りの内容</li>
+      <li>LINE及びDiscordの利用者ID並びにコミュニティ内でのやり取りの内容</li>
+      <li>SNSコンサルティング業務委託契約に関する契約情報、お支払いに関する情報(銀行口座情報を含みます。なお、Squareを利用したクレジットカード決済において、カード番号そのものは決済代行事業者が管理し、当社は保持しません。)</li>
+      <li>本サイトの閲覧履歴、アクセスログ、Cookie等の情報</li>
+    </ul>
+
+    <h2>3. 個人情報を取得する方法</h2>
+    <ul class="plain">
+      <li>SNS(X、Threads、その他SNS)上のダイレクトメッセージを通じたお問い合わせ</li>
+      <li>本サイトのお問い合わせフォーム及び資料ダウンロードフォーム</li>
+      <li>LINE、Discord、Google Meet、Zoom等を通じたご連絡・ご相談</li>
+      <li>SNSコンサルティング業務委託契約に関するご契約手続き</li>
+    </ul>
+
+    <h2>4. 個人情報を利用する目的</h2>
+    <ul class="plain">
+      <li>本サービスに関するご案内、ご相談への対応、契約の締結及び履行のため</li>
+      <li>SNSコンサルティング業務の提供のため</li>
+      <li>料金の請求及び決済手続きのため</li>
+      <li>Discordコミュニティの運営及び参加者への連絡のため</li>
+      <li>本サービスに関する重要なお知らせの通知のため</li>
+      <li>本サイトの利用状況の分析及び改善のため</li>
+      <li>法令に基づく対応のため</li>
+    </ul>
+
+    <h2>5. 個人情報の第三者提供</h2>
+    <p>当社は、以下のいずれかに該当する場合を除き、あらかじめお客様の同意を得ることなく、個人情報を第三者に提供しません。</p>
+    <ul class="plain">
+      <li>法令に基づく場合</li>
+      <li>人の生命、身体又は財産の保護のために必要がある場合であって、本人の同意を得ることが困難であるとき</li>
+      <li>決済代行事業者(Square等)その他本サービスの提供に必要な範囲で業務を委託する第三者に取扱いを委託する場合</li>
+    </ul>
+
+    <h2>6. 個人情報の安全管理措置</h2>
+    <p>当社は、取得した個人情報の漏えい、滅失又は毀損の防止その他の安全管理のために、必要かつ適切な措置を講じます。</p>
+
+    <h2>7. 個人情報の開示・訂正・利用停止等の請求</h2>
+    <p>お客様は、当社が保有する自己の個人情報について、開示、訂正、追加、削除又は利用停止等を求めることができます。ご希望の場合は、下記9項のお問い合わせ窓口までご連絡ください。本人確認をさせていただいたうえで、法令に従い合理的な期間内に対応します。</p>
+
+    <h2>8. Cookie等の利用について</h2>
+    <p>本サイトでは、アクセス状況の分析、利便性の向上等を目的として、Cookie等の技術を使用することがあります。お客様はブラウザの設定によりCookieの取得を拒否することができますが、その場合、本サービスの一部機能がご利用いただけなくなることがあります。</p>
+
+    <h2>9. お問い合わせ窓口</h2>
+    <p>本ポリシーに関するお問い合わせは、下記までご連絡ください。</p>
+    <p>株式会社moz 個人情報お問い合わせ窓口<br><a href="mailto:contact@moz-group.com">contact@moz-group.com</a></p>
+
+    <h2>10. 本ポリシーの変更</h2>
+    <p>当社は、法令の改正その他の事情により、本ポリシーの内容を変更することがあります。変更後の内容は、本サイトに掲載した時点から効力を生じるものとします。重要な変更を行う場合には、本サイト上で分かりやすく告知します。</p>
+
+    <p style="margin-top:32px; padding-top:20px; border-top:1px solid var(--border); color:var(--text-sub); font-size:0.85rem;">
+      制定日:2026年8月20日<br>
+      最終更新日:2026年8月20日<br>
+      株式会社moz 代表取締役 斎藤瑞樹
+    </p>
   </div>
 </section>
 
@@ -575,6 +660,7 @@
       <a href="staff.html">スタッフ紹介</a>
       <a href="privacy.html">プライバシーポリシー</a>
       <a href="terms.html">利用規約</a>
+      <a href="tokushoho.html">特定商取引法に基づく表記</a>
     </div>
     <div class="footer-copy">&copy; 2026 moz Inc. All rights reserved.</div>
   </div>
@@ -601,6 +687,78 @@
     menu.querySelectorAll('a').forEach(function(link) {
       link.addEventListener('click', closeMenu);
     });
+  })();
+
+  // ===== タイプライター =====
+  (function() {
+    function typeLine(el, duration, callback) {
+      if (!el) { if (callback) callback(); return; }
+      const full = el.scrollWidth;
+      el.style.width = '0px';
+      el.classList.add('tw-active');
+      const start = performance.now();
+      function step(now) {
+        const t = Math.min(1, (now - start) / duration);
+        el.style.width = (full * t) + 'px';
+        if (t < 1) {
+          requestAnimationFrame(step);
+        } else {
+          el.classList.remove('tw-active');
+          el.style.width = '';
+          if (callback) callback();
+        }
+      }
+      requestAnimationFrame(step);
+    }
+
+    // ヒーロー見出し:ページ読み込み後すぐに開始
+    window.addEventListener('load', function() {
+      const h1 = document.getElementById('twHero1');
+      const h2 = document.getElementById('twHero2');
+      setTimeout(function() {
+        typeLine(h1, 700, function() {
+          typeLine(h2, 600);
+        });
+      }, 200);
+    });
+
+    // ミッション本文:スクロールで画面に入ったら開始
+    const m1 = document.getElementById('twMission1');
+    const m2 = document.getElementById('twMission2');
+    if (m1 && m2) {
+      let missionStarted = false;
+      const missionObserver = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting && !missionStarted) {
+            missionStarted = true;
+            typeLine(m1, 900, function() {
+              typeLine(m2, 900);
+            });
+            missionObserver.disconnect();
+          }
+        });
+      }, { threshold: 0.4 });
+      missionObserver.observe(m1);
+    }
+  })();
+
+  // ===== スクロール連動フェードイン =====
+  (function() {
+    const targets = document.querySelectorAll(
+      '.eyebrow, h2, p.lead, .service-grid, .rep-block, .recruit-box, .community-grid, table.profile, .staff-grid, .sns-row, .disclosure-box, .hero p.sub, .hero .cta-row'
+    );
+    targets.forEach(function(el) { el.classList.add('reveal'); });
+
+    const revealObserver = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+
+    targets.forEach(function(el) { revealObserver.observe(el); });
   })();
 </script>
 
