@@ -244,6 +244,45 @@
     max-width: 780px;
   }
   .hero h1 .accent { color: var(--gold); }
+
+  /* Thank-you bubbles */
+  .thanks-bubble {
+    position: absolute;
+    font-size: 0.78rem;
+    padding: 5px 14px;
+    border-radius: 999px;
+    background: rgba(31,95,139,0.08);
+    color: var(--accent2);
+    white-space: nowrap;
+    pointer-events: none;
+    opacity: 0.85;
+    z-index: 1;
+  }
+  .thanks-bubble.gold { background: rgba(217,69,31,0.08); color: var(--gold); }
+  @keyframes thanksFloatA { 0%,100% { transform: translate(0,0); } 50% { transform: translate(8px,-16px); } }
+  @keyframes thanksFloatB { 0%,100% { transform: translate(0,0); } 50% { transform: translate(-10px,12px); } }
+  @keyframes thanksFloatC { 0%,100% { transform: translate(0,0); } 50% { transform: translate(6px,10px); } }
+  .tb-1 { top:12%; left:6%; }
+  .tb-2 { top:22%; right:8%; }
+  .tb-3 { top:78%; left:4%; }
+  .tb-4 { top:85%; right:10%; }
+  .tb-5 { top:50%; right:4%; }
+  .tb-6 { top:60%; left:2%; }
+  .thanks-bubble:nth-child(1) { animation: thanksFloatA 7s ease-in-out infinite; }
+  .thanks-bubble:nth-child(2) { animation: thanksFloatB 8.5s ease-in-out infinite 0.4s; }
+  .thanks-bubble:nth-child(3) { animation: thanksFloatC 6.5s ease-in-out infinite 0.8s; }
+  .thanks-bubble:nth-child(4) { animation: thanksFloatA 9s ease-in-out infinite 1.2s; }
+  .thanks-bubble:nth-child(5) { animation: thanksFloatB 7.5s ease-in-out infinite 0.6s; }
+  .thanks-bubble:nth-child(6) { animation: thanksFloatC 8s ease-in-out infinite 1s; }
+  @media (max-width: 760px) {
+    .thanks-bubble { font-size: 0.62rem; padding: 3px 8px; opacity: 0.65; }
+    .tb-1 { top:4%; left:4%; }
+    .tb-2 { top:15%; right:4%; }
+    .tb-3 { top:28%; left:3%; }
+    .tb-4 { top:41%; right:3%; }
+    .tb-5 { top:80%; left:6%; }
+    .tb-6 { top:92%; right:6%; }
+  }
   @media (max-width: 480px) {
     .hero h1 {
       font-size: 7.8vw;
@@ -576,6 +615,12 @@
 
 <!-- ============ HERO ============ -->
 <section class="hero" id="top">
+  <span class="thanks-bubble tb-1">ありがとう</span>
+  <span class="thanks-bubble gold tb-2">Thank you</span>
+  <span class="thanks-bubble tb-3">Gracias</span>
+  <span class="thanks-bubble gold tb-4">Merci</span>
+  <span class="thanks-bubble tb-5">谢谢</span>
+  <span class="thanks-bubble gold tb-6">Danke</span>
   <div class="wrap">
     <div class="eyebrow">moz Inc.</div>
     <h1><span class="tw-line" id="twHero1">「ありがとうのその先へ」</span></h1>
@@ -646,7 +691,7 @@
         <li>AIツールも活用しながら、再現性のある方法をお伝えします</li>
       </ul>
 
-      <svg viewBox="0 0 720 320" width="720" height="320" xmlns="http://www.w3.org/2000/svg" style="width:100%; height:auto; max-width:640px; display:block; margin:24px auto;">
+      <svg id="growthChartSvg" viewBox="0 0 720 320" width="720" height="320" xmlns="http://www.w3.org/2000/svg" style="width:100%; height:auto; max-width:640px; display:block; margin:24px auto;">
   <defs>
     <linearGradient id="growthFill" x1="0" y1="0" x2="0" y2="1">
       <stop offset="0%" stop-color="#d9451f" stop-opacity="0.25"/>
@@ -668,9 +713,9 @@
 
   <line x1="415.6" y1="30" x2="415.6" y2="270" stroke="#1f5f8b" stroke-width="1" stroke-dasharray="4,4"/>
   <text x="421.6" y="44" font-size="11" fill="#1f5f8b">2027年〜</text>
-  <path d="M50.0,270 L50.0,268.6 L90.6,256.4 L131.2,247.4 L171.9,242.8 L212.5,238.3 L253.1,231.5 L293.8,224.7 L334.4,215.7 L375.0,204.3 L415.6,190.8 L456.2,174.9 L496.9,156.8 L537.5,136.4 L578.1,113.8 L618.8,88.9 L659.4,61.7 L700.0,30.0 L700.0,270 Z" fill="url(#growthFill)"/>
-  <polyline points="50.0,268.6 90.6,256.4 131.2,247.4 171.9,242.8 212.5,238.3 253.1,231.5 293.8,224.7 334.4,215.7 375.0,204.3 415.6,190.8 456.2,174.9 496.9,156.8 537.5,136.4 578.1,113.8 618.8,88.9 659.4,61.7 700.0,30.0" fill="none" stroke="#d9451f" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
-  <circle cx="50.0" cy="268.6" r="3.5" fill="#d9451f"/><circle cx="90.6" cy="256.4" r="3.5" fill="#d9451f"/><circle cx="131.2" cy="247.4" r="3.5" fill="#d9451f"/><circle cx="171.9" cy="242.8" r="3.5" fill="#d9451f"/><circle cx="212.5" cy="238.3" r="3.5" fill="#d9451f"/><circle cx="253.1" cy="231.5" r="3.5" fill="#d9451f"/><circle cx="293.8" cy="224.7" r="3.5" fill="#d9451f"/><circle cx="334.4" cy="215.7" r="3.5" fill="#d9451f"/><circle cx="375.0" cy="204.3" r="3.5" fill="#d9451f"/><circle cx="415.6" cy="190.8" r="3.5" fill="#d9451f"/><circle cx="456.2" cy="174.9" r="3.5" fill="#d9451f"/><circle cx="496.9" cy="156.8" r="3.5" fill="#d9451f"/><circle cx="537.5" cy="136.4" r="3.5" fill="#d9451f"/><circle cx="578.1" cy="113.8" r="3.5" fill="#d9451f"/><circle cx="618.8" cy="88.9" r="3.5" fill="#d9451f"/><circle cx="659.4" cy="61.7" r="3.5" fill="#d9451f"/><circle cx="700.0" cy="30.0" r="3.5" fill="#d9451f"/>
+  <path id="growthAreaPath" d="M50.0,270 L50.0,268.6 L90.6,256.4 L131.2,247.4 L171.9,242.8 L212.5,238.3 L253.1,231.5 L293.8,224.7 L334.4,215.7 L375.0,204.3 L415.6,190.8 L456.2,174.9 L496.9,156.8 L537.5,136.4 L578.1,113.8 L618.8,88.9 L659.4,61.7 L700.0,30.0 L700.0,270 Z" fill="url(#growthFill)"/>
+  <polyline id="growthLine" points="50.0,268.6 90.6,256.4 131.2,247.4 171.9,242.8 212.5,238.3 253.1,231.5 293.8,224.7 334.4,215.7 375.0,204.3 415.6,190.8 456.2,174.9 496.9,156.8 537.5,136.4 578.1,113.8 618.8,88.9 659.4,61.7 700.0,30.0" fill="none" stroke="#d9451f" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
+  <circle class="growthDot" cx="50.0" cy="268.6" r="3.5" fill="#d9451f"/><circle class="growthDot" cx="90.6" cy="256.4" r="3.5" fill="#d9451f"/><circle class="growthDot" cx="131.2" cy="247.4" r="3.5" fill="#d9451f"/><circle class="growthDot" cx="171.9" cy="242.8" r="3.5" fill="#d9451f"/><circle class="growthDot" cx="212.5" cy="238.3" r="3.5" fill="#d9451f"/><circle class="growthDot" cx="253.1" cy="231.5" r="3.5" fill="#d9451f"/><circle class="growthDot" cx="293.8" cy="224.7" r="3.5" fill="#d9451f"/><circle class="growthDot" cx="334.4" cy="215.7" r="3.5" fill="#d9451f"/><circle class="growthDot" cx="375.0" cy="204.3" r="3.5" fill="#d9451f"/><circle class="growthDot" cx="415.6" cy="190.8" r="3.5" fill="#d9451f"/><circle class="growthDot" cx="456.2" cy="174.9" r="3.5" fill="#d9451f"/><circle class="growthDot" cx="496.9" cy="156.8" r="3.5" fill="#d9451f"/><circle class="growthDot" cx="537.5" cy="136.4" r="3.5" fill="#d9451f"/><circle class="growthDot" cx="578.1" cy="113.8" r="3.5" fill="#d9451f"/><circle class="growthDot" cx="618.8" cy="88.9" r="3.5" fill="#d9451f"/><circle class="growthDot" cx="659.4" cy="61.7" r="3.5" fill="#d9451f"/><circle class="growthDot" cx="700.0" cy="30.0" r="3.5" fill="#d9451f"/>
   <text x="50.0" y="290" font-size="11" fill="#5f7485" text-anchor="middle">4月</text>
 <text x="131.2" y="290" font-size="11" fill="#5f7485" text-anchor="middle">6月</text>
 <text x="212.5" y="290" font-size="11" fill="#5f7485" text-anchor="middle">8月</text>
@@ -872,6 +917,130 @@
     }, { threshold: 0.12 });
 
     targets.forEach(function(el) { revealObserver.observe(el); });
+  })();
+
+  // ===== 成長グラフの描画アニメーション =====
+  (function() {
+    const svg = document.getElementById('growthChartSvg');
+    if (!svg) return;
+    const line = document.getElementById('growthLine');
+    const area = document.getElementById('growthAreaPath');
+    const dots = svg.querySelectorAll('.growthDot');
+
+    const len = line.getTotalLength();
+    line.style.strokeDasharray = len;
+    line.style.strokeDashoffset = len;
+    line.style.transition = 'stroke-dashoffset 1.8s ease';
+    area.style.opacity = '0';
+    area.style.transition = 'opacity 1s ease 1.6s';
+    dots.forEach(function(d, i) {
+      d.style.opacity = '0';
+      d.style.transition = 'opacity 0.3s ease ' + (1.8 + i * 0.04) + 's';
+    });
+
+    let started = false;
+    const chartObserver = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting && !started) {
+          started = true;
+          requestAnimationFrame(function() {
+            line.style.strokeDashoffset = '0';
+            area.style.opacity = '1';
+            dots.forEach(function(d) { d.style.opacity = '1'; });
+          });
+          chartObserver.disconnect();
+        }
+      });
+    }, { threshold: 0.3 });
+    chartObserver.observe(svg);
+  })();
+
+  // ===== マグネットボタン =====
+  (function() {
+    if (!window.matchMedia('(hover: hover)').matches) return;
+    document.querySelectorAll('.btn').forEach(function(btn) {
+      btn.style.transition = 'transform 0.15s ease';
+      btn.addEventListener('mousemove', function(e) {
+        const r = btn.getBoundingClientRect();
+        const x = (e.clientX - r.left - r.width / 2) * 0.25;
+        const y = (e.clientY - r.top - r.height / 2) * 0.25;
+        btn.style.transform = 'translate(' + x + 'px,' + y + 'px)';
+      });
+      btn.addEventListener('mouseleave', function() {
+        btn.style.transform = 'translate(0,0)';
+      });
+    });
+  })();
+
+  // ===== ライオンの視差効果 =====
+  (function() {
+    const lion = document.querySelector('.lion-bg-fixed img');
+    if (!lion) return;
+    const canHover = window.matchMedia('(hover: hover)').matches;
+    let scrollY = 0, mouseX = 0, mouseY = 0;
+    function render() {
+      const sOffset = Math.min(scrollY * 0.04, 30);
+      lion.style.transform = 'translate(' + (mouseX + 'px') + ',' + (sOffset + mouseY) + 'px)';
+    }
+    window.addEventListener('scroll', function() {
+      scrollY = window.scrollY;
+      requestAnimationFrame(render);
+    }, { passive: true });
+    if (canHover) {
+      window.addEventListener('mousemove', function(e) {
+        mouseX = (e.clientX / window.innerWidth - 0.5) * 14;
+        mouseY = (e.clientY / window.innerHeight - 0.5) * 10;
+        requestAnimationFrame(render);
+      });
+    }
+  })();
+
+  // ===== サービスカードの傾き演出 =====
+  (function() {
+    if (!window.matchMedia('(hover: hover)').matches) return;
+    document.querySelectorAll('.service-card').forEach(function(card) {
+      card.style.transition = 'transform 0.15s ease';
+      card.style.transformStyle = 'preserve-3d';
+      card.addEventListener('mousemove', function(e) {
+        const r = card.getBoundingClientRect();
+        const px = (e.clientX - r.left) / r.width - 0.5;
+        const py = (e.clientY - r.top) / r.height - 0.5;
+        card.style.transform = 'perspective(600px) rotateX(' + (py * -6) + 'deg) rotateY(' + (px * 6) + 'deg) translateY(-2px)';
+      });
+      card.addEventListener('mouseleave', function() {
+        card.style.transform = 'perspective(600px) rotateX(0) rotateY(0)';
+      });
+    });
+  })();
+
+  // ===== LINEボタンの紙吹雪演出 =====
+  (function() {
+    const colors = ['#d9451f', '#1f5f8b', '#ea6b3f', '#3a7fab'];
+    function burstConfetti(x, y) {
+      for (let i = 0; i < 18; i++) {
+        const p = document.createElement('span');
+        const size = 5 + Math.random() * 4;
+        p.style.cssText = 'position:fixed; left:' + x + 'px; top:' + y + 'px; width:' + size + 'px; height:' + size + 'px; ' +
+          'background:' + colors[i % colors.length] + '; border-radius:' + (Math.random() > 0.5 ? '50%' : '2px') + '; ' +
+          'pointer-events:none; z-index:9999; opacity:1;';
+        document.body.appendChild(p);
+        const angle = Math.random() * Math.PI * 2;
+        const dist = 60 + Math.random() * 80;
+        const dx = Math.cos(angle) * dist;
+        const dy = Math.sin(angle) * dist - 40;
+        p.animate([
+          { transform: 'translate(0,0) rotate(0deg)', opacity: 1 },
+          { transform: 'translate(' + dx + 'px,' + dy + 'px) rotate(' + (Math.random() * 360) + 'deg)', opacity: 0 }
+        ], { duration: 700 + Math.random() * 400, easing: 'cubic-bezier(0.2,0.8,0.3,1)' });
+        setTimeout(function() { p.remove(); }, 1200);
+      }
+    }
+    document.querySelectorAll('a[href="https://lin.ee/wGe7asY"]').forEach(function(btn) {
+      btn.addEventListener('click', function(e) {
+        const r = btn.getBoundingClientRect();
+        burstConfetti(r.left + r.width / 2, r.top + r.height / 2);
+      });
+    });
   })();
 </script>
 
