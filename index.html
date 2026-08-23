@@ -311,6 +311,47 @@
     opacity: 1;
     transform: translateY(0);
   }
+
+  /* スクロール進捗バー */
+  #scrollProgress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 3px;
+    width: 0%;
+    background: var(--gold);
+    z-index: 200;
+    transition: width 0.1s ease-out;
+  }
+
+  /* サービスカードの左右スライドイン */
+  .reveal-left {
+    opacity: 0;
+    transform: translateX(-32px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal-left.is-visible { opacity: 1; transform: translateX(0); }
+  .reveal-right {
+    opacity: 0;
+    transform: translateX(32px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal-right.is-visible { opacity: 1; transform: translateX(0); }
+
+  /* ボタンのリップル(波紋) */
+  .btn { position: relative; overflow: hidden; }
+  .btn-ripple {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.55);
+    transform: scale(0);
+    pointer-events: none;
+    animation: rippleAnim 0.6s ease-out forwards;
+  }
+  .btn-outline .btn-ripple { background: rgba(31,95,139,0.25); }
+  @keyframes rippleAnim {
+    to { transform: scale(2.6); opacity: 0; }
+  }
   .hero p.sub {
     margin-top: 24px;
     color: var(--text-sub);
@@ -590,6 +631,8 @@
 </style>
 </head>
 <body>
+
+<div id="scrollProgress" aria-hidden="true"></div>
 
 <div class="lion-bg-fixed" aria-hidden="true">
   <img src="lion-bg.png" alt="">
@@ -903,7 +946,7 @@
   // ===== スクロール連動フェードイン =====
   (function() {
     const targets = document.querySelectorAll(
-      '.eyebrow, h2, p.lead, .service-grid, .rep-block, .recruit-box, .community-grid, table.profile, .staff-grid, .sns-row, .disclosure-box, .hero p.sub, .hero .cta-row'
+      '.eyebrow, h2, p.lead, .rep-block, .recruit-box, .community-grid, table.profile, .staff-grid, .sns-row, .disclosure-box, .hero p.sub, .hero .cta-row'
     );
     targets.forEach(function(el) { el.classList.add('reveal'); });
 
@@ -1039,6 +1082,99 @@
       btn.addEventListener('click', function(e) {
         const r = btn.getBoundingClientRect();
         burstConfetti(r.left + r.width / 2, r.top + r.height / 2);
+      });
+    });
+  })();
+
+  // ===== スクロール進捗バー =====
+  (function() {
+    const bar = document.getElementById('scrollProgress');
+    if (!bar) return;
+    function update() {
+      const h = document.documentElement;
+      const scrolled = h.scrollTop;
+      const max = h.scrollHeight - h.clientHeight;
+      const pct = max > 0 ? (scrolled / max) * 100 : 0;
+      bar.style.width = pct + '%';
+    }
+    window.addEventListener('scroll', function() { requestAnimationFrame(update); }, { passive: true });
+    update();
+  })();
+
+  // ===== サービスカードの左右スライドイン =====
+  (function() {
+    const cards = document.querySelectorAll('.service-card');
+    cards.forEach(function(card, i) {
+      card.classList.add(i % 2 === 0 ? 'reveal-left' : 'reveal-right');
+    });
+    const cardObserver = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          cardObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15 });
+    cards.forEach(function(card) { cardObserver.observe(card); });
+  })();
+
+  // ===== ボタンのリップル(波紋)演出 =====
+  (function() {
+    document.querySelectorAll('.btn').forEach(function(btn) {
+      btn.addEventListener('click', function(e) {
+        const r = btn.getBoundingClientRect();
+        const ripple = document.createElement('span');
+        const size = Math.max(r.width, r.height);
+        ripple.className = 'btn-ripple';
+        ripple.style.width = size + 'px';
+        ripple.style.height = size + 'px';
+        ripple.style.left = (e.clientX - r.left - size / 2) + 'px';
+        ripple.style.top = (e.clientY - r.top - size / 2) + 'px';
+        btn.appendChild(ripple);
+        setTimeout(function() { ripple.remove(); }, 650);
+      });
+    });
+  })();
+
+  // ===== 「ありがとう」バブルをタップで弾けさせる =====
+  (function() {
+    const colors = ['#d9451f', '#1f5f8b', '#ea6b3f', '#3a7fab'];
+    function popBurst(x, y) {
+      for (let i = 0; i < 8; i++) {
+        const p = document.createElement('span');
+        const size = 4 + Math.random() * 3;
+        p.style.cssText = 'position:fixed; left:' + x + 'px; top:' + y + 'px; width:' + size + 'px; height:' + size + 'px; ' +
+          'background:' + colors[i % colors.length] + '; border-radius:50%; pointer-events:none; z-index:9999;';
+        document.body.appendChild(p);
+        const angle = Math.random() * Math.PI * 2;
+        const dist = 30 + Math.random() * 40;
+        p.animate([
+          { transform: 'translate(0,0)', opacity: 1 },
+          { transform: 'translate(' + (Math.cos(angle) * dist) + 'px,' + (Math.sin(angle) * dist) + 'px)', opacity: 0 }
+        ], { duration: 500, easing: 'ease-out' });
+        setTimeout(function() { p.remove(); }, 550);
+      }
+    }
+    const zones = [
+      { top: 4, left: 4 }, { top: 15, right: 4 }, { top: 28, left: 3 },
+      { top: 41, right: 3 }, { top: 80, left: 6 }, { top: 92, right: 6 },
+      { top: 22, left: 30 }, { top: 65, right: 30 }
+    ];
+    document.querySelectorAll('.thanks-bubble').forEach(function(bubble) {
+      bubble.style.pointerEvents = 'auto';
+      bubble.style.cursor = 'pointer';
+      bubble.addEventListener('click', function() {
+        const r = bubble.getBoundingClientRect();
+        popBurst(r.left + r.width / 2, r.top + r.height / 2);
+        bubble.style.transition = 'opacity 0.2s ease';
+        bubble.style.opacity = '0';
+        setTimeout(function() {
+          const z = zones[Math.floor(Math.random() * zones.length)];
+          bubble.style.top = z.top + '%';
+          bubble.style.left = z.left !== undefined ? z.left + '%' : '';
+          bubble.style.right = z.right !== undefined ? z.right + '%' : '';
+          bubble.style.opacity = '';
+        }, 250);
       });
     });
   })();
