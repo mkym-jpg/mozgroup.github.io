@@ -1,0 +1,917 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>お問い合わせ | 株式会社moz</title>
+<style>
+  :root {
+    --bg: #eef5f9;
+    --bg-elevated: #ffffff;
+    --gold: #d9451f;
+    --gold-soft: #ea6b3f;
+    --accent2: #1f5f8b;
+    --accent2-soft: #3a7fab;
+    --text-main: #16232e;
+    --text-sub: #5f7485;
+    --border: #d8e3ea;
+    --font-display: "Zen Kaku Gothic New", "Hiragino Sans", "Yu Gothic", sans-serif;
+    --font-body: "Hiragino Sans", "Yu Gothic", sans-serif;
+    --max-width: 1080px;
+  }
+
+  html { scroll-behavior: smooth; scroll-padding-top: 90px; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  .lion-bg-fixed {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding-top: 4vh;
+    pointer-events: none;
+    opacity: 0.28;
+  }
+  .lion-bg-fixed img {
+    width: min(1100px, 82vw);
+    height: auto;
+    filter: drop-shadow(0 18px 30px rgba(22,35,46,0.18));
+  }
+  @media (max-width: 900px) {
+    .lion-bg-fixed {
+      align-items: center;
+      padding-top: 0;
+      opacity: 0.28;
+    }
+    .lion-bg-fixed img {
+      width: 96vw;
+      max-width: none;
+      filter: none;
+    }
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--text-main);
+    font-family: var(--font-body);
+    line-height: 1.75;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  a { color: inherit; text-decoration: none; }
+
+  .wrap {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  /* Header */
+  header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(238,245,249,0.92);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--gold);
+    box-shadow: 0 4px 14px rgba(22,35,46,0.06);
+  }
+  .header-inner {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 18px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+  }
+  .logo {
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    font-size: 1.15rem;
+    flex-shrink: 0;
+    white-space: nowrap;
+  }
+  .logo span { color: var(--gold); }
+  .logo img { height: 40px; width: auto; display: block; }
+  nav ul {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+    font-size: 0.8rem;
+    flex-wrap: nowrap;
+    white-space: nowrap;
+  }
+  nav a:hover { color: var(--gold-soft); }
+  .nav-toggle {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    color: var(--text-main);
+    z-index: 120;
+  }
+  .nav-toggle span {
+    display: block;
+    width: 24px;
+    height: 2px;
+    background: var(--text-main);
+    margin: 5px 0;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+  }
+  .nav-toggle.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .nav-toggle.open span:nth-child(2) { opacity: 0; }
+  .nav-toggle.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+  @media (max-width: 760px) {
+    .nav-toggle {
+      display: block;
+      margin-left: auto;
+    }
+    nav {
+      position: static;
+      display: contents;
+    }
+    nav ul {
+      display: none;
+      position: absolute;
+      top: 100%;
+      right: 0;
+      left: 0;
+      flex-direction: column;
+      gap: 0;
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+      padding: 8px 0;
+    }
+    nav ul.open { display: flex; }
+    nav ul li {
+      padding: 0;
+    }
+    nav ul li a {
+      display: block;
+      padding: 14px 24px;
+      font-size: 1rem;
+      border-top: 1px solid var(--border);
+    }
+    nav ul li:first-child a { border-top: none; }
+  }
+
+  /* Section base */
+  section {
+    padding: 96px 0;
+    border-bottom: 1px solid var(--gold);
+  }
+  .eyebrow {
+    color: var(--accent2);
+    font-size: 0.78rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+    position: relative;
+    padding-left: 18px;
+  }
+  .eyebrow::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 10px;
+    height: 3px;
+    background: var(--gold);
+  }
+  h1, h2, h3 {
+    font-family: var(--font-display);
+    font-weight: 700;
+    letter-spacing: 0.02em;
+  }
+  h2 {
+    font-size: clamp(1.6rem, 3vw, 2.2rem);
+    margin-bottom: 32px;
+    position: relative;
+    display: inline-block;
+  }
+  h2::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -8px;
+    width: 40px;
+    height: 3px;
+    background: var(--gold);
+  }
+  p.lead {
+    color: var(--text-sub);
+    font-size: 1.02rem;
+    max-width: 640px;
+  }
+
+  /* Hero */
+  .hero {
+    padding: 140px 0 100px;
+    border-bottom: 1px solid var(--gold);
+    position: relative;
+    overflow: hidden;
+  }
+  .hero .wrap {
+    position: relative;
+    z-index: 2;
+  }
+  .hero h1 {
+    font-size: clamp(2.2rem, 5vw, 3.4rem);
+    line-height: 1.35;
+    max-width: 780px;
+  }
+  .hero h1 .accent { color: var(--gold); }
+  @media (max-width: 480px) {
+    .hero h1 {
+      font-size: 7.8vw;
+      white-space: nowrap;
+    }
+  }
+
+  /* Typewriter */
+  .tw-line {
+    display: inline-block;
+    overflow: hidden;
+    white-space: nowrap;
+    vertical-align: bottom;
+  }
+  .tw-line.tw-active {
+    border-right: 2px solid var(--gold);
+  }
+
+  /* Scroll reveal */
+  .reveal {
+    opacity: 0;
+    transform: translateY(18px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .hero p.sub {
+    margin-top: 24px;
+    color: var(--text-sub);
+    max-width: 560px;
+    font-size: 1.05rem;
+  }
+  .cta-row {
+    margin-top: 40px;
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .btn {
+    display: inline-block;
+    padding: 14px 28px;
+    font-size: 0.92rem;
+    border-radius: 4px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    transition: all 0.2s ease;
+  }
+  .btn-primary {
+    background: var(--gold);
+    color: #ffffff;
+    box-shadow: 0 3px 8px rgba(217,69,31,0.25), 0 8px 18px rgba(217,69,31,0.15);
+  }
+  .btn-primary:hover {
+    background: var(--gold-soft);
+    box-shadow: 0 4px 10px rgba(217,69,31,0.3), 0 10px 22px rgba(217,69,31,0.18);
+    transform: translateY(-1px);
+  }
+  .btn-outline {
+    border: 1px solid var(--border);
+    color: var(--text-main);
+  }
+  .btn-outline:hover { border-color: var(--gold); color: var(--gold); }
+
+  /* Mission */
+  .mission-body {
+    max-width: 720px;
+    color: var(--text-sub);
+  }
+  .placeholder-note {
+    display: inline-block;
+    margin-top: 16px;
+    padding: 4px 10px;
+    font-size: 0.72rem;
+    border: 1px dashed var(--gold);
+    color: var(--gold);
+    border-radius: 3px;
+  }
+
+  /* Services */
+  .service-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+    margin-top: 36px;
+  }
+  .service-card {
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 32px;
+    box-shadow: 0 2px 6px rgba(22,35,46,0.06), 0 10px 24px rgba(22,35,46,0.08);
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+  }
+  .service-card:hover {
+    border-color: var(--gold);
+    box-shadow: 0 6px 14px rgba(22,35,46,0.10), 0 18px 34px rgba(22,35,46,0.12);
+    transform: translateY(-2px);
+  }
+  .service-card .tag {
+    font-size: 0.72rem;
+    color: var(--gold);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .service-card h3 { font-size: 1.2rem; margin-bottom: 10px; }
+  .service-card p { color: var(--text-sub); font-size: 0.92rem; }
+  .service-card.add-more {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-sub);
+    border-style: dashed;
+    font-size: 0.85rem;
+  }
+  .disclosure-box {
+    margin-top: 40px;
+    padding: 32px;
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    box-shadow: 0 3px 8px rgba(22,35,46,0.06), 0 14px 30px rgba(22,35,46,0.08);
+  }
+  .disclosure-box p {
+    color: var(--text-sub);
+    font-size: 0.94rem;
+    margin-bottom: 16px;
+  }
+  .disclosure-box p:last-of-type { margin-bottom: 24px; }
+  .disclosure-box strong { color: var(--gold); }
+
+  /* Rep message */
+  .rep-block {
+    display: flex;
+    gap: 40px;
+    flex-wrap: wrap;
+    align-items: flex-start;
+  }
+  .rep-photo {
+    width: 180px;
+    height: 180px;
+    border-radius: 6px;
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    box-shadow: 0 8px 20px rgba(22,35,46,0.10);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-sub);
+    font-size: 0.8rem;
+    flex-shrink: 0;
+  }
+  .rep-text { max-width: 560px; color: var(--text-sub); }
+  .rep-text .name { color: var(--text-main); font-weight: 700; margin-top: 16px; }
+
+  /* Staff (top page) */
+  .staff-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 24px;
+    margin-top: 32px;
+  }
+  .staff-card { min-width: 0; }
+  @media (max-width: 760px) {
+    .staff-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+    .staff-card { padding: 10px; }
+    .staff-card svg { width: 60px; }
+    .staff-card h3 { font-size: 0.78rem; word-break: break-word; }
+    .staff-role { font-size: 0.62rem; word-break: break-word; }
+    .staff-meta { font-size: 0.66rem; }
+  }
+  .staff-card {
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 24px;
+    text-align: center;
+    box-shadow: 0 2px 6px rgba(22,35,46,0.05), 0 8px 18px rgba(22,35,46,0.07);
+    transition: box-shadow 0.2s ease, transform 0.2s ease;
+  }
+  .staff-card:hover {
+    box-shadow: 0 6px 14px rgba(22,35,46,0.10), 0 16px 30px rgba(22,35,46,0.10);
+    transform: translateY(-2px);
+  }
+  .staff-card svg { width: 110px; height: auto; margin: 0 auto 10px; display: block; }
+  .staff-card h3 { font-size: 0.95rem; margin-bottom: 4px; }
+  .staff-role { color: var(--gold); font-size: 0.74rem; letter-spacing: 0.04em; margin-bottom: 8px; }
+  .staff-meta { color: var(--text-sub); font-size: 0.78rem; }
+
+  /* Recruit */
+  .recruit-box {
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 48px;
+    box-shadow: 0 3px 8px rgba(22,35,46,0.06), 0 14px 30px rgba(22,35,46,0.09);
+  }
+  .recruit-box h2 { margin-bottom: 12px; }
+
+  /* Community / Discord */
+  .community-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 32px;
+    margin-top: 32px;
+  }
+  @media (max-width: 760px) {
+    .community-grid { grid-template-columns: 1fr; }
+  }
+  .discord-widget-slot {
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 24px;
+    min-height: 220px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-sub);
+    font-size: 0.85rem;
+    text-align: center;
+  }
+  .channel-list { list-style: none; margin-top: 16px; }
+  .channel-list li {
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 0.9rem;
+    color: var(--text-sub);
+  }
+  .channel-list li .badge {
+    display: inline-block;
+    font-size: 0.68rem;
+    padding: 2px 8px;
+    border-radius: 10px;
+    margin-right: 8px;
+  }
+  .badge.open { background: rgba(31,95,139,0.13); color: var(--accent2); }
+  .badge.private { background: rgba(217,69,31,0.10); color: var(--gold); }
+
+  /* Company profile */
+  table.profile {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 24px;
+  }
+  table.profile th, table.profile td {
+    text-align: left;
+    padding: 16px 12px;
+    border-bottom: 1px solid var(--border);
+    font-size: 0.92rem;
+  }
+  table.profile th {
+    width: 180px;
+    color: var(--text-sub);
+    font-weight: 500;
+  }
+  .tbd { color: var(--gold); font-size: 0.82rem; }
+
+  /* News */
+  .news-empty {
+    color: var(--text-sub);
+    font-size: 0.92rem;
+    padding: 32px;
+    text-align: center;
+    border: 1px dashed var(--border);
+    border-radius: 6px;
+  }
+
+  /* SNS */
+  .sns-row {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-top: 24px;
+  }
+  .sns-pill {
+    padding: 12px 22px;
+    border: 1px solid var(--border);
+    border-radius: 30px;
+    font-size: 0.88rem;
+  }
+  .sns-pill:hover { border-color: var(--gold); color: var(--gold-soft); }
+
+  footer {
+    padding: 40px 0;
+    text-align: center;
+    color: var(--text-sub);
+    font-size: 0.8rem;
+  }
+  .footer-links {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin-bottom: 16px;
+    font-size: 0.82rem;
+  }
+  .footer-links a:hover { color: var(--gold); }
+  .footer-copy { color: var(--text-sub); }
+
+  .contact-form {
+    max-width: 640px;
+    margin: 0 auto;
+  }
+  .form-group {
+    margin-bottom: 28px;
+  }
+  .form-group label.field-label {
+    display: block;
+    font-weight: 700;
+    font-size: 0.92rem;
+    margin-bottom: 10px;
+    color: var(--text-main);
+  }
+  .form-group .required {
+    color: var(--gold);
+    font-size: 0.72rem;
+    font-weight: 600;
+    margin-left: 6px;
+    vertical-align: middle;
+  }
+  .radio-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .radio-pill {
+    position: relative;
+  }
+  .radio-pill input {
+    position: absolute;
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    cursor: pointer;
+  }
+  .radio-pill span {
+    display: inline-block;
+    padding: 10px 20px;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    font-size: 0.88rem;
+    color: var(--text-sub);
+    background: var(--bg-elevated);
+    transition: all 0.15s ease;
+  }
+  .radio-pill input:checked + span {
+    background: var(--gold);
+    border-color: var(--gold);
+    color: #fff;
+  }
+  .radio-pill input:focus-visible + span {
+    outline: 2px solid var(--accent2);
+    outline-offset: 2px;
+  }
+  .contact-form input[type="text"],
+  .contact-form input[type="email"],
+  .contact-form textarea {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    font-family: inherit;
+    font-size: 0.95rem;
+    background: var(--bg-elevated);
+    color: var(--text-main);
+  }
+  .contact-form input:focus,
+  .contact-form textarea:focus {
+    outline: none;
+    border-color: var(--accent2);
+  }
+  .contact-form textarea {
+    min-height: 160px;
+    resize: vertical;
+  }
+  .contact-submit {
+    display: block;
+    width: 100%;
+    padding: 16px;
+    background: var(--gold);
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s ease;
+  }
+  .contact-submit:hover { background: var(--gold-soft); }
+  .contact-submit:disabled { opacity: 0.6; cursor: not-allowed; }
+  .form-status {
+    margin-top: 16px;
+    padding: 14px 16px;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    display: none;
+  }
+  .form-status.success {
+    display: block;
+    background: rgba(31,95,139,0.08);
+    color: var(--accent2);
+    border: 1px solid var(--accent2);
+  }
+  .form-status.error {
+    display: block;
+    background: rgba(217,69,31,0.08);
+    color: var(--gold);
+    border: 1px solid var(--gold);
+  }
+</style>
+</head>
+<body>
+
+<div class="lion-bg-fixed" aria-hidden="true">
+  <img src="lion-bg.png" alt="">
+</div>
+
+<header>
+  <div class="header-inner">
+    <div class="logo"><a href="#top" style="display:flex; align-items:center;"><img src="moz-logo.png" alt="株式会社moz"></a></div>
+    <button class="nav-toggle" id="navToggle" aria-label="メニューを開く" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <nav>
+      <ul id="navMenu">
+        <li><a href="#top">HOME</a></li>
+        <li><a href="#mission">ミッション</a></li>
+        <li><a href="#services">サービス</a></li>
+        <li><a href="preview-3d.html" target="_blank">MOZ WORLD ↗</a></li>
+        <li><a href="cabin.html" target="_blank">癒しの部屋 ↗</a></li>
+        <li><a href="contact.html">お問い合わせ</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<section class="page-hero">
+  <div class="wrap">
+    <div class="eyebrow">Contact</div>
+    <h1>お問い合わせ</h1>
+  </div>
+</section>
+
+<section class="page-content">
+  <div class="wrap">
+    <form id="contactForm" class="contact-form">
+
+      <div class="form-group">
+        <label class="field-label">お名前<span class="required">必須</span></label>
+        <input type="text" name="from_name" id="fromName" required>
+      </div>
+
+      <div class="form-group">
+        <label class="field-label">メールアドレス<span class="required">必須</span></label>
+        <input type="email" name="from_email" id="fromEmail" required>
+      </div>
+
+      <div class="form-group">
+        <label class="field-label">区分<span class="required">必須</span></label>
+        <div class="radio-row">
+          <label class="radio-pill">
+            <input type="radio" name="entity_type" value="個人" required>
+            <span>個人</span>
+          </label>
+          <label class="radio-pill">
+            <input type="radio" name="entity_type" value="法人">
+            <span>法人</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="field-label">お問い合わせ内容<span class="required">必須</span></label>
+        <div class="radio-row">
+          <label class="radio-pill">
+            <input type="radio" name="inquiry_type" value="コンサルを希望する" required>
+            <span>コンサルを希望する</span>
+          </label>
+          <label class="radio-pill">
+            <input type="radio" name="inquiry_type" value="提供サービスについて">
+            <span>提供サービスについて</span>
+          </label>
+          <label class="radio-pill">
+            <input type="radio" name="inquiry_type" value="取材">
+            <span>取材</span>
+          </label>
+          <label class="radio-pill">
+            <input type="radio" name="inquiry_type" value="その他">
+            <span>その他</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="field-label" for="message">問い合わせ詳細<span class="required">必須</span></label>
+        <textarea name="message" id="message" required placeholder="お問い合わせ内容をご自由にご記入ください"></textarea>
+      </div>
+
+      <button type="submit" class="contact-submit" id="submitBtn">送信する</button>
+      <div class="form-status" id="formStatus"></div>
+    </form>
+
+    <!-- ▼▼▼ EmailJS 送信設定 ▼▼▼
+      このフォームは EmailJS というサービス経由でメール送信します。
+      以下の3箇所を、EmailJSで取得したご自身の値に差し替えてください。
+      1) YOUR_PUBLIC_KEY  … EmailJSのPublic Key
+      2) YOUR_SERVICE_ID  … 接続したメールサービスのID
+      3) YOUR_TEMPLATE_ID_MAIN / YOUR_TEMPLATE_ID_AUTOREPLY … 作成したテンプレートのID
+      詳しい設定手順は別途チャットでご案内します。
+    -->
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <script>
+      (function() {
+        emailjs.init({ publicKey: "YOUR_PUBLIC_KEY" });
+
+        const form = document.getElementById('contactForm');
+        const statusEl = document.getElementById('formStatus');
+        const submitBtn = document.getElementById('submitBtn');
+
+        form.addEventListener('submit', function(e) {
+          e.preventDefault();
+
+          const entityType = form.querySelector('input[name="entity_type"]:checked');
+          const inquiryType = form.querySelector('input[name="inquiry_type"]:checked');
+
+          if (!entityType || !inquiryType) {
+            statusEl.textContent = '区分とお問い合わせ内容を選択してください。';
+            statusEl.className = 'form-status error';
+            return;
+          }
+
+          submitBtn.disabled = true;
+          submitBtn.textContent = '送信中...';
+          statusEl.className = 'form-status';
+          statusEl.textContent = '';
+
+          const params = {
+            from_name: document.getElementById('fromName').value,
+            from_email: document.getElementById('fromEmail').value,
+            entity_type: entityType.value,
+            inquiry_type: inquiryType.value,
+            subject_line: entityType.value + '・' + inquiryType.value,
+            message: document.getElementById('message').value
+          };
+
+          // ① 社内(contact@moz-group.com、Cc: m.saito@ / g.fujita@)へ通知
+          emailjs.send('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID_MAIN', params)
+            .then(function() {
+              // ② 送信者本人へ自動返信
+              return emailjs.send('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID_AUTOREPLY', params);
+            })
+            .then(function() {
+              statusEl.textContent = 'お問い合わせを受け付けました。3営業日以内にご返信いたします。';
+              statusEl.className = 'form-status success';
+              form.reset();
+            })
+            .catch(function(err) {
+              console.error(err);
+              statusEl.textContent = '送信に失敗しました。お手数ですが、contact@moz-group.com まで直接ご連絡ください。';
+              statusEl.className = 'form-status error';
+            })
+            .finally(function() {
+              submitBtn.disabled = false;
+              submitBtn.textContent = '送信する';
+            });
+        });
+      })();
+    </script>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-links">
+      <a href="about.html">会社概要</a>
+      <a href="history.html">会社沿革</a>
+      <a href="index.html#representative">代表挨拶</a>
+      <a href="privacy.html">プライバシーポリシー</a>
+      <a href="terms.html">利用規約</a>
+      <a href="tokushoho.html">特定商取引法に基づく表記</a>
+      <a href="contact.html">お問い合わせ</a>
+    </div>
+    <div class="footer-copy">&copy; 2026 moz Inc. All rights reserved.</div>
+  </div>
+</footer>
+
+<script>
+  (function() {
+    var toggle = document.getElementById('navToggle');
+    var menu = document.getElementById('navMenu');
+    if (!toggle || !menu) return;
+
+    function closeMenu() {
+      menu.classList.remove('open');
+      toggle.classList.remove('open');
+      toggle.setAttribute('aria-expanded', 'false');
+    }
+
+    toggle.addEventListener('click', function() {
+      var isOpen = menu.classList.toggle('open');
+      toggle.classList.toggle('open', isOpen);
+      toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    });
+
+    menu.querySelectorAll('a').forEach(function(link) {
+      link.addEventListener('click', closeMenu);
+    });
+  })();
+
+  // ===== タイプライター =====
+  (function() {
+    function typeLine(el, duration, callback) {
+      if (!el) { if (callback) callback(); return; }
+      const full = el.scrollWidth;
+      el.style.width = '0px';
+      el.classList.add('tw-active');
+      const start = performance.now();
+      function step(now) {
+        const t = Math.min(1, (now - start) / duration);
+        el.style.width = (full * t) + 'px';
+        if (t < 1) {
+          requestAnimationFrame(step);
+        } else {
+          el.classList.remove('tw-active');
+          el.style.width = '';
+          if (callback) callback();
+        }
+      }
+      requestAnimationFrame(step);
+    }
+
+    // ヒーロー見出し:ページ読み込み後すぐに開始
+    window.addEventListener('load', function() {
+      const h1 = document.getElementById('twHero1');
+      setTimeout(function() {
+        typeLine(h1, 900);
+      }, 200);
+    });
+
+    // ミッション本文:スクロールで画面に入ったら開始
+    const m1 = document.getElementById('twMission1');
+    const m2 = document.getElementById('twMission2');
+    if (m1 && m2) {
+      let missionStarted = false;
+      const missionObserver = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting && !missionStarted) {
+            missionStarted = true;
+            typeLine(m1, 900, function() {
+              typeLine(m2, 900);
+            });
+            missionObserver.disconnect();
+          }
+        });
+      }, { threshold: 0.4 });
+      missionObserver.observe(m1);
+    }
+  })();
+
+  // ===== スクロール連動フェードイン =====
+  (function() {
+    const targets = document.querySelectorAll(
+      '.eyebrow, h2, p.lead, .service-grid, .rep-block, .recruit-box, .community-grid, table.profile, .staff-grid, .sns-row, .disclosure-box, .hero p.sub, .hero .cta-row'
+    );
+    targets.forEach(function(el) { el.classList.add('reveal'); });
+
+    const revealObserver = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+
+    targets.forEach(function(el) { revealObserver.observe(el); });
+  })();
+</script>
+
+</body>
+</html>
