@@ -92,7 +92,7 @@
     z-index: 100;
     background: rgba(238,245,249,0.92);
     backdrop-filter: blur(8px);
-    border-bottom: 1px solid var(--gold);
+    border-bottom: 1px solid var(--border);
     box-shadow: 0 4px 14px rgba(22,35,46,0.06);
   }
   .header-inner {
@@ -180,7 +180,7 @@
   /* Section base */
   section {
     padding: 96px 0;
-    border-bottom: 1px solid var(--gold);
+    border-bottom: 1px solid var(--border);
   }
   .eyebrow {
     color: var(--accent2);
@@ -230,7 +230,7 @@
   /* Hero */
   .hero {
     padding: 140px 0 100px;
-    border-bottom: 1px solid var(--gold);
+    border-bottom: 1px solid var(--border);
     position: relative;
     overflow: hidden;
   }
@@ -249,16 +249,19 @@
   .thanks-bubble {
     position: absolute;
     font-size: 0.78rem;
-    padding: 5px 14px;
+    font-weight: 600;
+    padding: 6px 16px;
     border-radius: 999px;
-    background: rgba(31,95,139,0.08);
+    background: #ffffff;
     color: var(--accent2);
+    border: 1px solid rgba(31,95,139,0.25);
+    box-shadow: 0 2px 6px rgba(22,35,46,0.08);
     white-space: nowrap;
     pointer-events: none;
-    opacity: 0.85;
+    opacity: 0.95;
     z-index: 1;
   }
-  .thanks-bubble.gold { background: rgba(217,69,31,0.08); color: var(--gold); }
+  .thanks-bubble.gold { background: #ffffff; color: var(--gold); border-color: rgba(217,69,31,0.3); }
   @keyframes thanksFloatA { 0%,100% { transform: translate(0,0); } 50% { transform: translate(8px,-16px); } }
   @keyframes thanksFloatB { 0%,100% { transform: translate(0,0); } 50% { transform: translate(-10px,12px); } }
   @keyframes thanksFloatC { 0%,100% { transform: translate(0,0); } 50% { transform: translate(6px,10px); } }
@@ -268,12 +271,12 @@
   .tb-4 { top:85%; right:10%; }
   .tb-5 { top:50%; right:4%; }
   .tb-6 { top:60%; left:2%; }
-  .thanks-bubble:nth-child(1) { animation: thanksFloatA 7s ease-in-out infinite; }
-  .thanks-bubble:nth-child(2) { animation: thanksFloatB 8.5s ease-in-out infinite 0.4s; }
-  .thanks-bubble:nth-child(3) { animation: thanksFloatC 6.5s ease-in-out infinite 0.8s; }
-  .thanks-bubble:nth-child(4) { animation: thanksFloatA 9s ease-in-out infinite 1.2s; }
-  .thanks-bubble:nth-child(5) { animation: thanksFloatB 7.5s ease-in-out infinite 0.6s; }
-  .thanks-bubble:nth-child(6) { animation: thanksFloatC 8s ease-in-out infinite 1s; }
+  .thanks-bubble:nth-child(1),
+  .thanks-bubble:nth-child(2),
+  .thanks-bubble:nth-child(3),
+  .thanks-bubble:nth-child(4),
+  .thanks-bubble:nth-child(5),
+  .thanks-bubble:nth-child(6) { animation: none; }
   @media (max-width: 760px) {
     .thanks-bubble { font-size: 0.62rem; padding: 3px 8px; opacity: 0.65; }
     .tb-1 { top:4%; left:4%; }
@@ -651,6 +654,7 @@
         <li><a href="#services">サービス</a></li>
         <li><a href="preview-3d.html" target="_blank">MOZ WORLD ↗</a></li>
         <li><a href="cabin.html" target="_blank">癒しの部屋 ↗</a></li>
+        <li><a href="#lineJoin">仲間になる</a></li>
       </ul>
     </nav>
   </div>
@@ -672,7 +676,7 @@
     </p>
     <div class="cta-row">
       <a href="#services" class="btn btn-primary">サービスを見る</a>
-      <a href="https://lin.ee/wGe7asY" target="_blank" rel="noopener" class="btn btn-outline">仲間になる</a>
+      <a href="#lineJoin" class="btn btn-outline">仲間になる</a>
       <a href="preview-3d.html" target="_blank" class="btn btn-outline">MOZ WORLD を覗く ↗</a>
     </div>
   </div>
@@ -684,11 +688,9 @@
     <div class="eyebrow">Mission</div>
     <h2>私たちが目指すもの</h2>
     <p class="mission-body">
-      <span class="tw-line" id="twMission1">一つのツールが、一人の悩みを解き、</span><br>
-      <span class="tw-line" id="twMission2">一つの出会いが、一つの人生を前へ進める。</span><br><br>
-      mozという場所で交わった人が、
-      「あの時、mozに出会えてよかった」と思える瞬間を、
-      これからも増やし続けていきます。
+      <span class="tw-line" id="twMission1">ツールが、悩みを解決に導く。</span><br>
+      <span class="tw-line" id="twMission2">出会いが、人生を前へ進める力になる。</span><br><br>
+      mozという場所で出会った人が「あの時、mozに出会えてよかった」と思える瞬間を、これからも増やし続けていきます。
     </p>
   </div>
 </section>
@@ -785,11 +787,12 @@
         </p>
       </blockquote>
 
-      <p style="margin-top:16px;">
-        カジュアルにお話しできる場を設けています。気になった方はそちらからお話ししませんか?
+      <p id="lineJoin" style="margin-top:16px;">
+        カジュアルにお話しできる場として、公式LINEをご用意しています。<br>
+        友だち追加後、そのままメッセージでご相談いただけます。押し売りやしつこい営業は一切行いません。
       </p>
       <div class="cta-row" style="margin-top:0;">
-        <a href="https://lin.ee/wGe7asY" target="_blank" rel="noopener" class="btn btn-primary">カジュアルな相談をする</a>
+        <a href="https://lin.ee/wGe7asY" target="_blank" rel="noopener" class="btn btn-primary">公式LINEを友だち追加する</a>
       </div>
     </div>
   </div>
@@ -819,7 +822,7 @@
         </p>
         <p>
           mozを立ち上げたのは、同じ思いを持つ人、同じ目標を持つ人と繋がり、世界中の「ありがとう」を集めたい。そんな思いからです。<br>
-          今後mozと関わってくださったすべての方の人生を、良い方向へ導いていきます。
+          今後mozと関わってくださったすべての方に、より良い未来につながる価値を提供してまいります。
         </p>
         <p class="name">代表取締役　斎藤瑞樹</p>
       </div>
@@ -1015,28 +1018,7 @@
     });
   })();
 
-  // ===== ライオンの視差効果 =====
-  (function() {
-    const lion = document.querySelector('.lion-bg-fixed img');
-    if (!lion) return;
-    const canHover = window.matchMedia('(hover: hover)').matches;
-    let scrollY = 0, mouseX = 0, mouseY = 0;
-    function render() {
-      const sOffset = Math.min(scrollY * 0.04, 30);
-      lion.style.transform = 'translate(' + (mouseX + 'px') + ',' + (sOffset + mouseY) + 'px)';
-    }
-    window.addEventListener('scroll', function() {
-      scrollY = window.scrollY;
-      requestAnimationFrame(render);
-    }, { passive: true });
-    if (canHover) {
-      window.addEventListener('mousemove', function(e) {
-        mouseX = (e.clientX / window.innerWidth - 0.5) * 14;
-        mouseY = (e.clientY / window.innerHeight - 0.5) * 10;
-        requestAnimationFrame(render);
-      });
-    }
-  })();
+  // ===== ライオンの視差効果(フィードバックにより廃止、静止背景に戻す) =====
 
   // ===== サービスカードの傾き演出 =====
   (function() {
