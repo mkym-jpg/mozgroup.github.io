@@ -1,5 +1,5 @@
 // 株式会社moz 共通スクリプト(全ページ共通):スマホメニューの開閉とスクロールフェードイン
-// (トップページのみ:ミッション文の文字演出とロードマップの線の演出も)/ 右下のTOPボタン
+// (トップページのみ:ミッション文の文字演出(ブラーイン)/ STEPのスタックカードとロードマップの線の演出も)/ 右下のTOPボタン / タッチした場所の光
 (function () {
   var toggle = document.getElementById('navToggle');
   var menu = document.getElementById('navMenu');
@@ -19,9 +19,10 @@
 
   var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  // .scatter の文字を1文字ずつに分け、ばらばらの位置・角度を与える(画面に入ると整う)
+  // .blur-text の文字を1文字ずつに分け、先頭から順にピントが合うよう時間差を付ける
   if (!reduceMotion) {
-    document.querySelectorAll('.scatter').forEach(function (el) {
+    document.querySelectorAll('.blur-text').forEach(function (el) {
+      var index = 0;
       (function split(node) {
         Array.prototype.slice.call(node.childNodes).forEach(function (child) {
           if (child.nodeType === 3) {
@@ -30,10 +31,7 @@
               var span = document.createElement('span');
               span.className = 'ch';
               span.textContent = c;
-              span.style.setProperty('--x', Math.round((Math.random() - 0.5) * 160) + 'px');
-              span.style.setProperty('--y', Math.round((Math.random() - 0.5) * 110) + 'px');
-              span.style.setProperty('--r', Math.round((Math.random() - 0.5) * 70) + 'deg');
-              span.style.setProperty('--d', (Math.random() * 0.45).toFixed(2) + 's');
+              span.style.setProperty('--d', (index++ * 0.04).toFixed(2) + 's');
               frag.appendChild(span);
             });
             node.replaceChild(frag, child);
@@ -107,6 +105,33 @@
     window.addEventListener('load', function () { layoutTrack(); requestUpdate(); });
   }
 
+  // STEPのスタックカード(スマホ):次のカードが重なってくるほど、下のカードを少し縮めて暗くする
+  var stack = document.getElementById('stepStack');
+  if (stack && !reduceMotion) {
+    var cards = stack.querySelectorAll('.step');
+    var narrow = window.matchMedia('(max-width: 899px)');
+    var stackTicking = false;
+    function updateStack() {
+      stackTicking = false;
+      cards.forEach(function (card, i) {
+        var inner = card.querySelector('.step-inner');
+        var next = cards[i + 1];
+        if (!narrow.matches || !next) { inner.style.transform = ''; inner.style.filter = ''; return; }
+        var cur = card.getBoundingClientRect();
+        var gap = next.getBoundingClientRect().top - cur.top;
+        var p = Math.max(0, Math.min(1, 1 - gap / cur.height));
+        inner.style.transform = 'scale(' + (1 - 0.06 * p).toFixed(4) + ')';
+        inner.style.filter = 'brightness(' + (1 - 0.35 * p).toFixed(3) + ')';
+      });
+    }
+    function requestStack() {
+      if (!stackTicking) { stackTicking = true; requestAnimationFrame(updateStack); }
+    }
+    window.addEventListener('scroll', requestStack, { passive: true });
+    window.addEventListener('resize', requestStack);
+    updateStack();
+  }
+
   var targets = document.querySelectorAll('.reveal');
   var io = null;
   if (!('IntersectionObserver' in window)) {
@@ -121,6 +146,31 @@
       });
     }, { threshold: 0.12 });
     targets.forEach(function (el) { io.observe(el); });
+  }
+
+  // スマホで触れた場所に、白くやわらかい光がにじんで消える(明るい背景の上では青白い光)
+  function isLightAt(x, y) {
+    var el = document.elementFromPoint(x, y);
+    while (el && el !== document.documentElement) {
+      var m = getComputedStyle(el).backgroundColor.match(/[\d.]+/g);
+      if (m && (m.length < 4 || parseFloat(m[3]) > 0.5)) {
+        // 背景色の明るさ(0〜255)で判定
+        return (0.299 * m[0] + 0.587 * m[1] + 0.114 * m[2]) > 160;
+      }
+      el = el.parentElement;
+    }
+    return true;
+  }
+  if (!reduceMotion) {
+    document.addEventListener('pointerdown', function (e) {
+      if (e.pointerType !== 'touch') return;
+      var glow = document.createElement('span');
+      glow.className = 'touch-glow' + (isLightAt(e.clientX, e.clientY) ? ' on-light' : '');
+      glow.style.left = e.clientX + 'px';
+      glow.style.top = e.clientY + 'px';
+      document.body.appendChild(glow);
+      glow.addEventListener('animationend', function () { glow.remove(); });
+    }, { passive: true });
   }
 
   // 右下の「TOP」ボタン:先頭まで戻ったら、各セクションの演出をもう一度見られるように戻す

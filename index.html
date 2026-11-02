@@ -154,17 +154,16 @@
   }
 
   /* ============ MISSION ============ */
-  .mission-copy { font-family: var(--font-display); font-size: clamp(1.25rem, 5vw, 1.7rem); line-height: 1.9; }
+  .mission-copy { font-family: var(--font-display); font-size: clamp(1.05rem, 4.6vw, 1.7rem); line-height: 1.9; }
   .mission-copy em { font-style: normal; color: var(--violet); }
-  /* 散らばった文字が集まって文章になる(画面に入ったとき1回だけ) */
-  .reveal.scatter { opacity: 1; transform: none; }
-  #mission { overflow: hidden; }  /* 散らばった文字で横スクロールが出ないように */
-  .scatter .ch {
-    display: inline-block; opacity: 0;
-    transform: translate(var(--x), var(--y)) rotate(var(--r));
-    transition: opacity 1.1s ease var(--d), transform 1.6s cubic-bezier(.16, 1, .3, 1) var(--d);
+  /* 1文字ずつ、ぼやけた状態からピントが合っていく(画面に入ったとき) */
+  .reveal.blur-text { opacity: 1; transform: none; }
+  /* inline のままにして、句読点が行頭に来ない日本語の改行ルールを保つ */
+  .blur-text .ch {
+    opacity: 0; filter: blur(8px);
+    transition: opacity .8s ease var(--d), filter .8s ease var(--d);
   }
-  .scatter.is-visible .ch { opacity: 1; transform: none; }
+  .blur-text.is-visible .ch { opacity: 1; filter: blur(0); }
   .mission-body { margin-top: 24px; color: var(--sub); max-width: 680px; }
 
   /* ============ SERVICES ============ */
@@ -172,24 +171,28 @@
   .service-list li { font-size: 0.82rem; padding: 6px 14px; border: 1px solid var(--line); background: var(--card); border-radius: 999px; color: var(--sub); }
   .steps { display: grid; gap: 20px; margin-top: 44px; }
   @media (min-width: 900px) { .steps { grid-template-columns: repeat(3, 1fr); } }
-  .step { display: flex; overflow: hidden; }
+  .step { display: flex; }
   .step-inner { flex: 1; background: var(--card); border: 1px solid var(--line); display: flex; flex-direction: column; }
   .step-head { background: var(--ink); color: var(--on-ink); padding: 26px 24px 24px; }
   .step-no { font-family: var(--font-en); font-size: 1rem; letter-spacing: 0.24em; color: var(--gold); }
   .step-head h3 { font-size: 1.4rem; margin-top: 4px; }
   .step-head h3 small { font-size: 0.8rem; font-weight: 600; color: var(--on-ink-sub); margin-left: 6px; }
   .step-head p { margin-top: 10px; font-size: 0.88rem; color: var(--violet-soft); line-height: 1.7; }
-  /* 01は左から、02は右から、03は左からカットイン(画面に入ったかの判定は外側の .step で行う) */
-  .step.reveal { opacity: 1; transform: none; }
-  .step .step-inner { transform: translateX(-28px); clip-path: inset(0 100% 0 0); transition: clip-path 1s cubic-bezier(.7, 0, .2, 1), transform 1s cubic-bezier(.7, 0, .2, 1); }
-  .step:nth-child(2) .step-inner { transform: translateX(28px); clip-path: inset(0 0 0 100%); }
-  .step.is-visible .step-inner { transform: none; clip-path: inset(0 0 0 0); }
-  @media (min-width: 900px) {
-    .step:nth-child(2) .step-inner { transition-delay: .15s; }
-    .step:nth-child(3) .step-inner { transition-delay: .3s; }
+  /* スタックカード
+     スマホ:スクロールすると次のカードが前のカードの上に積み重なり、下になったカードは少し奥へ沈む(common.js)
+     PC:3枚が順番に下からせり上がる */
+  @media (max-width: 899px) {
+    .step { position: sticky; top: calc(var(--header-h) + 16px); overflow: visible; }
+    .step:nth-child(2) { top: calc(var(--header-h) + 30px); }
+    .step:nth-child(3) { top: calc(var(--header-h) + 44px); }
+    .step-inner { transform-origin: 50% 0; box-shadow: 0 -10px 30px rgba(16,19,43,0.12); will-change: transform; }
+    .step.reveal { opacity: 1; transform: none; }
   }
-  @media (prefers-reduced-motion: reduce) {
-    .step .step-inner, .step:nth-child(2) .step-inner { transform: none; clip-path: none; transition: none; }
+  @media (min-width: 900px) {
+    .step.reveal { opacity: 0; transform: translateY(80px); transition: opacity .8s ease, transform 1.1s cubic-bezier(.16, 1, .3, 1); }
+    .step.reveal:nth-child(2) { transition-delay: .15s; }
+    .step.reveal:nth-child(3) { transition-delay: .3s; }
+    .step.reveal.is-visible { opacity: 1; transform: none; }
   }
   .step:nth-child(3) .step-head { background: linear-gradient(135deg, var(--ink) 0%, #2A2560 100%); }
   .step-body { padding: 8px 24px 24px; flex: 1; display: flex; flex-direction: column; }
@@ -354,7 +357,7 @@
   <div class="wrap">
     <div class="eyebrow reveal">Mission</div>
     <h2 class="section-title reveal">私たちが目指すもの</h2>
-    <p class="mission-copy reveal scatter">一つの出会いが、悩みを解決に導き、<br><em>人生を前へ進める力になる。</em></p>
+    <p class="mission-copy reveal blur-text">一つの出会いが、悩みを解決に導き、<br><em>人生を前へ進める力になる。</em></p>
     <p class="mission-body reveal">mozという場所で出会った人が「あの時、mozに出会えてよかった」と思える瞬間を、これからも増やし続けていきます。</p>
   </div>
 </section>
@@ -373,7 +376,7 @@
       <li>AIを活用したマーケティング方法</li>
     </ul>
 
-    <div class="steps">
+    <div class="steps" id="stepStack">
       <article class="step reveal">
         <div class="step-inner">
           <div class="step-head">

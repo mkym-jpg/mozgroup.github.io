@@ -175,6 +175,23 @@ table.profile th { width: 200px; color: var(--sub); font-weight: 500; background
 .to-top.is-shown { opacity: 1; transform: none; pointer-events: auto; }
 .to-top:hover { background: var(--violet); }
 
+/* ---------- タッチした場所の光(スマホ) ---------- */
+.touch-glow {
+  position: fixed; z-index: 400; width: 120px; height: 120px; margin: -60px 0 0 -60px;
+  border-radius: 50%; pointer-events: none;
+  background: radial-gradient(circle, rgba(255,255,255,0.85) 0%, rgba(240,238,255,0.5) 30%, rgba(154,146,224,0.18) 55%, transparent 70%);
+  filter: blur(6px);
+  animation: touch-glow .9s cubic-bezier(.2, .7, .3, 1) forwards;
+}
+.touch-glow.on-light {
+  background: radial-gradient(circle, rgba(150,170,255,0.6) 0%, rgba(170,185,255,0.38) 30%, rgba(190,200,255,0.16) 55%, transparent 70%);
+}
+@keyframes touch-glow {
+  0%   { transform: scale(.2); opacity: 0; }
+  20%  { opacity: 1; }
+  100% { transform: scale(1.4); opacity: 0; }
+}
+
 /* ---------- Footer ---------- */
 .site-footer { background: var(--ink); color: var(--on-ink-sub); padding: 64px 0 40px; font-size: 0.82rem; }
 .footer-top { display: flex; flex-wrap: wrap; gap: 32px; justify-content: space-between; align-items: flex-start; }
