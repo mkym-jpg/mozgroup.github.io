@@ -60,7 +60,7 @@ ul { list-style: none; }
 }
 .brand { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
 .brand img { height: 34px; width: auto; }
-.brand span { font-family: var(--font-en); font-size: 1.6rem; font-weight: 500; letter-spacing: 0.12em; line-height: 1; }
+.brand img.brand-text { height: 17px; margin-top: 3px; }
 .site-nav ul { display: flex; align-items: center; gap: 26px; white-space: nowrap; }
 .site-nav a { font-size: 0.82rem; letter-spacing: 0.08em; color: var(--on-ink-sub); transition: color .2s; }
 .site-nav a:hover { color: var(--on-ink); }
