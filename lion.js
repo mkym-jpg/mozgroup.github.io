@@ -231,6 +231,7 @@ async function loadLion() {
 }
 
 // ---------- LP の進行 ----------
+// LP を閉じる:ライオンと文字を消す → 背景が上下に開いてトップが現れる
 function finishIntro() {
   if (!intro || intro.classList.contains('is-leaving')) return;
   markIntroSeen();
@@ -238,18 +239,20 @@ function finishIntro() {
   document.documentElement.classList.remove('intro-lock');
   setTimeout(() => {
     mount(heroStage, false);
-    intro.remove();
-  }, 800);
+    intro.classList.add('is-opening');
+  }, 420);
+  setTimeout(() => intro.remove(), 420 + 1400);
 }
 
 if (showIntro) {
   document.documentElement.classList.add('intro-lock');
   intro.hidden = false;
   mount(introStage, true);
-  // 1) 英文がフェードイン → 2) 自然に消える → 3) ライオンと VIEW ALL が現れる
+  // 1) 英文がフェードイン → 2) 自然に消え、扉の合わせ目に金の光 → 3) 扉が左右に開いてライオンが現れる → 4) VIEW ALL
   requestAnimationFrame(() => intro.classList.add('phase-copy'));
   setTimeout(() => intro.classList.add('phase-copy-out'), 3600);
-  setTimeout(() => intro.classList.add('phase-view'), 4800);
+  setTimeout(() => intro.classList.add('phase-open'), 5200);
+  setTimeout(() => intro.classList.add('phase-view'), 6600);
   document.getElementById('introView').addEventListener('click', finishIntro);
   document.getElementById('introSkip').addEventListener('click', finishIntro);
 } else {
