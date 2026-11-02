@@ -16,8 +16,8 @@
   --line: #E4E4EC;         /* 罫線 */
   --on-ink: #F8F8FB;       /* 濃色背景上のテキスト */
   --on-ink-sub: #A9ACC4;   /* 濃色背景上の補足テキスト */
-  --font-display: "Shippori Mincho B1", "Hiragino Mincho ProN", "Yu Mincho", serif;
-  --font-en: "Cormorant Garamond", "Times New Roman", serif;
+  --font-display: "Noto Serif JP", "Hiragino Mincho ProN", "Yu Mincho", serif;
+  --font-en: "Playfair Display", "Times New Roman", serif;
   --font-body: "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Yu Gothic", "Noto Sans JP", sans-serif;
   --max: 1080px;
   --header-h: 64px;
@@ -157,6 +157,23 @@ table.profile th { width: 200px; color: var(--sub); font-weight: 500; background
 .page-content ul.plain { list-style: disc; margin: 0 0 16px 1.3em; color: var(--sub); }
 .page-content a { color: var(--violet); text-decoration: underline; text-underline-offset: 3px; }
 .doc-meta { margin-top: 40px; padding-top: 20px; border-top: 1px solid var(--line); color: var(--sub); font-size: 0.85rem; }
+
+/* ---------- 右下のTOPボタン ---------- */
+.to-top {
+  position: fixed; right: 16px; bottom: max(16px, env(safe-area-inset-bottom)); z-index: 90;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0;
+  width: 52px; height: 52px; border-radius: 50%;
+  background: rgba(16,19,43,0.88); color: var(--on-ink);
+  border: 1px solid rgba(176,141,87,0.6);
+  font-family: var(--font-en); font-size: 0.72rem; letter-spacing: 0.12em; line-height: 1.1;
+  cursor: pointer;
+  opacity: 0; transform: translateY(10px); pointer-events: none;
+  transition: opacity .3s ease, transform .3s ease, background .2s;
+  -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
+}
+.to-top span { font-family: var(--font-body); font-size: 0.85rem; }
+.to-top.is-shown { opacity: 1; transform: none; pointer-events: auto; }
+.to-top:hover { background: var(--violet); }
 
 /* ---------- Footer ---------- */
 .site-footer { background: var(--ink); color: var(--on-ink-sub); padding: 64px 0 40px; font-size: 0.82rem; }

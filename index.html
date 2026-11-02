@@ -9,7 +9,7 @@
 <link rel="icon" href="lion-mark-dark.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Shippori+Mincho+B1:wght@600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 <style>
   /* ============ LP(最初の画面) ============ */
@@ -127,6 +127,26 @@
   .hero .sub { margin-top: 20px; color: var(--on-ink-sub); max-width: 520px; }
   .hero .cta-row { margin-top: 34px; display: flex; flex-wrap: wrap; gap: 12px; }
   .hero-stage { position: relative; height: min(92vw, 420px); margin-top: 8px; }
+  /* ライオンの背後にさす、ぼかした白い後光 */
+  .hero-stage::before, .intro-stage::before {
+    content: ""; position: absolute; left: 50%; top: 50%; z-index: 0;
+    width: min(118%, 640px); aspect-ratio: 1; transform: translate(-50%, -50%);
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255,255,255,0.95) 0%, rgba(246,245,255,0.85) 30%, rgba(214,210,255,0.45) 48%, rgba(170,165,240,0.12) 62%, transparent 72%);
+    filter: blur(14px);
+    pointer-events: none;
+    animation: halo-sway 7s ease-in-out infinite alternate;
+  }
+  /* 後光のゆらぎ:大きさと明るさがゆっくり、わずかに揺れる */
+  @keyframes halo-sway {
+    0%   { transform: translate(-50%, -50%) scale(1);    opacity: .86; }
+    45%  { transform: translate(-50.6%, -49.6%) scale(1.035); opacity: 1; }
+    100% { transform: translate(-49.5%, -50.4%) scale(.985); opacity: .9; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .hero-stage::before, .intro-stage::before { animation: none; }
+  }
+  .hero-stage .lion-canvas, .intro-stage .lion-canvas { position: relative; z-index: 1; }
   @media (min-width: 900px) {
     .hero { padding: 72px 0 96px; }
     .hero-grid { grid-template-columns: 1.05fr 1fr; gap: 40px; }
@@ -319,7 +339,7 @@
     <div class="hero-copy">
       <div class="eyebrow">Beyond Gratitude.</div>
       <h1>「ありがとうの<br><span class="line2">その先へ」</span></h1>
-      <p class="sub">私たちは、SNSコンサルティングを通じて出会った方の人生を変えます。</p>
+      <p class="sub">私たちは、SNSコンサルティングを通じて<br>出会った方の人生を変えます。</p>
       <div class="cta-row">
         <a href="#services" class="btn btn-gold">サービスを見る</a>
         <a href="#lineJoin" class="btn btn-ghost">Join us</a>

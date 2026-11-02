@@ -1,5 +1,5 @@
 // 株式会社moz 共通スクリプト(全ページ共通):スマホメニューの開閉とスクロールフェードイン
-// (トップページのみ:ミッション文の文字演出とロードマップの線の演出も)
+// (トップページのみ:ミッション文の文字演出とロードマップの線の演出も)/ 右下のTOPボタン
 (function () {
   var toggle = document.getElementById('navToggle');
   var menu = document.getElementById('navMenu');
@@ -48,6 +48,7 @@
 
   // ロードマップの線:スクロールに合わせて銀色に伸び、最後の点に届いたら金色にする
   var roadmap = document.getElementById('roadmapLine');
+  var requestUpdate = function () {};
   if (roadmap) {
     var track = roadmap.querySelector('.rm-track');
     var fill = roadmap.querySelector('.rm-fill');
@@ -96,9 +97,9 @@
       });
       if (p >= 1) roadmap.classList.add('is-complete');
     }
-    function requestUpdate() {
+    requestUpdate = function () {
       if (!ticking) { ticking = true; requestAnimationFrame(update); }
-    }
+    };
     layoutTrack();
     update();
     window.addEventListener('scroll', requestUpdate, { passive: true });
@@ -107,17 +108,48 @@
   }
 
   var targets = document.querySelectorAll('.reveal');
+  var io = null;
   if (!('IntersectionObserver' in window)) {
     targets.forEach(function (el) { el.classList.add('is-visible'); });
-    return;
+  } else {
+    io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    targets.forEach(function (el) { io.observe(el); });
   }
-  var io = new IntersectionObserver(function (entries) {
-    entries.forEach(function (entry) {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('is-visible');
-        io.unobserve(entry.target);
-      }
+
+  // 右下の「TOP」ボタン:先頭まで戻ったら、各セクションの演出をもう一度見られるように戻す
+  var topBtn = document.createElement('button');
+  topBtn.type = 'button';
+  topBtn.className = 'to-top';
+  topBtn.setAttribute('aria-label', 'ページの先頭へ戻る');
+  topBtn.innerHTML = '<span aria-hidden="true">↑</span>TOP';
+  document.body.appendChild(topBtn);
+
+  function replayAnimations() {
+    if (!io) return;
+    targets.forEach(function (el) {
+      el.classList.remove('is-visible');
+      io.observe(el);
     });
-  }, { threshold: 0.12 });
-  targets.forEach(function (el) { io.observe(el); });
+    if (roadmap) {
+      roadmap.classList.remove('is-complete');
+      requestUpdate();
+    }
+  }
+  var waitingTop = false;
+  topBtn.addEventListener('click', function () {
+    waitingTop = true;
+    window.scrollTo({ top: 0, behavior: reduceMotion ? 'auto' : 'smooth' });
+    if (window.scrollY < 2) { waitingTop = false; replayAnimations(); }
+  });
+  window.addEventListener('scroll', function () {
+    topBtn.classList.toggle('is-shown', window.scrollY > window.innerHeight * 0.8);
+    if (waitingTop && window.scrollY < 2) { waitingTop = false; replayAnimations(); }
+  }, { passive: true });
 })();
