@@ -1,0 +1,168 @@
+/* ============================================================
+   株式会社moz 共通スタイル(全ページ共通)
+   色・フォント・ヘッダー・フッター・本文の基本はここだけで管理する。
+   ページ固有のスタイルは各HTMLの <style> に書く。
+   ============================================================ */
+:root {
+  --ink: #10132B;          /* 濃色背景(ヘッダー・ヒーロー・フッター) */
+  --ink-2: #181C3A;        /* 濃色背景上のカード */
+  --bg: #F8F8FB;           /* 本文背景(白系) */
+  --card: #FFFFFF;         /* カード */
+  --text: #1A1D33;         /* 本文テキスト */
+  --sub: #5C5F72;          /* 補足テキスト */
+  --violet: #6B5FC4;       /* 強調(白背景上) */
+  --violet-soft: #9A92E0;  /* 強調(濃色背景上) */
+  --gold: #B08D57;         /* アクセント */
+  --line: #E4E4EC;         /* 罫線 */
+  --on-ink: #F8F8FB;       /* 濃色背景上のテキスト */
+  --on-ink-sub: #A9ACC4;   /* 濃色背景上の補足テキスト */
+  --font-display: "Shippori Mincho B1", "Hiragino Mincho ProN", "Yu Mincho", serif;
+  --font-en: "Cormorant Garamond", "Times New Roman", serif;
+  --font-body: "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Yu Gothic", "Noto Sans JP", sans-serif;
+  --max: 1080px;
+  --header-h: 64px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; scroll-padding-top: calc(var(--header-h) + 16px); -webkit-text-size-adjust: 100%; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.9;
+  letter-spacing: 0.02em;
+  -webkit-font-smoothing: antialiased;
+  font-variant-numeric: lining-nums;
+  overflow-x: hidden;
+}
+button { font-variant-numeric: lining-nums; }
+a { color: inherit; text-decoration: none; }
+img { max-width: 100%; display: block; }
+ul { list-style: none; }
+
+.wrap { max-width: var(--max); margin: 0 auto; padding: 0 20px; }
+@media (min-width: 768px) { .wrap { padding: 0 32px; } body { font-size: 16px; } }
+
+/* ---------- Header ---------- */
+.site-header {
+  position: sticky; top: 0; z-index: 100;
+  height: var(--header-h);
+  background: var(--ink);
+  color: var(--on-ink);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+.header-inner {
+  max-width: var(--max); height: 100%;
+  margin: 0 auto; padding: 0 20px;
+  display: flex; align-items: center; justify-content: space-between;
+  position: relative;
+}
+.brand { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+.brand img { height: 34px; width: auto; }
+.brand span { font-family: var(--font-en); font-size: 1.6rem; font-weight: 500; letter-spacing: 0.12em; line-height: 1; }
+.site-nav ul { display: flex; align-items: center; gap: 26px; white-space: nowrap; }
+.site-nav a { font-size: 0.82rem; letter-spacing: 0.08em; color: var(--on-ink-sub); transition: color .2s; }
+.site-nav a:hover { color: var(--on-ink); }
+.site-nav a.nav-cta {
+  color: var(--on-ink); border: 1px solid var(--gold);
+  padding: 8px 18px; border-radius: 2px;
+}
+.site-nav a.nav-cta:hover { background: var(--gold); color: var(--ink); }
+.nav-toggle { display: none; background: none; border: 0; padding: 10px; margin-right: -10px; cursor: pointer; }
+.nav-toggle span { display: block; width: 22px; height: 1.5px; background: var(--on-ink); margin: 5px 0; transition: transform .3s, opacity .3s; }
+.nav-toggle.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+.nav-toggle.open span:nth-child(2) { opacity: 0; }
+.nav-toggle.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+@media (max-width: 900px) {
+  .nav-toggle { display: block; margin-left: auto; }
+  .site-nav ul {
+    display: none;
+    position: absolute; top: 100%; left: 0; right: 0;
+    flex-direction: column; align-items: stretch; gap: 0;
+    background: var(--ink); padding: 8px 0 20px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+  .site-nav ul.open { display: flex; }
+  .site-nav a { display: block; padding: 15px 24px; font-size: 0.95rem; color: var(--on-ink); border-top: 1px solid rgba(255,255,255,0.06); }
+  .site-nav li:first-child a { border-top: 0; }
+  .site-nav a.nav-cta { margin: 14px 24px 0; text-align: center; border: 1px solid var(--gold); }
+}
+
+/* ---------- 見出し・本文 ---------- */
+h1, h2, h3 { font-family: var(--font-display); font-weight: 700; letter-spacing: 0.04em; line-height: 1.5; }
+.eyebrow {
+  font-family: var(--font-en);
+  font-size: 0.95rem; font-weight: 600;
+  letter-spacing: 0.22em; text-transform: uppercase;
+  color: var(--violet);
+  margin-bottom: 10px;
+}
+.section-title { font-size: clamp(1.6rem, 5.4vw, 2.3rem); margin-bottom: 28px; }
+.section-title::after { content: ""; display: block; width: 32px; height: 1px; background: var(--gold); margin-top: 18px; }
+.lead { color: var(--sub); max-width: 680px; }
+
+section { padding: 88px 0; }
+@media (min-width: 768px) { section { padding: 120px 0; } }
+.section-dark { background: var(--ink); color: var(--on-ink); }
+.section-dark .eyebrow { color: var(--violet-soft); }
+.section-dark .lead { color: var(--on-ink-sub); }
+
+/* ---------- ボタン ---------- */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+  min-height: 52px; padding: 0 30px;
+  font-size: 0.9rem; font-weight: 600; letter-spacing: 0.1em;
+  border-radius: 2px;
+  transition: background .2s, color .2s, border-color .2s;
+}
+.btn-primary { background: var(--ink); color: var(--on-ink); border-bottom: 2px solid var(--gold); }
+.btn-primary:hover { background: var(--violet); }
+.btn-gold { background: var(--gold); color: var(--ink); }
+.btn-gold:hover { background: #C4A26C; }
+.btn-ghost { border: 1px solid rgba(255,255,255,0.35); color: var(--on-ink); }
+.btn-ghost:hover { border-color: var(--on-ink); }
+.btn-line { background: #06C755; color: #fff; }
+.btn-line:hover { background: #05B34C; }
+@media (max-width: 520px) { .btn { width: 100%; } }
+
+/* ---------- テーブル(会社概要・特商法) ---------- */
+table.profile { width: 100%; border-collapse: collapse; background: var(--card); border: 1px solid var(--line); }
+table.profile th, table.profile td { text-align: left; vertical-align: top; padding: 18px 20px; border-bottom: 1px solid var(--line); font-size: 0.92rem; }
+table.profile th { width: 200px; color: var(--sub); font-weight: 500; background: #FBFBFD; }
+@media (max-width: 640px) {
+  table.profile, table.profile tbody, table.profile tr, table.profile th, table.profile td { display: block; width: 100%; }
+  table.profile th { padding: 14px 16px 4px; border-bottom: 0; background: none; font-size: 0.8rem; }
+  table.profile td { padding: 0 16px 14px; }
+}
+
+/* ---------- スクロールで一度だけフェードイン ---------- */
+.reveal { opacity: 0; transform: translateY(16px); transition: opacity .8s ease, transform .8s ease; }
+.reveal.is-visible { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .reveal { opacity: 1; transform: none; transition: none; }
+}
+
+/* ---------- サブページ ---------- */
+.page-hero { background: var(--ink); color: var(--on-ink); padding: 72px 0 56px; }
+.page-hero .eyebrow { color: var(--violet-soft); }
+.page-hero h1 { font-size: clamp(1.7rem, 6vw, 2.6rem); }
+.page-content { padding: 64px 0 104px; }
+.page-content .doc { max-width: 820px; }
+.page-content h2 { font-size: 1.2rem; margin: 48px 0 14px; padding-left: 14px; border-left: 2px solid var(--gold); line-height: 1.6; }
+.page-content h2:first-child { margin-top: 0; }
+.page-content p { color: var(--sub); margin-bottom: 16px; }
+.page-content ul.plain { list-style: disc; margin: 0 0 16px 1.3em; color: var(--sub); }
+.page-content a { color: var(--violet); text-decoration: underline; text-underline-offset: 3px; }
+.doc-meta { margin-top: 40px; padding-top: 20px; border-top: 1px solid var(--line); color: var(--sub); font-size: 0.85rem; }
+
+/* ---------- Footer ---------- */
+.site-footer { background: var(--ink); color: var(--on-ink-sub); padding: 64px 0 40px; font-size: 0.82rem; }
+.footer-top { display: flex; flex-wrap: wrap; gap: 32px; justify-content: space-between; align-items: flex-start; }
+.footer-brand img { height: 84px; width: auto; }
+.footer-brand p { font-family: var(--font-en); font-size: 1rem; letter-spacing: 0.18em; color: var(--violet-soft); margin-top: 10px; }
+.footer-links { display: grid; grid-template-columns: repeat(2, auto); gap: 12px 40px; }
+.footer-links a:hover { color: var(--on-ink); }
+.footer-copy { margin-top: 48px; padding-top: 24px; border-top: 1px solid rgba(255,255,255,0.08); font-family: var(--font-en); letter-spacing: 0.08em; }

@@ -2,528 +2,38 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>利用規約 | 株式会社moz</title>
-<style>
-  :root {
-    --bg: #eef5f9;
-    --bg-elevated: #ffffff;
-    --gold: #d9451f;
-    --gold-soft: #ea6b3f;
-    --accent2: #1f5f8b;
-    --accent2-soft: #3a7fab;
-    --text-main: #16232e;
-    --text-sub: #5f7485;
-    --border: #d8e3ea;
-    --font-display: "Zen Kaku Gothic New", "Hiragino Sans", "Yu Gothic", sans-serif;
-    --font-body: "Hiragino Sans", "Yu Gothic", sans-serif;
-    --max-width: 1080px;
-  }
-
-  html { scroll-behavior: smooth; }
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-
-  .lion-bg-fixed {
-    position: fixed;
-    inset: 0;
-    z-index: -1;
-    display: flex;
-    align-items: flex-start;
-    justify-content: center;
-    padding-top: 4vh;
-    pointer-events: none;
-    opacity: 0.28;
-  }
-  .lion-bg-fixed img {
-    width: min(1100px, 82vw);
-    height: auto;
-  }
-  @media (max-width: 900px) {
-    .lion-bg-fixed {
-      align-items: center;
-      padding-top: 0;
-      opacity: 0.28;
-    }
-    .lion-bg-fixed img {
-      width: 96vw;
-      max-width: none;
-    }
-  }
-
-  body {
-    background: var(--bg);
-    color: var(--text-main);
-    font-family: var(--font-body);
-    line-height: 1.75;
-    -webkit-font-smoothing: antialiased;
-  }
-
-  a { color: inherit; text-decoration: none; }
-
-  .wrap {
-    max-width: var(--max-width);
-    margin: 0 auto;
-    padding: 0 24px;
-  }
-
-  /* Header */
-  header {
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    background: rgba(238,245,249,0.92);
-    backdrop-filter: blur(8px);
-    border-bottom: 1px solid var(--gold);
-  }
-  .header-inner {
-    max-width: var(--max-width);
-    margin: 0 auto;
-    padding: 18px 24px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    position: relative;
-  }
-  .logo {
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    font-size: 1.15rem;
-    flex-shrink: 0;
-    white-space: nowrap;
-  }
-  .logo span { color: var(--gold); }
-  .logo img { height: 40px; width: auto; display: block; }
-  nav ul {
-    list-style: none;
-    display: flex;
-    gap: 20px;
-    font-size: 0.8rem;
-    flex-wrap: nowrap;
-    white-space: nowrap;
-  }
-  nav a:hover { color: var(--gold-soft); }
-  .nav-toggle {
-    display: none;
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 8px;
-    color: var(--text-main);
-    z-index: 120;
-  }
-  .nav-toggle span {
-    display: block;
-    width: 24px;
-    height: 2px;
-    background: var(--text-main);
-    margin: 5px 0;
-    transition: transform 0.3s ease, opacity 0.3s ease;
-  }
-  .nav-toggle.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
-  .nav-toggle.open span:nth-child(2) { opacity: 0; }
-  .nav-toggle.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
-
-  @media (max-width: 760px) {
-    .nav-toggle {
-      display: block;
-      margin-left: auto;
-    }
-    nav {
-      position: static;
-      display: contents;
-    }
-    nav ul {
-      display: none;
-      position: absolute;
-      top: 100%;
-      right: 0;
-      left: 0;
-      flex-direction: column;
-      gap: 0;
-      background: var(--bg);
-      border-bottom: 1px solid var(--border);
-      padding: 8px 0;
-    }
-    nav ul.open { display: flex; }
-    nav ul li {
-      padding: 0;
-    }
-    nav ul li a {
-      display: block;
-      padding: 14px 24px;
-      font-size: 1rem;
-      border-top: 1px solid var(--border);
-    }
-    nav ul li:first-child a { border-top: none; }
-  }
-
-  /* Section base */
-  section {
-    padding: 96px 0;
-    border-bottom: 1px solid var(--gold);
-  }
-  .eyebrow {
-    color: var(--accent2);
-    font-size: 0.78rem;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    margin-bottom: 14px;
-    position: relative;
-    padding-left: 18px;
-  }
-  .eyebrow::before {
-    content: "";
-    position: absolute;
-    left: 0;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 10px;
-    height: 3px;
-    background: var(--gold);
-  }
-  h1, h2, h3 {
-    font-family: var(--font-display);
-    font-weight: 700;
-    letter-spacing: 0.02em;
-  }
-  h2 {
-    font-size: clamp(1.6rem, 3vw, 2.2rem);
-    margin-bottom: 32px;
-    position: relative;
-    display: inline-block;
-  }
-  h2::after {
-    content: "";
-    position: absolute;
-    left: 0;
-    bottom: -8px;
-    width: 40px;
-    height: 3px;
-    background: var(--gold);
-  }
-  p.lead {
-    color: var(--text-sub);
-    font-size: 1.02rem;
-    max-width: 640px;
-  }
-
-  /* Hero */
-  .hero {
-    padding: 140px 0 100px;
-    border-bottom: 1px solid var(--gold);
-    position: relative;
-    overflow: hidden;
-  }
-  .hero::before {
-    content: "";
-    position: absolute;
-    top: -20%;
-    right: -10%;
-    width: 480px;
-    height: 480px;
-    background: radial-gradient(circle, rgba(217,69,31,0.12), transparent 70%);
-    pointer-events: none;
-  }
-  .hero .wrap {
-    position: relative;
-    z-index: 2;
-  }
-  .hero h1 {
-    font-size: clamp(2.2rem, 5vw, 3.4rem);
-    line-height: 1.35;
-    max-width: 780px;
-  }
-  .hero h1 .accent { color: var(--gold); }
-  .hero p.sub {
-    margin-top: 24px;
-    color: var(--text-sub);
-    max-width: 560px;
-    font-size: 1.05rem;
-  }
-  .cta-row {
-    margin-top: 40px;
-    display: flex;
-    gap: 16px;
-    flex-wrap: wrap;
-  }
-  .btn {
-    display: inline-block;
-    padding: 14px 28px;
-    font-size: 0.92rem;
-    border-radius: 4px;
-    font-weight: 600;
-    letter-spacing: 0.02em;
-    transition: all 0.2s ease;
-  }
-  .btn-primary {
-    background: var(--gold);
-    color: #ffffff;
-  }
-  .btn-primary:hover { background: var(--gold-soft); }
-  .btn-outline {
-    border: 1px solid var(--border);
-    color: var(--text-main);
-  }
-  .btn-outline:hover { border-color: var(--gold); color: var(--gold); }
-
-  /* Mission */
-  .mission-body {
-    max-width: 720px;
-    color: var(--text-sub);
-  }
-  .placeholder-note {
-    display: inline-block;
-    margin-top: 16px;
-    padding: 4px 10px;
-    font-size: 0.72rem;
-    border: 1px dashed var(--gold);
-    color: var(--gold);
-    border-radius: 3px;
-  }
-
-  /* Services */
-  .service-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 24px;
-    margin-top: 36px;
-  }
-  .service-card {
-    background: var(--bg-elevated);
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    padding: 32px;
-    transition: border-color 0.2s ease;
-  }
-  .service-card:hover { border-color: var(--gold); }
-  .service-card .tag {
-    font-size: 0.72rem;
-    color: var(--gold);
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    margin-bottom: 10px;
-  }
-  .service-card h3 { font-size: 1.2rem; margin-bottom: 10px; }
-  .service-card p { color: var(--text-sub); font-size: 0.92rem; }
-  .service-card.add-more {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--text-sub);
-    border-style: dashed;
-    font-size: 0.85rem;
-  }
-  .disclosure-box {
-    margin-top: 40px;
-    padding: 32px;
-    background: var(--bg-elevated);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-  }
-  .disclosure-box p {
-    color: var(--text-sub);
-    font-size: 0.94rem;
-    margin-bottom: 16px;
-  }
-  .disclosure-box p:last-of-type { margin-bottom: 24px; }
-  .disclosure-box strong { color: var(--gold); }
-
-  /* Rep message */
-  .rep-block {
-    display: flex;
-    gap: 40px;
-    flex-wrap: wrap;
-    align-items: flex-start;
-  }
-  .rep-photo {
-    width: 180px;
-    height: 180px;
-    border-radius: 6px;
-    background: var(--bg-elevated);
-    border: 1px solid var(--border);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--text-sub);
-    font-size: 0.8rem;
-    flex-shrink: 0;
-  }
-  .rep-text { max-width: 560px; color: var(--text-sub); }
-  .rep-text .name { color: var(--text-main); font-weight: 700; margin-top: 16px; }
-
-  /* Staff (top page) */
-  .staff-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 24px;
-    margin-top: 32px;
-  }
-  .staff-card { min-width: 0; }
-  @media (max-width: 760px) {
-    .staff-grid {
-      grid-template-columns: repeat(2, 1fr);
-      gap: 10px;
-    }
-    .staff-card { padding: 10px; }
-    .staff-card svg { width: 60px; }
-    .staff-card h3 { font-size: 0.78rem; word-break: break-word; }
-    .staff-role { font-size: 0.62rem; word-break: break-word; }
-    .staff-meta { font-size: 0.66rem; }
-  }
-  .staff-card {
-    background: var(--bg-elevated);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 24px;
-    text-align: center;
-  }
-  .staff-card svg { width: 110px; height: auto; margin: 0 auto 10px; display: block; }
-  .staff-card h3 { font-size: 0.95rem; margin-bottom: 4px; }
-  .staff-role { color: var(--gold); font-size: 0.74rem; letter-spacing: 0.04em; margin-bottom: 8px; }
-  .staff-meta { color: var(--text-sub); font-size: 0.78rem; }
-
-  /* Recruit */
-  .recruit-box {
-    background: var(--bg-elevated);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 48px;
-  }
-  .recruit-box h2 { margin-bottom: 12px; }
-
-  /* Community / Discord */
-  .community-grid {
-    display: grid;
-    grid-template-columns: 1.2fr 1fr;
-    gap: 32px;
-    margin-top: 32px;
-  }
-  @media (max-width: 760px) {
-    .community-grid { grid-template-columns: 1fr; }
-  }
-  .discord-widget-slot {
-    background: var(--bg-elevated);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 24px;
-    min-height: 220px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--text-sub);
-    font-size: 0.85rem;
-    text-align: center;
-  }
-  .channel-list { list-style: none; margin-top: 16px; }
-  .channel-list li {
-    padding: 10px 0;
-    border-bottom: 1px solid var(--border);
-    font-size: 0.9rem;
-    color: var(--text-sub);
-  }
-  .channel-list li .badge {
-    display: inline-block;
-    font-size: 0.68rem;
-    padding: 2px 8px;
-    border-radius: 10px;
-    margin-right: 8px;
-  }
-  .badge.open { background: rgba(31,95,139,0.13); color: var(--accent2); }
-  .badge.private { background: rgba(217,69,31,0.10); color: var(--gold); }
-
-  /* Company profile */
-  table.profile {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 24px;
-  }
-  table.profile th, table.profile td {
-    text-align: left;
-    padding: 16px 12px;
-    border-bottom: 1px solid var(--border);
-    font-size: 0.92rem;
-  }
-  table.profile th {
-    width: 180px;
-    color: var(--text-sub);
-    font-weight: 500;
-  }
-  .tbd { color: var(--gold); font-size: 0.82rem; }
-
-  /* News */
-  .news-empty {
-    color: var(--text-sub);
-    font-size: 0.92rem;
-    padding: 32px;
-    text-align: center;
-    border: 1px dashed var(--border);
-    border-radius: 6px;
-  }
-
-  /* SNS */
-  .sns-row {
-    display: flex;
-    gap: 16px;
-    flex-wrap: wrap;
-    margin-top: 24px;
-  }
-  .sns-pill {
-    padding: 12px 22px;
-    border: 1px solid var(--border);
-    border-radius: 30px;
-    font-size: 0.88rem;
-  }
-  .sns-pill:hover { border-color: var(--gold); color: var(--gold-soft); }
-
-  footer {
-    padding: 40px 0;
-    text-align: center;
-    color: var(--text-sub);
-    font-size: 0.8rem;
-  }
-  .footer-links {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 20px;
-    margin-bottom: 16px;
-    font-size: 0.82rem;
-  }
-  .footer-links a:hover { color: var(--gold); }
-  .footer-copy { color: var(--text-sub); }
-  .page-hero { padding: 100px 0 50px; border-bottom: 1px solid var(--border); }
-  .page-hero h1 { font-size: clamp(1.8rem, 4vw, 2.6rem); margin-top: 10px; }
-  .page-content { padding: 60px 0 100px; }
-  .page-content h2 { font-size: 1.3rem; margin: 40px 0 16px; }
-  .page-content h2:first-child { margin-top: 0; }
-  .page-content p { color: var(--text-sub); margin-bottom: 16px; line-height: 1.9; }
-  .page-content ul.plain { list-style: disc; margin: 0 0 16px 20px; color: var(--text-sub); line-height: 1.9; }
-</style>
+<meta name="description" content="株式会社mozの利用規約です。">
+<meta name="theme-color" content="#10132B">
+<link rel="icon" href="lion-mark-dark.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Shippori+Mincho+B1:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<div class="lion-bg-fixed" aria-hidden="true">
-  <img src="lion-bg.png" alt="">
-</div>
-
-<header>
+<header class="site-header">
   <div class="header-inner">
-    <div class="logo"><a href="index.html#top" style="display:flex; align-items:center;"><img src="moz-logo.png" alt="株式会社moz"></a></div>
+    <a class="brand" href="index.html#top" aria-label="株式会社moz トップへ"><img src="lion-mark-white.png" alt=""><span>moz</span></a>
     <button class="nav-toggle" id="navToggle" aria-label="メニューを開く" aria-expanded="false">
       <span></span><span></span><span></span>
     </button>
-    <nav>
+    <nav class="site-nav">
       <ul id="navMenu">
         <li><a href="index.html#top">HOME</a></li>
         <li><a href="index.html#mission">ミッション</a></li>
         <li><a href="index.html#services">サービス</a></li>
-        <li><a href="preview-3d.html" target="_blank">MOZ WORLD ↗</a></li>
-        <li><a href="cabin.html" target="_blank">癒しの部屋 ↗</a></li>
+        <li><a href="index.html#faq">よくある質問</a></li>
+        <li><a href="cabin.html" target="_blank" rel="noopener">癒しの部屋 ↗</a></li>
+        <li><a href="index.html#lineJoin" class="nav-cta">仲間になる</a></li>
       </ul>
     </nav>
   </div>
 </header>
 
+<main>
 <section class="page-hero">
   <div class="wrap">
     <div class="eyebrow">Terms</div>
@@ -533,21 +43,22 @@
 
 <section class="page-content">
   <div class="wrap">
-    <p>本規約は、株式会社moz(以下「当社」)が提供するウェブサイト、コミュニティ(Discord等)、および関連サービス(以下「本サービス」)の利用条件を定めるものです。本サービスをご利用になる方(以下「利用者」)は、本規約に同意したものとみなします。</p>
+    <div class="doc">
+    <p>本規約は、株式会社moz(以下「当社」)が提供するウェブサイト、コミュニティ、および関連サービス(以下「本サービス」)の利用条件を定めるものです。本サービスをご利用になる方(以下「利用者」)は、本規約に同意したものとみなします。</p>
 
     <h2>第1条(定義)</h2>
     <p>本規約において、次の各号に掲げる用語は、当該各号に定める意味を有するものとします。</p>
     <ul class="plain">
-      <li>「本サービス」とは、当社が提供するウェブサイト、AIツール(Idemitor＜イデミター＞、Resona＜レゾナ＞(仮)等)、コミュニティ運営その他関連する一切のサービスをいいます。</li>
+      <li>「本サービス」とは、当社が提供するウェブサイト、SNSコンサルティング、セミナー、コミュニティ運営その他関連する一切のサービスをいいます。</li>
       <li>「利用者」とは、本サービスを利用する個人または法人をいいます。</li>
-      <li>「コンテンツ」とは、本サービスを通じて提供または利用者が投稿する文章、画像、データその他一切の情報をいいます。</li>
+      <li>「コンテンツ」とは、本サービスを通じて提供または利用者が投稿する文章、画像、動画、データその他一切の情報をいいます。</li>
     </ul>
 
     <h2>第2条(適用)</h2>
     <p>本規約は、利用者と当社との間の本サービスの利用に関わる一切の関係に適用されます。当社が本サービスに関して個別に定める規定(ガイドライン等)がある場合、当該規定は本規約の一部を構成します。</p>
 
     <h2>第3条(利用登録・コミュニティ参加)</h2>
-    <p>本サービスの一部(Discordコミュニティ等)の利用にあたっては、当社所定の方法によるご登録・ご参加が必要です。当社は、登録希望者に以下の事由があると判断した場合、登録をお断り、または登録後であっても利用資格を取り消すことができるものとします。</p>
+    <p>本サービスの一部(グループコンサルティング等のコミュニティ)の利用にあたっては、当社所定の方法によるご登録・ご参加が必要です。当社は、登録希望者に以下の事由があると判断した場合、登録をお断り、または登録後であっても利用資格を取り消すことができるものとします。</p>
     <ul class="plain">
       <li>虚偽の情報を届け出た場合</li>
       <li>本規約に違反したことがある場合</li>
@@ -564,7 +75,7 @@
       <li>他の利用者に関する個人情報等を収集または蓄積する行為</li>
       <li>不正アクセスをし、またはこれを試みる行為</li>
       <li>他の利用者に成りすます行為</li>
-      <li>当社が提供するAIツールを、当社の許諾なく第三者に再配布・転売する行為</li>
+      <li>当社が提供する教材・動画・資料等を、当社の許諾なく第三者に再配布・転売する行為</li>
       <li>その他、当社が不適切と判断する行為</li>
     </ul>
 
@@ -579,7 +90,7 @@
     <p>当社は、本サービスの提供の停止または中断により、利用者または第三者が被ったいかなる不利益または損害についても、一切の責任を負わないものとします。</p>
 
     <h2>第6条(知的財産権)</h2>
-    <p>本サービスを通じて当社が提供するAIツール、コンテンツ、その他一切の情報にかかる著作権、商標権その他の知的財産権は、当社または正当な権利を有する第三者に帰属します。利用者は、当社の事前の書面による承諾なく、これらを複製、転用、改変、頒布その他の方法により利用してはならないものとします。</p>
+    <p>本サービスを通じて当社が提供する教材、動画、資料その他一切のコンテンツにかかる著作権、商標権その他の知的財産権は、当社または正当な権利を有する第三者に帰属します。利用者は、当社の事前の書面による承諾なく、これらを複製、転用、改変、頒布その他の方法により利用してはならないものとします。</p>
 
     <h2>第7条(利用制限および登録抹消)</h2>
     <p>当社は、利用者が以下のいずれかに該当する場合には、事前の通知なく、利用者に対して本サービスの全部もしくは一部の利用を制限し、または利用者としての登録を抹消することができるものとします。</p>
@@ -608,47 +119,31 @@
     <h2>第13条(準拠法・裁判管轄)</h2>
     <p>本規約の解釈にあたっては、日本法を準拠法とします。本サービスに関して紛争が生じた場合には、当社の本店所在地を管轄する裁判所を専属的合意管轄とします。</p>
 
-    <p style="margin-top:24px;">制定日:(TBD)</p>
+    <p class="doc-meta">最終更新日:2026年11月2日</p>
+    </div>
   </div>
 </section>
+</main>
 
-<footer>
+<footer class="site-footer">
   <div class="wrap">
-    <div class="footer-links">
-      <a href="about.html">会社概要</a>
-      <a href="history.html">会社沿革</a>
-      <a href="index.html#representative">代表挨拶</a>
-      <a href="privacy.html">プライバシーポリシー</a>
-      <a href="terms.html">利用規約</a>
-      <a href="tokushoho.html">特定商取引法に基づく表記</a>
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img src="moz-logo-white.png" alt="株式会社moz Beyond Gratitude.">
+      </div>
+      <nav class="footer-links" aria-label="フッターメニュー">
+        <a href="about.html">会社概要</a>
+        <a href="history.html">会社沿革</a>
+        <a href="index.html#representative">代表挨拶</a>
+        <a href="privacy.html">プライバシーポリシー</a>
+        <a href="terms.html">利用規約</a>
+        <a href="tokushoho.html">特定商取引法に基づく表記</a>
+      </nav>
     </div>
     <div class="footer-copy">&copy; 2026 moz Inc. All rights reserved.</div>
   </div>
 </footer>
 
-<script>
-  (function() {
-    var toggle = document.getElementById('navToggle');
-    var menu = document.getElementById('navMenu');
-    if (!toggle || !menu) return;
-
-    function closeMenu() {
-      menu.classList.remove('open');
-      toggle.classList.remove('open');
-      toggle.setAttribute('aria-expanded', 'false');
-    }
-
-    toggle.addEventListener('click', function() {
-      var isOpen = menu.classList.toggle('open');
-      toggle.classList.toggle('open', isOpen);
-      toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
-    });
-
-    menu.querySelectorAll('a').forEach(function(link) {
-      link.addEventListener('click', closeMenu);
-    });
-  })();
-</script>
-
+<script src="common.js"></script>
 </body>
 </html>

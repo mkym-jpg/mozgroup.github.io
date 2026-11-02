@@ -2,16 +2,25 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MOZ CABIN — 癒しの部屋</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>癒しの部屋 | 株式会社moz</title>
+<meta name="theme-color" content="#0E0906">
+<link rel="icon" href="lion-mark-dark.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Shippori+Mincho+B1:wght@600;700&display=swap" rel="stylesheet">
 <style>
+  /* 火の位置は script 内の BG_IMAGES(画像に対する%)から自動で計算する */
   :root {
-    --copper: #c8834f;
-    --copper-soft: #e0a978;
-    --petrol: #2d524d;
-    --text: #ede4d3;
-    --text-sub: #b0a48f;
-    --wood-dark: #150d07;
+    --fire-x: 50%;
+    --fire-y: 60%;
+    --gold: #C9A46A;
+    --gold-soft: #E2C796;
+    --text: #F1E9DC;
+    --text-sub: #B9AC98;
+    --wood-dark: #0E0906;
+    --font-display: "Shippori Mincho B1", "Hiragino Mincho ProN", "Yu Mincho", serif;
+    --font-en: "Cormorant Garamond", "Times New Roman", serif;
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   html, body {
@@ -20,209 +29,111 @@
     background: var(--wood-dark);
     font-family: "Hiragino Sans", "Yu Gothic", sans-serif;
     color: var(--text);
+    font-variant-numeric: lining-nums;
   }
   .cabin-bg {
-    position: fixed;
-    inset: 0;
-    z-index: 1;
-    background: url("cabin-bg.jpg") center 52% / cover no-repeat;
+    position: fixed; inset: 0; z-index: 1;
+    background: url("cabin-bg.jpg") center center / cover no-repeat;
   }
+  @media (orientation: portrait) {
+    .cabin-bg { background-image: url("cabin-bg-sp.jpg"); }
+  }
+  /* 火のゆらぎ(ゆっくり・控えめ) */
   .fire-glow {
-    position: fixed;
-    left: 56.0%;
-    top: 59.8%;
-    width: 90vw;
-    height: 90vh;
+    position: fixed; left: var(--fire-x); top: var(--fire-y);
+    width: 90vw; height: 90vh;
     transform: translate(-50%, -50%);
-    z-index: 2;
-    pointer-events: none;
-    background: radial-gradient(ellipse 40% 45% at center,
-                rgba(255,150,60,0.28) 0%,
-                rgba(255,130,50,0.12) 35%,
-                transparent 70%);
+    z-index: 2; pointer-events: none;
+    background: radial-gradient(ellipse 40% 45% at center, rgba(255,150,60,0.24) 0%, rgba(255,130,50,0.1) 35%, transparent 70%);
     mix-blend-mode: screen;
-    animation: breathe 5s ease-in-out infinite;
+    animation: breathe 6s ease-in-out infinite;
   }
   @keyframes breathe {
-    0%, 100% { opacity: 0.35; transform: translate(-50%, -50%) scale(1.0); }
-    50%      { opacity: 1.0;  transform: translate(-50%, -50%) scale(1.06); }
+    0%, 100% { opacity: 0.45; }
+    50% { opacity: 0.95; }
   }
-  .fire-flicker {
-    position: fixed;
-    left: 56.0%;
-    top: 59.8%;
-    width: 60vw;
-    height: 60vh;
-    transform: translate(-50%, -50%);
-    z-index: 2;
-    pointer-events: none;
-    background: radial-gradient(ellipse 30% 35% at center,
-                rgba(255,170,80,0.18) 0%, transparent 65%);
-    mix-blend-mode: screen;
-    animation: flicker 0.14s steps(2) infinite;
-  }
-  @keyframes flicker {
-    0%   { opacity: 0.5; }
-    50%  { opacity: 0.85; }
-    100% { opacity: 0.62; }
-  }
-  #embers {
-    position: fixed;
-    inset: 0;
-    z-index: 3;
-    pointer-events: none;
-  }
+  #embers { position: fixed; inset: 0; z-index: 3; pointer-events: none; }
   .vignette {
-    position: fixed;
-    inset: 0;
-    z-index: 4;
-    pointer-events: none;
-    background: radial-gradient(ellipse at 50% 52%, transparent 35%, rgba(10,6,3,0.5) 85%, rgba(8,5,2,0.8) 100%);
+    position: fixed; inset: 0; z-index: 4; pointer-events: none;
+    background: radial-gradient(ellipse at 50% 52%, transparent 35%, rgba(10,6,3,0.5) 85%, rgba(8,5,2,0.82) 100%);
   }
   .ui {
-    position: fixed;
-    inset: 0;
-    z-index: 5;
-    pointer-events: none;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    padding: 28px;
+    position: fixed; inset: 0; z-index: 5; pointer-events: none;
+    display: flex; flex-direction: column; justify-content: space-between;
+    padding: max(28px, env(safe-area-inset-top)) 24px max(28px, env(safe-area-inset-bottom));
   }
   .eyebrow {
-    font-size: 0.72rem;
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
-    color: var(--copper-soft);
+    font-family: var(--font-en); font-size: 0.95rem; font-weight: 600;
+    letter-spacing: 0.26em; color: var(--gold-soft);
     text-shadow: 0 2px 8px rgba(0,0,0,0.8);
   }
   .room-title {
-    margin-top: 8px;
-    font-size: clamp(1.4rem, 3.5vw, 2rem);
-    font-weight: 700;
-    letter-spacing: 0.04em;
+    margin-top: 6px;
+    font-family: var(--font-display); font-weight: 700;
+    font-size: clamp(1.6rem, 6vw, 2.3rem); letter-spacing: 0.08em;
     text-shadow: 0 2px 12px rgba(0,0,0,0.9);
   }
   .room-sub {
-    margin-top: 10px;
-    font-size: 0.85rem;
-    color: var(--text-sub);
-    max-width: 360px;
-    line-height: 1.8;
+    margin-top: 10px; font-size: 0.88rem; color: var(--text-sub);
+    max-width: 360px; line-height: 1.9;
     text-shadow: 0 1px 8px rgba(0,0,0,0.9);
   }
-  .ui-bottom {
-    pointer-events: none;
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    align-items: flex-start;
-  }
-  .controls {
-    pointer-events: auto;
-    display: flex;
-    gap: 12px;
-    flex-wrap: wrap;
-    align-items: center;
-  }
+  .ui-bottom { display: flex; flex-direction: column; gap: 14px; align-items: flex-start; }
+  .controls { pointer-events: auto; display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
   .btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    padding: 12px 20px;
-    border-radius: 4px;
-    font-size: 0.85rem;
-    font-weight: 600;
+    display: inline-flex; align-items: center; gap: 8px;
+    min-height: 46px; padding: 0 20px;
+    border-radius: 2px; font-size: 0.85rem; font-weight: 600; letter-spacing: 0.06em;
     cursor: pointer;
-    border: 1px solid rgba(224,169,120,0.4);
-    background: rgba(30,18,10,0.7);
+    border: 1px solid rgba(201,164,106,0.45);
+    background: rgba(20,12,7,0.72);
     color: var(--text);
-    backdrop-filter: blur(6px);
-    transition: all 0.2s ease;
+    backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+    transition: border-color .2s, background .2s;
     text-decoration: none;
   }
-  .btn:hover { border-color: var(--copper); background: rgba(50,32,18,0.85); }
-  .btn-discord {
-    background: rgba(45,82,77,0.6);
-    border-color: rgba(120,180,170,0.4);
-  }
-  .btn-discord:hover { border-color: var(--petrol); background: rgba(45,82,77,0.85); }
-  .hint {
-    font-size: 0.72rem;
-    color: var(--text-sub);
-    letter-spacing: 0.05em;
-    text-shadow: 0 1px 6px rgba(0,0,0,0.9);
-  }
+  .btn:hover { border-color: var(--gold); background: rgba(40,26,14,0.85); }
+  .btn-line { border-color: rgba(6,199,85,0.55); }
+  .btn-line:hover { border-color: #06C755; }
+  .hint { font-size: 0.74rem; color: var(--text-sub); letter-spacing: 0.06em; text-shadow: 0 1px 6px rgba(0,0,0,0.9); }
   .nav-back {
     pointer-events: auto;
-    position: fixed;
-    top: 28px;
-    right: 28px;
-    z-index: 6;
-    font-size: 0.78rem;
-    color: var(--text-sub);
-    text-decoration: none;
-    border: 1px solid rgba(176,164,143,0.3);
-    padding: 8px 14px;
-    border-radius: 4px;
-    background: rgba(30,18,10,0.6);
-    backdrop-filter: blur(6px);
+    position: fixed; top: max(24px, env(safe-area-inset-top)); right: 20px; z-index: 6;
+    font-size: 0.78rem; color: var(--text-sub); text-decoration: none;
+    border: 1px solid rgba(185,172,152,0.3);
+    padding: 9px 14px; border-radius: 2px;
+    background: rgba(20,12,7,0.6);
+    backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
   }
-  .nav-back:hover { color: var(--copper); border-color: var(--copper); }
+  .nav-back:hover { color: var(--gold-soft); border-color: var(--gold); }
   .enter-gate {
-    position: fixed;
-    inset: 0;
-    z-index: 10;
+    position: fixed; inset: 0; z-index: 10;
     background: rgba(12,7,4,0.96);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    padding: 32px;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    text-align: center; padding: 32px;
     transition: opacity 0.9s ease;
   }
   .enter-gate.hidden { opacity: 0; pointer-events: none; }
-  .enter-gate .g-eyebrow {
-    font-size: 0.72rem;
-    letter-spacing: 0.24em;
-    text-transform: uppercase;
-    color: var(--copper-soft);
-    margin-bottom: 20px;
-  }
-  .enter-gate h1 {
-    font-size: clamp(1.6rem, 4vw, 2.4rem);
-    font-weight: 700;
-    line-height: 1.7;
-    margin-bottom: 16px;
-  }
-  .enter-gate p {
-    color: var(--text-sub);
-    font-size: 0.9rem;
-    line-height: 1.9;
-    max-width: 420px;
-    margin-bottom: 36px;
-  }
+  .enter-gate .g-eyebrow { font-family: var(--font-en); font-size: 1rem; letter-spacing: 0.3em; color: var(--gold-soft); margin-bottom: 20px; }
+  .enter-gate h1 { font-family: var(--font-display); font-size: clamp(1.6rem, 6vw, 2.4rem); font-weight: 700; line-height: 1.7; margin-bottom: 16px; letter-spacing: 0.06em; }
+  .enter-gate p { color: var(--text-sub); font-size: 0.9rem; line-height: 1.9; max-width: 420px; margin-bottom: 36px; }
   .enter-btn {
-    padding: 16px 40px;
-    background: var(--copper);
-    color: var(--wood-dark);
-    border: none;
-    border-radius: 4px;
-    font-size: 0.95rem;
-    font-weight: 700;
-    letter-spacing: 0.05em;
-    cursor: pointer;
-    transition: background 0.2s ease;
+    min-height: 52px; padding: 0 44px;
+    background: var(--gold); color: var(--wood-dark);
+    border: none; border-radius: 2px;
+    font-size: 0.95rem; font-weight: 700; letter-spacing: 0.12em;
+    cursor: pointer; transition: background 0.2s ease;
   }
-  .enter-btn:hover { background: var(--copper-soft); }
+  .enter-btn:hover { background: var(--gold-soft); }
+  @media (prefers-reduced-motion: reduce) {
+    .fire-glow { animation: none; opacity: 0.7; }
+  }
 </style>
 </head>
 <body>
 
 <div class="cabin-bg"></div>
 <div class="fire-glow"></div>
-<div class="fire-flicker"></div>
 <canvas id="embers"></canvas>
 <div class="vignette"></div>
 
@@ -239,10 +150,8 @@
   </div>
   <div class="ui-bottom">
     <div class="controls">
-      <div class="btn" id="soundToggle">🔥 火の音を消す</div>
-      <span class="btn btn-discord" style="cursor:default; opacity:0.7;">
-        💬 カジュアルな相談 準備中
-      </span>
+      <button class="btn" id="soundToggle" type="button">♪ 音を消す</button>
+      <a class="btn btn-line" href="https://lin.ee/wGe7asY" target="_blank" rel="noopener">公式LINEで気軽に話す</a>
     </div>
     <div class="hint">火を眺めて、少し休んでいってください</div>
   </div>
@@ -251,8 +160,8 @@
 <div class="enter-gate" id="enterGate">
   <div class="g-eyebrow">MOZ CABIN</div>
   <h1>火を入れておきました。<br>どうぞ、中へ。</h1>
-  <p>暖炉のはぜる音が流れます。<br>音量にご注意ください。</p>
-  <button class="enter-btn" id="enterBtn">中へ入る</button>
+  <p>暖炉の火と、やさしい音楽が流れます。<br>音量にご注意ください。</p>
+  <button class="enter-btn" id="enterBtn" type="button">中へ入る</button>
 </div>
 
 <audio id="fireAudio" loop preload="auto">
@@ -262,13 +171,26 @@
 <script>
   const canvas = document.getElementById('embers');
   const ctx = canvas.getContext('2d');
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   let W, H, fireX, fireY;
+
+  // 背景画像ごとの火の位置(画像の幅・高さに対する割合)。画像を差し替えたらここを直す
+  const BG_IMAGES = {
+    landscape: { w: 1376, h: 768,  fireX: 0.345, fireY: 0.63 },
+    portrait:  { w: 768,  h: 1376, fireX: 0.658, fireY: 0.655 },
+  };
+  const portraitQuery = window.matchMedia('(orientation: portrait)');
 
   function resize() {
     W = canvas.width = window.innerWidth;
     H = canvas.height = window.innerHeight;
-    fireX = W * 0.560;
-    fireY = H * 0.598;
+    // background-size: cover / 中央寄せ と同じ計算で、画面上の火の位置を求める
+    const bg = portraitQuery.matches ? BG_IMAGES.portrait : BG_IMAGES.landscape;
+    const scale = Math.max(W / bg.w, H / bg.h);
+    fireX = (W - bg.w * scale) / 2 + bg.fireX * bg.w * scale;
+    fireY = (H - bg.h * scale) / 2 + bg.fireY * bg.h * scale;
+    document.documentElement.style.setProperty('--fire-x', fireX + 'px');
+    document.documentElement.style.setProperty('--fire-y', fireY + 'px');
   }
   resize();
   window.addEventListener('resize', resize);
@@ -278,11 +200,11 @@
     embers.push({
       x: fireX + (Math.random() - 0.5) * W * 0.08,
       y: fireY,
-      vx: (Math.random() - 0.5) * 0.4,
-      vy: -(0.5 + Math.random() * 1.1),
+      vx: (Math.random() - 0.5) * 0.3,
+      vy: -(0.4 + Math.random() * 0.8),
       life: 1,
       decay: 0.004 + Math.random() * 0.006,
-      size: 1 + Math.random() * 1.8
+      size: 1 + Math.random() * 1.6
     });
   }
 
@@ -291,27 +213,25 @@
     requestAnimationFrame(draw);
     ctx.clearRect(0, 0, W, H);
     frame++;
-    if (frame % 14 === 0 && embers.length < 22) spawnEmber();
+    if (frame % 18 === 0 && embers.length < 16) spawnEmber();
     for (let i = embers.length - 1; i >= 0; i--) {
       const e = embers[i];
       e.x += e.vx;
       e.y += e.vy;
-      e.vy -= 0.004;
-      e.vx += (Math.random() - 0.5) * 0.05;
+      e.vy -= 0.003;
+      e.vx += (Math.random() - 0.5) * 0.04;
       e.life -= e.decay;
       if (e.life <= 0) { embers.splice(i, 1); continue; }
-      const alpha = e.life * 0.9;
-      const flick = 0.7 + Math.random() * 0.3;
       ctx.beginPath();
       ctx.arc(e.x, e.y, e.size, 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(255, ${150 + Math.floor(e.life*80)}, 60, ${alpha * flick})`;
+      ctx.fillStyle = `rgba(255, ${150 + Math.floor(e.life * 80)}, 60, ${e.life * 0.8})`;
       ctx.shadowBlur = 6;
       ctx.shadowColor = 'rgba(255,140,40,0.8)';
       ctx.fill();
     }
     ctx.shadowBlur = 0;
   }
-  draw();
+  if (!reduceMotion) draw();
 
   const gate = document.getElementById('enterGate');
   const enterBtn = document.getElementById('enterBtn');
@@ -324,29 +244,30 @@
     audio.volume = 0.6;
     audio.play().catch(() => {
       soundOn = false;
-      soundToggle.textContent = '🔇 火の音を出す';
+      soundToggle.textContent = '♪ 音を出す';
     });
   });
 
+  // ループの継ぎ目で音が途切れないよう、終端の少し手前で先頭に戻す
   audio.addEventListener('timeupdate', () => {
     if (!soundOn) return;
     if (audio.duration && audio.currentTime > audio.duration - 0.3) {
       audio.currentTime = 0;
-      audio.play().catch(()=>{});
+      audio.play().catch(() => {});
     }
   });
   audio.addEventListener('ended', () => {
-    if (soundOn) { audio.currentTime = 0; audio.play().catch(()=>{}); }
+    if (soundOn) { audio.currentTime = 0; audio.play().catch(() => {}); }
   });
 
   soundToggle.addEventListener('click', () => {
     soundOn = !soundOn;
     if (soundOn) {
-      audio.play().catch(()=>{});
-      soundToggle.textContent = '🔥 火の音を消す';
+      audio.play().catch(() => {});
+      soundToggle.textContent = '♪ 音を消す';
     } else {
       audio.pause();
-      soundToggle.textContent = '🔇 火の音を出す';
+      soundToggle.textContent = '♪ 音を出す';
     }
   });
 </script>
