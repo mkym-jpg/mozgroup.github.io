@@ -58,9 +58,9 @@ ul { list-style: none; }
   display: flex; align-items: center; justify-content: space-between;
   position: relative;
 }
-.brand { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+.brand { display: flex; align-items: flex-end; gap: 8px; flex-shrink: 0; }  /* ライオンと moz ロゴを下で揃える */
 .brand img { height: 34px; width: auto; }
-.brand img.brand-text { height: 17px; margin-top: 3px; }
+.brand img.brand-text { height: 9px; }
 .site-nav ul { display: flex; align-items: center; gap: 26px; white-space: nowrap; }
 .site-nav a { font-size: 0.82rem; letter-spacing: 0.08em; color: var(--on-ink-sub); transition: color .2s; }
 .site-nav a:hover { color: var(--on-ink); }
