@@ -34,7 +34,7 @@
   /* 演出途中の表示指定より優先させるため html を付けて強くしている */
   html #intro.is-leaving .intro-stage,
   html #intro.is-leaving .intro-view,
-  html #intro.is-leaving .intro-hint,
+  html #intro.is-leaving .intro-logo,
   html #intro.is-leaving .intro-skip,
   html #intro.is-leaving .intro-copy,
   html #intro.is-leaving .intro-seam,
@@ -82,11 +82,19 @@
     letter-spacing: 0.3em; color: var(--violet-soft);
   }
   .intro-stage {
-    position: absolute; left: 0; right: 0; top: 8vh; bottom: 22vh; z-index: 1;
+    position: absolute; left: 0; right: 0; top: 7vh; bottom: calc(max(9vh, 56px) + 130px); z-index: 1;
     opacity: 0; transform: scale(.92);
     transition: opacity 1.6s ease .3s, transform 2.2s cubic-bezier(.22, 1, .36, 1) .2s;
   }
   #intro.phase-open .intro-stage { opacity: 1; transform: none; }
+  /* ライオンの下の moz テキストロゴ(扉が開いたあと、少し遅れて現れる) */
+  .intro-logo {
+    position: absolute; z-index: 4; left: 50%; bottom: calc(max(9vh, 56px) + 80px);
+    width: auto; height: clamp(30px, 8vw, 42px); transform: translate(-50%, 8px);
+    opacity: 0; transition: opacity 1.2s ease 1.1s, transform 1.4s cubic-bezier(.16, 1, .3, 1) 1.1s;
+    pointer-events: none;
+  }
+  #intro.phase-open .intro-logo { opacity: 1; transform: translate(-50%, 0); }
   .intro-view {
     position: absolute; z-index: 4; left: 50%; bottom: max(9vh, 56px); transform: translate(-50%, 10px);
     background: none; border: 0; cursor: pointer; color: #fff;
@@ -98,12 +106,6 @@
   }
   #intro.phase-view .intro-view { opacity: 1; transform: translate(-50%, 0); pointer-events: auto; }
   .intro-view:hover { color: var(--gold); }
-  .intro-hint {
-    position: absolute; z-index: 4; left: 0; right: 0; bottom: calc(max(9vh, 56px) + 66px);
-    text-align: center; font-size: 0.72rem; letter-spacing: 0.2em; color: rgba(255,255,255,0.45);
-    opacity: 0; transition: opacity 1s ease .8s;
-  }
-  #intro.phase-view .intro-hint { opacity: 1; }
   .intro-skip {
     position: absolute; z-index: 5; top: max(18px, env(safe-area-inset-top)); right: 18px;
     background: none; border: 0; cursor: pointer;
@@ -311,7 +313,7 @@
     <p>ありがとうのその先へ</p>
   </div>
   <div class="intro-stage" id="introStage"></div>
-  <p class="intro-hint">DRAG TO ROTATE</p>
+  <img class="intro-logo" src="moz-text-white.png" alt="moz">
   <button class="intro-view" id="introView" type="button">VIEW ALL</button>
   <button class="intro-skip" id="introSkip" type="button">SKIP</button>
 </div>
